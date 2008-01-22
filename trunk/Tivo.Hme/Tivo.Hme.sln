@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tivo.Hme", "Tivo.Hme\Tivo.Hme.csproj", "{08BD3EA4-334C-4A30-9E36-19827F1EBC6A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Samples", "Samples\Samples.csproj", "{82CD1B79-2B77-43C8-9431-C68C36DF791E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tivo.Hme.Host", "Tivo.Hme.Host\Tivo.Hme.Host.csproj", "{96790110-C502-4730-831B-64BF06FE7B3B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{08BD3EA4-334C-4A30-9E36-19827F1EBC6A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08BD3EA4-334C-4A30-9E36-19827F1EBC6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08BD3EA4-334C-4A30-9E36-19827F1EBC6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08BD3EA4-334C-4A30-9E36-19827F1EBC6A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{82CD1B79-2B77-43C8-9431-C68C36DF791E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82CD1B79-2B77-43C8-9431-C68C36DF791E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82CD1B79-2B77-43C8-9431-C68C36DF791E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82CD1B79-2B77-43C8-9431-C68C36DF791E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{96790110-C502-4730-831B-64BF06FE7B3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{96790110-C502-4730-831B-64BF06FE7B3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{96790110-C502-4730-831B-64BF06FE7B3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{96790110-C502-4730-831B-64BF06FE7B3B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
