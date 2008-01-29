@@ -27,15 +27,14 @@ namespace Tivo.Hme.Host
     {
         public override void Write(Stream responseStream)
         {
-            byte[] image = File.ReadAllBytes(@"C:\npgsql\icon.png");
             StreamWriter writer = new StreamWriter(responseStream);
             writer.WriteLine("HTTP/1.1 200 OK");
             writer.WriteLine("Content-type: image/png");
-            writer.WriteLine("Content-Length: {0}", image.Length);
+            writer.WriteLine("Content-Length: {0}", Properties.Resources.iconpng.Length);
             writer.WriteLine("Connection: close");
             writer.WriteLine();
             writer.Flush();
-            responseStream.Write(image, 0, image.Length);
+            responseStream.Write(Properties.Resources.iconpng, 0, Properties.Resources.iconpng.Length);
             responseStream.Close();
         }
     }
