@@ -98,7 +98,7 @@ namespace Tivo.Hme.Events
             StringBuilder builder = new StringBuilder();
             builder.Append(GetType().Name);
             builder.Append(": ");
-            builder.AppendFormat("(FontId,{0}){Ascent,{1})(Descent,{2})(Height,{3})(LineGap,{4})(MetricsPerGlyph,{5}) ",
+            builder.AppendFormat("(FontId,{0})(Ascent,{1})(Descent,{2})(Height,{3})(LineGap,{4})(MetricsPerGlyph,{5}) ",
                 FontId, Ascent, Descent, Height, LineGap, _metricsPerGlyph);
             foreach (GlyphInfo info in _glyphInfo)
             {

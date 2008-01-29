@@ -49,7 +49,7 @@ namespace Tivo.Hme.Host
                 // major version
                 0,
                 // minor version
-                40
+                44
             };
             outputStream.Write(handshake, 0, handshake.Length);
             outputStream.Flush();

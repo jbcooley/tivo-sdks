@@ -48,7 +48,7 @@ namespace Tivo.Hme.Commands
 
         #region IHmeCommand Members
 
-        public void SendCommand(HmeConnection connection)
+        public virtual void SendCommand(HmeConnection connection)
         {
             connection.Writer.Write(Command);
             connection.Writer.Write(_resourceId);
@@ -56,5 +56,20 @@ namespace Tivo.Hme.Commands
         }
 
         #endregion
+    }
+
+    class ApplicationEnd : ResourceSetActive
+    {
+        public ApplicationEnd()
+            : base(false)
+        {
+            ResourceId = 1;
+        }
+
+        public override void SendCommand(HmeConnection connection)
+        {
+            base.SendCommand(connection);
+            connection.Application.IsRunning = false;
+        }
     }
 }
