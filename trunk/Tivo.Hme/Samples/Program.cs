@@ -45,7 +45,7 @@ namespace Tivo.Hme.Samples
         {
             if (e.KeyCode == KeyCode.Left)
             {
-                ((Application)sender).Dispose();
+                ((Application)sender).Close();
             }
         }
     }
