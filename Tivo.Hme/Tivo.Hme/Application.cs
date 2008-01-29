@@ -303,13 +303,15 @@ namespace Tivo.Hme
 
         public void Dispose()
         {
-            _running = false;
-            IResourceCommand command = new ResourceSetActive(false);
-            command.ResourceId = 1;
-            PostCommand(command);
+            Close();
         }
 
         #endregion
+
+        public void Close()
+        {
+            PostCommand(new ApplicationEnd());
+        }
 
         #region Events
 
