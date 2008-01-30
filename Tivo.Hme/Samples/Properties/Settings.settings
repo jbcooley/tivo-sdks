@@ -3,10 +3,10 @@
   <Profiles />
   <Settings>
     <Setting Name="MusicPath" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">C:\Npgsql\Projects\Tivo.Hme\Samples\music</Value>
+      <Value Profile="(Default)">C:\tivo-sdks\Tivo.Hme sdk 1.0\Samples\music</Value>
     </Setting>
     <Setting Name="ImagePath" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">.\</Value>
+      <Value Profile="(Default)">C:\tivo-sdks\Tivo.Hme sdk 1.0\Samples\music</Value>
     </Setting>
   </Settings>
 </SettingsFile>
