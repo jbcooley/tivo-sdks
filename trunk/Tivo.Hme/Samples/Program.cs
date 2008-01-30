@@ -31,6 +31,7 @@ namespace Tivo.Hme.Samples
                 server.Start();
             });
 
+            Console.WriteLine("Sample applications started.  Press enter to exit.");
             Console.ReadLine();
         }
 
