@@ -63,5 +63,18 @@ namespace Tivo.Hme.Host
                 _applications.Remove(application);
             }
         }
+
+        protected override void NonApplicationRequestRecieved(NonApplicationRequestReceivedArgs e)
+        {
+            if (e.HttpRequest.RequestUri.OriginalString.EndsWith("/icon.png", StringComparison.OrdinalIgnoreCase))
+            {
+                object[] attributes = typeof(ApplicationT).GetCustomAttributes(typeof(ApplicationIconAttribute), true);
+                if (attributes.Length != 0)
+                {
+                    e.HttpResponse = new ApplicationIconHttpResponse(((ApplicationIconAttribute)attributes[0]).Icon);
+                }
+            }
+            base.NonApplicationRequestRecieved(e);
+        }
     }
 }

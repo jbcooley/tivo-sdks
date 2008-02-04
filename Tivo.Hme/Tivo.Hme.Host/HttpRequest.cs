@@ -76,6 +76,7 @@ namespace Tivo.Hme.Host
         {
             StringBuilder builder = new StringBuilder();
             int readByte;
+            // TODO: check readByte == -1 for end of stream
             while ((readByte = _stream.ReadByte()) != '\n')
             {
                 if (readByte != '\r')

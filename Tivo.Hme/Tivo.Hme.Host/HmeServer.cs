@@ -45,6 +45,22 @@ namespace Tivo.Hme.Host
 	
     }
 
+    public class NonApplicationRequestReceivedArgs : HttpRequestReceivedArgs
+    {
+        private HttpResponse _response;
+
+        public NonApplicationRequestReceivedArgs(HttpRequest request)
+            : base(request)
+        {
+        }
+
+        public HttpResponse HttpResponse
+        {
+            get { return _response; }
+            set { _response = value; }
+        }
+    }
+
     /// <summary>
     /// Server Options for application
     /// </summary>
@@ -132,6 +148,21 @@ namespace Tivo.Hme.Host
         }
 
         public event EventHandler<HmeApplicationConnectedEventArgs> ApplicationConnected;
+        // TODO: need to enhance args to support returning a value
+        public event EventHandler<NonApplicationRequestReceivedArgs> NonApplicationRequestReceivedArgs;
+
+        protected virtual void NonApplicationRequestRecieved(NonApplicationRequestReceivedArgs e)
+        {
+            EventHandler<NonApplicationRequestReceivedArgs> handler = NonApplicationRequestReceivedArgs;
+            if (handler != null)
+            {
+                handler(this, e);
+            }
+            if (e.HttpResponse == null)
+            {
+                e.HttpResponse = new ApplicationIconHttpResponse();
+            }
+        }
 
         private void HttpServer_HttpRequestReceived(object sender, HttpRequestReceivedArgs e)
         {
@@ -155,7 +186,9 @@ namespace Tivo.Hme.Host
             }
             else if (_started && e.HttpRequest.RequestUri.OriginalString.StartsWith(_applicationPrefix.AbsolutePath))
             {
-                e.HttpRequest.WriteResponse(new ApplicationIconHttpResponse());
+                NonApplicationRequestReceivedArgs args = new NonApplicationRequestReceivedArgs(e.HttpRequest);
+                NonApplicationRequestRecieved(args);
+                e.HttpRequest.WriteResponse(args.HttpResponse);
             }
         }
 
