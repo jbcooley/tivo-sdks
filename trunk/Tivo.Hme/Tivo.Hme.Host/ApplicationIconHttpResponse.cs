@@ -19,22 +19,35 @@
 // THE SOFTWARE.
 
 using System;
+
 using System.IO;
 
 namespace Tivo.Hme.Host
 {
     class ApplicationIconHttpResponse : HttpResponse
     {
+        private byte[] _icon;
+
+        public ApplicationIconHttpResponse()
+        {
+            _icon = Properties.Resources.iconpng;
+        }
+
+        public ApplicationIconHttpResponse(byte[] icon)
+        {
+            _icon = icon;
+        }
+
         public override void Write(Stream responseStream)
         {
             StreamWriter writer = new StreamWriter(responseStream);
             writer.WriteLine("HTTP/1.1 200 OK");
             writer.WriteLine("Content-type: image/png");
-            writer.WriteLine("Content-Length: {0}", Properties.Resources.iconpng.Length);
+            writer.WriteLine("Content-Length: {0}", _icon.Length);
             writer.WriteLine("Connection: close");
             writer.WriteLine();
             writer.Flush();
-            responseStream.Write(Properties.Resources.iconpng, 0, Properties.Resources.iconpng.Length);
+            responseStream.Write(_icon, 0, _icon.Length);
             responseStream.Close();
         }
     }
