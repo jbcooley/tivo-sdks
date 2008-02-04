@@ -55,7 +55,7 @@ namespace Tivo.Hme.Host
             outputStream.Flush();
             // check for handshake on input stream
             byte[] response = new byte[handshake.Length];
-            int read = inputStream.Read(response, 0, response.Length);
+            int read = HmeReader.ReadAll(inputStream, response, 0, response.Length);
             // check magic number
             if (handshake[0] != response[0] ||
                 handshake[1] != response[1] ||
