@@ -147,7 +147,7 @@ namespace Tivo.Hme.Host
             {
                 _bytesLeft = lookingForTerminator;
                 byte[] buffer = new byte[_bytesLeft];
-                if (_input.Read(buffer, 0, _bytesLeft) != _bytesLeft)
+                if (ReadAll(_input, buffer, 0, _bytesLeft) != _bytesLeft)
                     throw new EndOfStreamException();
                 unknownEventInfo.Add(buffer);
                 _bytesLeft = 0;
@@ -193,7 +193,7 @@ namespace Tivo.Hme.Host
             {
                 if (_bytesLeft < count)
                 {
-                    if (_input.Read(buffer, offset, _bytesLeft) != _bytesLeft)
+                    if (ReadAll(_input, buffer, offset, _bytesLeft) != _bytesLeft)
                         throw new EndOfStreamException();
                     offset += _bytesLeft;
                     count -= _bytesLeft;
@@ -202,7 +202,7 @@ namespace Tivo.Hme.Host
                 }
                 else
                 {
-                    if (_input.Read(buffer, offset, count) != count)
+                    if (ReadAll(_input, buffer, offset, count) != count)
                         throw new EndOfStreamException();
                     _bytesLeft -= (short)count;
                 }
@@ -228,17 +228,30 @@ namespace Tivo.Hme.Host
             {
                 buffer[0] = _asyncBytes[0];
                 _useAsyncBytes = false;
-                if (_input.Read(buffer, 1, 1) != 1)
+                if (ReadAll(_input, buffer, 1, 1) != 1)
                     throw new EndOfStreamException();
             }
             else
             {
-                if (_input.Read(buffer, 0, 2) != 2)
+                if (ReadAll(_input, buffer, 0, 2) != 2)
                     throw new EndOfStreamException();
             }
             if (BitConverter.IsLittleEndian)
                 Array.Reverse(buffer);
             return BitConverter.ToInt16(buffer, 0);
+        }
+
+        internal static int ReadAll(Stream stream, byte[] buffer, int offset, int count)
+        {
+            int readCount = 0;
+            do
+            {
+                int bytesRead = stream.Read(buffer, offset, count);
+                offset += bytesRead;
+                count -= bytesRead;
+                readCount += bytesRead;
+            } while (count != 0);
+            return readCount;
         }
     }
 }
