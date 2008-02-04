@@ -53,4 +53,22 @@ namespace Tivo.Hme
         public abstract void OnApplicationStart(HmeApplicationStartArgs e);
         public abstract void OnApplicationEnd();
     }
+
+    [AttributeUsage(AttributeTargets.Class)]
+    public sealed class ApplicationIconAttribute : Attribute
+    {
+        public ApplicationIconAttribute(Type resourceSource, string resourceName)
+        {
+            System.Resources.ResourceManager resMan = new System.Resources.ResourceManager(resourceSource);
+            Icon = resMan.GetObject(resourceName) as byte[];
+            if (Icon == null)
+            {
+                StatusLog.Write(System.Diagnostics.TraceEventType.Error,
+                    string.Format("Unable to load resource {0} from resourceSet {1}.",
+                    resourceName, resMan.BaseName));
+            }
+        }
+
+        public byte[] Icon { get; private set; }
+    }
 }
