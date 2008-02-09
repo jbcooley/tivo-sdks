@@ -22,6 +22,9 @@ using System;
 
 namespace Tivo.Hme
 {
+    /// <summary>
+    /// Represents the key pressed on a remote.
+    /// </summary>
     public enum KeyCode : long
     {
         /// <summary>

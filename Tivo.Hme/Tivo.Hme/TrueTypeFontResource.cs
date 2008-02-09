@@ -22,13 +22,16 @@ using System;
 
 namespace Tivo.Hme
 {
+    /// <summary>
+    /// Represents a TrueType font resource for an application
+    /// </summary>
     public sealed class TrueTypeFontResource : IHmeResource
     {
         private Application _application;
         private string _name;
         private long _resourceId;
 
-        public TrueTypeFontResource(Application application, string name, long resourceId)
+        internal TrueTypeFontResource(Application application, string name, long resourceId)
         {
             _application = application;
             _name = name;
@@ -37,11 +40,17 @@ namespace Tivo.Hme
 
         #region IHmeResource Members
 
+        /// <summary>
+        /// The name of the TrueType font in the <see cref="Application.Fonts"/> collection.
+        /// </summary>
         public string Name
         {
             get { return _name; }
         }
 
+        /// <summary>
+        /// Releases the resource allocated to the associated application.
+        /// </summary>
         public void Close()
         {
             Dispose();
@@ -51,6 +60,9 @@ namespace Tivo.Hme
 
         #region IDisposable Members
 
+        /// <summary>
+        /// Releases the resource allocated to the associated application.
+        /// </summary>
         public void Dispose()
         {
             if (_resourceId >= 2048)
@@ -61,6 +73,11 @@ namespace Tivo.Hme
 
         #region IEquatable<IHmeResource> Members
 
+        /// <summary>
+        /// Tests equality between two resources
+        /// </summary>
+        /// <param name="other">Must be a TrueTypeFontResource.</param>
+        /// <returns>true if the resources represent the same item; false otherwise.</returns>
         public bool Equals(IHmeResource other)
         {
             return Equals((object)other);
@@ -68,6 +85,11 @@ namespace Tivo.Hme
 
         #endregion
 
+        /// <summary>
+        /// Tests equality between two resources
+        /// </summary>
+        /// <param name="obj">Must be a TrueTypeFontResource.</param>
+        /// <returns>true if the resources represent the same item; false otherwise.</returns>
         public override bool Equals(object obj)
         {
             TrueTypeFontResource ttfResource = obj as TrueTypeFontResource;
@@ -77,6 +99,10 @@ namespace Tivo.Hme
                 return false;
         }
 
+        /// <summary>
+        /// overriden, returns the hash code such that two equal resources have the same hash code value.
+        /// </summary>
+        /// <returns>a hash code</returns>
         public override int GetHashCode()
         {
             return _resourceId.GetHashCode();

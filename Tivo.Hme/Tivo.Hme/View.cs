@@ -26,6 +26,9 @@ using System.ComponentModel;
 
 namespace Tivo.Hme
 {
+    /// <summary>
+    /// A basic type for representing a viewable area of the screen.
+    /// </summary>
     public class View : IDisposable, INotifyPropertyChanged
     {
         private const int RootId = 2;
@@ -45,6 +48,9 @@ namespace Tivo.Hme
         private List<Commands.IHmeCommand> _queuedCommands;
         private Application _application;
 
+        /// <summary>
+        /// Constructs a <see cref="View"/>.
+        /// </summary>
         public View()
         {
             _children = new ViewCollection(this);
@@ -63,16 +69,33 @@ namespace Tivo.Hme
             PostCommand(new Commands.ViewSetVisible(ViewId, true));
         }
 
+        /// <summary>
+        /// Occurs when a key is held down and this view has focus.
+        /// </summary>
         public event EventHandler<KeyEventArgs> KeyDown;
+
+        /// <summary>
+        /// Occurs when a key is pressed and this view has focus.
+        /// </summary>
         public event EventHandler<KeyEventArgs> KeyPress;
+
+        /// <summary>
+        /// Occurs when a key is released and this view has focus.
+        /// </summary>
         public event EventHandler<KeyEventArgs> KeyUp;
 
+        /// <summary>
+        /// An identifier that uniquely identifies this view for the <see cref="Application"/>.
+        /// </summary>
         public long ViewId
         {
             get { return _id; }
             internal set { _id = value; }
         }
 
+        /// <summary>
+        /// If this view is not the root view, then the parent view.
+        /// </summary>
         public View Parent
         {
             get { return _parent; }
@@ -111,11 +134,18 @@ namespace Tivo.Hme
             }
         }
 
+        /// <summary>
+        /// A <see cref="ViewCollection"/> containing all child views of this view.
+        /// </summary>
         public ViewCollection Children
         {
             get { return _children; }
         }
 
+        /// <summary>
+        /// The boundaries of this view in parent coordinates.
+        /// (0,0) is the upper left corner of <see cref="View.Parent"/>.
+        /// </summary>
         public Rectangle Bounds
         {
             get { return _bounds; }
@@ -125,6 +155,10 @@ namespace Tivo.Hme
             }
         }
 
+        /// <summary>
+        /// The location of this view in parent coordinates.
+        /// (0,0) is the upper left corner of <see cref="View.Parent"/>.
+        /// </summary>
         public Point Location
         {
             get { return _bounds.Location; }
@@ -139,6 +173,9 @@ namespace Tivo.Hme
             }
         }
 
+        /// <summary>
+        /// The size of this view
+        /// </summary>
         public Size Size
         {
             get { return _bounds.Size; }
@@ -153,6 +190,10 @@ namespace Tivo.Hme
             }
         }
 
+        /// <summary>
+        /// The distance to maintain betwen this views <see cref="View.Bounds"/> and its <see cref="View.Parent"/>.
+        /// Using Margin instead of <see cref="View.Bounds"/> allows a flexible layout for different resolutions.
+        /// </summary>
         public Margin Margin
         {
             get { return _margin; }
@@ -185,6 +226,9 @@ namespace Tivo.Hme
             }
         }
 
+        /// <summary>
+        /// Adjusts the positioning of child views.
+        /// </summary>
         public Point Offset
         {
             get { return _offset; }
@@ -198,6 +242,9 @@ namespace Tivo.Hme
             }
         }
 
+        /// <summary>
+        /// Scales resources in this view as well as child views.
+        /// </summary>
         public SizeF Scale
         {
             get { return _scale; }
@@ -211,6 +258,9 @@ namespace Tivo.Hme
             }
         }
 
+        /// <summary>
+        /// true if this view is displayed; false otherwise.
+        /// </summary>
         public bool Visible
         {
             get { return _visible; }
@@ -224,6 +274,9 @@ namespace Tivo.Hme
             }
         }
 
+        /// <summary>
+        /// Level of transparency where 0 is opaque and 1 is completely transparent.
+        /// </summary>
         public float Transparency
         {
             get { return _transparency; }
@@ -237,6 +290,9 @@ namespace Tivo.Hme
             }
         }
 
+        /// <summary>
+        /// true if this view can recieve focus and be the <see cref="Tivo.Hme.Application.ActiveView"/>; false otherwise.
+        /// </summary>
         public bool CanFocus
         {
             get { return _canFocus; }
@@ -249,27 +305,46 @@ namespace Tivo.Hme
             }
         }
 
+        /// <summary>
+        /// true if this view has focus and is the <see cref="Tivo.Hme.Application.ActiveView"/>.
+        /// </summary>
         public bool Focused
         {
             get { return Application != null && Application.ActiveView == this; }
         }
 
+        /// <summary>
+        /// Temporarily stop updating the view while adjustments are made.
+        /// </summary>
         public void SuspendPainting()
         {
             PostCommand(new Commands.ViewSetPainting(ViewId, false));
         }
 
+        /// <summary>
+        /// Update the view with adjustments mad while painting was suspended.
+        /// </summary>
+        /// <remarks>
+        /// See <see cref="View.SuspendPainting"/>.
+        /// </remarks>
         public void ResumePainting()
         {
             PostCommand(new Commands.ViewSetPainting(ViewId, true));
         }
 
+        /// <summary>
+        /// A unique identifier for the <see cref="Application"/> that identifies the resource displayed in the view.
+        /// </summary>
         protected internal long ResourceId
         {
             get { return _resourceId; }
             protected set{ _resourceId = value; }
         }
 
+        /// <summary>
+        /// Animate view using instructions set in an <see cref="Animation"/>.
+        /// </summary>
+        /// <param name="animation">Contains instructions for the animations to perform.</param>
         public void Animate(Animation animation)
         {
             foreach (Commands.IViewCommand viewCommand in animation.Commands)
@@ -279,6 +354,10 @@ namespace Tivo.Hme
             }
         }
 
+        /// <summary>
+        /// Make this view the <see cref="Tivo.Hme.Application.ActiveView"/>.
+        /// </summary>
+        /// <returns></returns>
         public bool Focus()
         {
             if (CanFocus && Application != null && Parent != null)
@@ -291,6 +370,9 @@ namespace Tivo.Hme
 
         #region IDisposable Members
 
+        /// <summary>
+        /// Remove the view and its children from the screen.
+        /// </summary>
         public void Dispose()
         {
             Dispose(true);
@@ -298,6 +380,10 @@ namespace Tivo.Hme
 
         #endregion
 
+        /// <summary>
+        /// Remove the view and its children from the screen.
+        /// </summary>
+        /// <param name="disposing">true if called from <see cref="Dispose()"/>; false if finalizing.</param>
         protected virtual void Dispose(bool disposing)
         {
             if (disposing && Application != null)
@@ -310,6 +396,9 @@ namespace Tivo.Hme
             }
         }
 
+        /// <summary>
+        /// The <see cref="Application"/> that is associated with this view.
+        /// </summary>
         protected Application Application
         {
             get { return _application; }
@@ -338,6 +427,9 @@ namespace Tivo.Hme
             }
         }
 
+        /// <summary>
+        /// Used in derived classes to allow resources to be added when a new application is available.
+        /// </summary>
         protected virtual void OnNewApplication()
         {
         }
@@ -403,6 +495,10 @@ namespace Tivo.Hme
             }
         }
 
+        /// <summary>
+        /// Called when a key is down and this view is the <see cref="Tivo.Hme.Application.ActiveView"/>.
+        /// </summary>
+        /// <param name="e">The <see cref="KeyEventArgs"/> for the event.</param>
         protected internal virtual void OnKeyDown(KeyEventArgs e)
         {
             EventHandler<KeyEventArgs> handler = KeyDown;
@@ -412,6 +508,10 @@ namespace Tivo.Hme
                 Parent.OnKeyDown(e);
         }
 
+        /// <summary>
+        /// Called when a key is pressed and this view is the <see cref="Tivo.Hme.Application.ActiveView"/>.
+        /// </summary>
+        /// <param name="e">The <see cref="KeyEventArgs"/> for the event.</param>
         protected internal virtual void OnKeyPress(KeyEventArgs e)
         {
             EventHandler<KeyEventArgs> handler = KeyPress;
@@ -421,6 +521,10 @@ namespace Tivo.Hme
                 Parent.OnKeyPress(e);
         }
 
+        /// <summary>
+        /// Called when a key is released and this view is the <see cref="Tivo.Hme.Application.ActiveView"/>.
+        /// </summary>
+        /// <param name="e">The <see cref="KeyEventArgs"/> for the event.</param>
         protected internal virtual void OnKeyUp(KeyEventArgs e)
         {
             EventHandler<KeyEventArgs> handler = KeyUp;
@@ -432,10 +536,17 @@ namespace Tivo.Hme
 
         #region INotifyPropertyChanged Members
 
+        /// <summary>
+        /// Occurs after a View property is changed.
+        /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
         #endregion
 
+        /// <summary>
+        /// Called when certain view properties change.
+        /// </summary>
+        /// <param name="e">The <see cref="PropertyChangedEventArgs"/> for the event.</param>
         protected virtual void OnPropertyChanged(PropertyChangedEventArgs e)
         {
             PropertyChangedEventHandler handler = PropertyChanged;
