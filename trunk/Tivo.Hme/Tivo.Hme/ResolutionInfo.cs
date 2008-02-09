@@ -24,6 +24,9 @@ using System.Text;
 
 namespace Tivo.Hme
 {
+    /// <summary>
+    /// Resolution and aspect ratio
+    /// </summary>
     public class ResolutionInfo : IEquatable<ResolutionInfo>
     {
         private long _horizontal;
@@ -40,35 +43,56 @@ namespace Tivo.Hme
             _pixelAspectHeight = pixelAspectHeight;
         }
 
+        /// <summary>
+        /// Horizontal resolution
+        /// </summary>
         public long Horizontal
         {
             get { return _horizontal; }
             set { _horizontal = value; }
         }
 
+        /// <summary>
+        /// Vertical resolution
+        /// </summary>
         public long Vertical
         {
             get { return _vertical; }
             set { _vertical = value; }
         }
 
+        /// <summary>
+        /// pixel aspect ratio - width
+        /// </summary>
         public long PixelAspectWidth
         {
             get { return _pixelAspectWidth; }
             set { _pixelAspectWidth = value; }
         }
 
+        /// <summary>
+        /// pixel aspect ratio - height
+        /// </summary>
         public long PixelAspectHeight
         {
             get { return _pixelAspectHeight; }
             set { _pixelAspectHeight = value; }
         }
 
+        /// <summary>
+        /// Returns a readable version of the resolution data.
+        /// </summary>
+        /// <returns>Returns a readable version of the resolution data.</returns>
         public override string ToString()
         {
             return string.Format("Resolution {0}x{1} {2}:{3}", Horizontal, Vertical, PixelAspectWidth, PixelAspectHeight);
         }
 
+        /// <summary>
+        /// Tests for equality between two ResolutionInfo
+        /// </summary>
+        /// <param name="obj">Must be a ResolutionInfo</param>
+        /// <returns>true if the two represent the same resolution and aspect ratio; false otherwise.</returns>
         public override bool Equals(object obj)
         {
             if (obj is ResolutionInfo)
@@ -76,6 +100,10 @@ namespace Tivo.Hme
             return false;
         }
 
+        /// <summary>
+        /// returns the hash code such that two equal resources have the same hash code value.
+        /// </summary>
+        /// <returns>a hash code</returns>
         public override int GetHashCode()
         {
             return _horizontal.GetHashCode() ^ _vertical.GetHashCode() ^ _pixelAspectHeight.GetHashCode() ^ _pixelAspectWidth.GetHashCode();
@@ -83,6 +111,11 @@ namespace Tivo.Hme
 
         #region IEquatable<ResolutionInfo> Members
 
+        /// <summary>
+        /// Tests for equality between two ResolutionInfo
+        /// </summary>
+        /// <param name="other">Must be a ResolutionInfo</param>
+        /// <returns>true if the two represent the same resolution and aspect ratio; false otherwise.</returns>
         public bool Equals(ResolutionInfo other)
         {
             return this._horizontal == other._horizontal &&
@@ -93,11 +126,23 @@ namespace Tivo.Hme
 
         #endregion
 
+        /// <summary>
+        /// Tests for equality between two ResolutionInfo
+        /// </summary>
+        /// <param name="lhs">a ResolutionInfo</param>
+        /// <param name="rhs">a ResolutionInfo</param>
+        /// <returns>true if the two represent the same resolution and aspect ratio; false otherwise.</returns>
         public static bool operator ==(ResolutionInfo lhs, ResolutionInfo rhs)
         {
             return lhs.Equals(rhs);
         }
 
+        /// <summary>
+        /// Tests for inequality between two ResolutionInfo
+        /// </summary>
+        /// <param name="lhs">a ResolutionInfo</param>
+        /// <param name="rhs">a ResolutionInfo</param>
+        /// <returns>true if the two represent the different resolution or aspect ratio; false otherwise.</returns>
         public static bool operator !=(ResolutionInfo lhs, ResolutionInfo rhs)
         {
             return !lhs.Equals(rhs);

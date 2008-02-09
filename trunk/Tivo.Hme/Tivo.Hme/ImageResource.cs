@@ -22,6 +22,9 @@ using System;
 
 namespace Tivo.Hme
 {
+    /// <summary>
+    /// Represents an image resource for an application
+    /// </summary>
     public sealed class ImageResource : IHmeResource
     {
         private Application _application;
@@ -37,11 +40,17 @@ namespace Tivo.Hme
 
         #region IHmeResource Members
 
+        /// <summary>
+        /// The name of the image in the <see cref="Application.Images"/> collection.
+        /// </summary>
         public string Name
         {
             get { return _name; }
         }
 
+        /// <summary>
+        /// Releases the resource allocated to the associated application.
+        /// </summary>
         public void Close()
         {
             Dispose();
@@ -51,6 +60,9 @@ namespace Tivo.Hme
 
         #region IDisposable Members
 
+        /// <summary>
+        /// Releases the resource allocated to the associated application.
+        /// </summary>
         public void Dispose()
         {
             if (_resourceId >= 2048)
@@ -61,6 +73,11 @@ namespace Tivo.Hme
 
         #region IEquatable<IHmeResource> Members
 
+        /// <summary>
+        /// Tests equality between two resources
+        /// </summary>
+        /// <param name="other">Must be an ImageResource.</param>
+        /// <returns>true if the resources represent the same item; false otherwise.</returns>
         public bool Equals(IHmeResource other)
         {
             return Equals((object)other);
@@ -68,6 +85,11 @@ namespace Tivo.Hme
 
         #endregion
 
+        /// <summary>
+        /// Tests equality between two resources
+        /// </summary>
+        /// <param name="obj">Must be an ImageResource.</param>
+        /// <returns>true if the resources represent the same item; false otherwise.</returns>
         public override bool Equals(object obj)
         {
             ImageResource imageResource = obj as ImageResource;
@@ -77,6 +99,10 @@ namespace Tivo.Hme
                 return false;
         }
 
+        /// <summary>
+        /// returns the hash code such that two equal resources have the same hash code value.
+        /// </summary>
+        /// <returns>a hash code</returns>
         public override int GetHashCode()
         {
             return _resourceId.GetHashCode();
