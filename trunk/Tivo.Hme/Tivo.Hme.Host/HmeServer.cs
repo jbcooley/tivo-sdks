@@ -148,7 +148,6 @@ namespace Tivo.Hme.Host
         }
 
         public event EventHandler<HmeApplicationConnectedEventArgs> ApplicationConnected;
-        // TODO: need to enhance args to support returning a value
         public event EventHandler<NonApplicationRequestReceivedArgs> NonApplicationRequestReceivedArgs;
 
         protected virtual void NonApplicationRequestRecieved(NonApplicationRequestReceivedArgs e)
@@ -180,7 +179,7 @@ namespace Tivo.Hme.Host
                 EventHandler<HmeApplicationConnectedEventArgs> handler = ApplicationConnected;
                 if (handler != null)
                 {
-                    handler.BeginInvoke(this, args, null, null);
+                    handler(this, args);
                     AddHmeConnection(connection);
                 }
             }
