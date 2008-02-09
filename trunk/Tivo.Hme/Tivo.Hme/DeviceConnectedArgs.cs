@@ -47,6 +47,11 @@ namespace Tivo.Hme
             get { return _deviceInfo["version"]; }
         }
 
+        public string Host
+        {
+            get { return _deviceInfo["host"]; }
+        }
+
         public Dictionary<string, string> DeviceInfo
         {
             get { return _deviceInfo; }
