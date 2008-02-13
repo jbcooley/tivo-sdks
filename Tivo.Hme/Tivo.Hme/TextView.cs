@@ -85,16 +85,22 @@ namespace Tivo.Hme
             _layout = layout;
             if (Application != null)
             {
-                ResourceId = Application.GetResourceId(new Resource(_text, _style, _color));
-                PostCommand(new Commands.ViewSetResource(ViewId, ResourceId, (long)Layout));
+                Create();
             }
         }
 
         protected override void OnNewApplication()
         {
+            Create();
+            base.OnNewApplication();
+        }
+
+        private void Create()
+        {
+            // ensure color gets created before text
+            Application.GetResourceId(new Resource(_color));
             ResourceId = Application.GetResourceId(new Resource(_text, _style, _color));
             PostCommand(new Commands.ViewSetResource(ViewId, ResourceId, (long)Layout));
-            base.OnNewApplication();
         }
     }
 }
