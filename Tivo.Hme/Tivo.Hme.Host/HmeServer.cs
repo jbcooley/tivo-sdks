@@ -165,10 +165,8 @@ namespace Tivo.Hme.Host
 
         private void HttpServer_HttpRequestReceived(object sender, HttpRequestReceivedArgs e)
         {
-            // TODO: make this test better
-            if (_started && e.HttpRequest.RequestUri.OriginalString == _applicationPrefix.AbsolutePath)
-            //(_applicationPrefix.IsAbsoluteUri &&
-            //e.HttpRequest.Headers[HttpRequestHeader.Host] == _applicationPrefix.Host))
+            if (_started &&
+                StringComparer.InvariantCultureIgnoreCase.Compare(e.HttpRequest.RequestUri.OriginalString, _applicationPrefix.AbsolutePath) == 0)
             {
                 e.HttpRequest.WriteResponse(new HmeApplicationHttpResponse());
                 HmeConnection connection = new HmeConnection(e.HttpRequest.Stream, e.HttpRequest.Stream);
@@ -183,7 +181,7 @@ namespace Tivo.Hme.Host
                     AddHmeConnection(connection);
                 }
             }
-            else if (_started && e.HttpRequest.RequestUri.OriginalString.StartsWith(_applicationPrefix.AbsolutePath))
+            else if (_started && e.HttpRequest.RequestUri.OriginalString.StartsWith(_applicationPrefix.AbsolutePath, StringComparison.InvariantCultureIgnoreCase))
             {
                 NonApplicationRequestReceivedArgs args = new NonApplicationRequestReceivedArgs(e.HttpRequest);
                 NonApplicationRequestRecieved(args);
@@ -267,11 +265,22 @@ namespace Tivo.Hme.Host
         private static void ApplicationEventsHandled(IAsyncResult result)
         {
             HmeConnection connection = (HmeConnection)result.AsyncState;
-            connection.EndHandleEvent(result);
-            if (connection.Application.IsRunning)
-                connection.BeginHandleEvent(ApplicationEventsHandled, result.AsyncState);
-            else
+            // TODO: move this exception logic into Begin and End HandleEvent.
+            try
+            {
+                connection.EndHandleEvent(result);
+                if (connection.Application.IsRunning)
+                    connection.BeginHandleEvent(ApplicationEventsHandled, result.AsyncState);
+                else
+                    RemoveHmeConnection(connection);
+            }
+            catch (System.IO.IOException ex)
+            {
+                // just a disconnect so not a critical event
+                ServerLog.Write(ex);
+                connection.Application.CloseDisconnected();
                 RemoveHmeConnection(connection);
+            }
         }
 
         private static void ProcessApplicationCommands(object hmeConnection)
