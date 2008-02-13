@@ -386,9 +386,12 @@ namespace Tivo.Hme
         /// <param name="disposing">true if called from <see cref="Dispose()"/>; false if finalizing.</param>
         protected virtual void Dispose(bool disposing)
         {
-            if (disposing && Application != null)
+            if (disposing)
             {
-                Application.ReleaseResourceId(ResourceId);
+                if (Application != null)
+                {
+                    Application.ReleaseResourceId(ResourceId);
+                }
                 foreach (View child in Children)
                 {
                     child.Dispose();
@@ -470,28 +473,37 @@ namespace Tivo.Hme
         {
             if (Application != null)
             {
-                if (!IsRoot)
+                ProcessNewApplicationCore();
+                foreach (View child in Children)
                 {
-                    ViewId = Application.GetNewViewId();
-                    PostCommand(new Commands.ViewAdd(ViewId, _parent, _bounds, _visible));
-                }
-                if (_usingMargin)
-                    AdjustBoundsForMargin();
-                if (_queuedCommands != null)
-                {
-                    _queuedCommands.ForEach(delegate(Commands.IHmeCommand command)
-                    {
-                        Commands.IViewCommand viewCommand = command as Commands.IViewCommand;
-                        if (viewCommand != null && viewCommand.ViewId == 0) viewCommand.UseView(this);
-                    });
-                    Application.PostCommandBatch(_queuedCommands);
-                    _queuedCommands = null;
+                    child.ProcessNewApplicationCore();
                 }
                 OnNewApplication();
                 foreach (View child in Children)
                 {
-                    child.ProcessNewApplication();
+                    child.OnNewApplication();
                 }
+            }
+        }
+
+        private void ProcessNewApplicationCore()
+        {
+            if (!IsRoot)
+            {
+                ViewId = Application.GetNewViewId();
+                PostCommand(new Commands.ViewAdd(ViewId, _parent, _bounds, _visible));
+            }
+            if (_usingMargin)
+                AdjustBoundsForMargin();
+            if (_queuedCommands != null)
+            {
+                _queuedCommands.ForEach(delegate(Commands.IHmeCommand command)
+                {
+                    Commands.IViewCommand viewCommand = command as Commands.IViewCommand;
+                    if (viewCommand != null && viewCommand.ViewId == 0) viewCommand.UseView(this);
+                });
+                Application.PostCommandBatch(_queuedCommands);
+                _queuedCommands = null;
             }
         }
 
