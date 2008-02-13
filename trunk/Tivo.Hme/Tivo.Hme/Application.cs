@@ -43,6 +43,8 @@ namespace Tivo.Hme
         private long _nextActionId = 1;
         private Dictionary<long, Delegate> _actions = new Dictionary<long, Delegate>();
         private Dictionary<long, object> _actionObjects = new Dictionary<long, object>();
+        private Dictionary<Resource, Delegate> _fontCreated = new Dictionary<Resource, Delegate>();
+        private Dictionary<Resource, object> _fontCreatedObject = new Dictionary<Resource, object>();
         private ResourceManager _resourceManager = new ResourceManager();
         private Host.HmeConnection _connection;
         #endregion
@@ -110,6 +112,7 @@ namespace Tivo.Hme
                     OnPropertyChanged(new PropertyChangedEventArgs("IsRunning"));
                     if (!_running)
                         OnClosed(EventArgs.Empty);
+                    Root.Dispose();
                 }
             }
         }
@@ -146,6 +149,18 @@ namespace Tivo.Hme
         public void CreateTextStyle(TextStyle style)
         {
             GetResourceId(new Resource(style));
+        }
+
+        public void CreateTextStyle(TextStyle style, EventHandler<TextStyleCreatedArgs> styleCreated, object state)
+        {
+            lock (_fontCreated)
+            {
+                // TODO: call method even when style has already been created
+                Resource styleResource = new Resource(style);
+                _fontCreatedObject.Add(styleResource, state);
+                _fontCreated.Add(styleResource, styleCreated);
+                GetResourceId(styleResource);
+            }
         }
 
         public TrueTypeFontResource GetTrueTypeFontResource(string name)
@@ -313,6 +328,11 @@ namespace Tivo.Hme
             PostCommand(new ApplicationEnd());
         }
 
+        public void CloseDisconnected()
+        {
+            IsRunning = false;
+        }
+
         #region Events
 
         private void OnClosed(EventArgs eventArgs)
@@ -367,11 +387,35 @@ namespace Tivo.Hme
 
         internal void OnFontInfoReceived(Events.FontInfo fontInfo)
         {
+            TextStyleCreatedArgs args = new TextStyleCreatedArgs(new TextStyleInfo(
+                    fontInfo.Ascent, fontInfo.Descent, fontInfo.Height, fontInfo.LineGap, fontInfo.GlyphInfo));
+            EventHandler<TextStyleCreatedArgs> callback = null;
+            object context = null;
+            lock (_fontCreated)
+            {
+                foreach (KeyValuePair<Resource, Delegate> createdCallback in _fontCreated)
+                {
+                    // TODO: fix this in case two threads ask for a callback on the same font
+                    if (fontInfo.FontId == GetResourceId(createdCallback.Key))
+                    {
+                        context = _fontCreatedObject[createdCallback.Key];
+                        callback = (EventHandler<TextStyleCreatedArgs>)createdCallback.Value;
+                        _fontCreated.Remove(createdCallback.Key);
+                        _fontCreatedObject.Remove(createdCallback.Key);
+                        break;
+                    }
+                }
+            }
+            if (callback != null)
+            {
+                try { callback(context, args); }
+                catch (Exception ex) { StatusLog.Write(System.Diagnostics.TraceEventType.Warning, ex); }
+            }
             EventHandler<TextStyleCreatedArgs> handler = TextStyleCreated;
             if (handler != null)
             {
-                handler(this, new TextStyleCreatedArgs(new TextStyleInfo(
-                    fontInfo.Ascent, fontInfo.Descent, fontInfo.Height, fontInfo.LineGap, fontInfo.GlyphInfo)));
+                try { handler(this, args); }
+                catch (Exception ex) { StatusLog.Write(System.Diagnostics.TraceEventType.Warning, ex); }
             }
         }
 
