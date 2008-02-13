@@ -23,6 +23,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\Tivo.Hme.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -31,6 +32,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\Tivo.Hme.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -82,7 +84,6 @@
     <Compile Include="Host\HmeReader.cs" />
     <Compile Include="HmeResourceCollection.cs" />
     <Compile Include="HmeApplicationHandler.cs" />
-    <Compile Include="HmeTimer.cs" />
     <Compile Include="Host\HmeWriter.cs" />
     <Compile Include="Host\HmeConnection.cs" />
     <Compile Include="IdleEventArgs.cs" />
