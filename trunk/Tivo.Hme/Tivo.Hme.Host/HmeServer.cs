@@ -269,7 +269,7 @@ namespace Tivo.Hme.Host
             try
             {
                 connection.EndHandleEvent(result);
-                if (connection.Application.IsRunning)
+                if (connection.Application.IsConnected)
                     connection.BeginHandleEvent(ApplicationEventsHandled, result.AsyncState);
                 else
                     RemoveHmeConnection(connection);
