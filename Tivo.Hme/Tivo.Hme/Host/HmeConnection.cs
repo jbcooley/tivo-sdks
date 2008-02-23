@@ -32,8 +32,8 @@ namespace Tivo.Hme.Host
         private HmeReader _reader;
         private AutoResetEvent _eventReceived = new AutoResetEvent(false);
         private AutoResetEvent _commandReceived = new AutoResetEvent(false);
-        private List<Events.EventInfo> _events = new List<Events.EventInfo>();
-        private List<Commands.IHmeCommand> _commands = new List<Commands.IHmeCommand>();
+        private Queue<Events.EventInfo> _events = new Queue<Events.EventInfo>();
+        private Queue<Commands.IHmeCommand> _commands = new Queue<Commands.IHmeCommand>();
         // used for locks
         private object _processCommands = new object();
         private object _processEvents = new object();
@@ -99,7 +99,7 @@ namespace Tivo.Hme.Host
         {
             try
             {
-                while (Application.IsRunning)
+                while (Application.IsConnected)
                 {
                     WaitHandle.WaitAny(new WaitHandle[] { _eventReceived, _commandReceived }, 1000, false);
                     ProcessCommandsAndEvents();
@@ -107,7 +107,7 @@ namespace Tivo.Hme.Host
             }
             catch (IOException)
             {
-                Application.IsRunning = false;
+                Application.IsConnected = false;
             }
         }
 
@@ -115,16 +115,16 @@ namespace Tivo.Hme.Host
         {
             try
             {
-                if (Application.IsRunning)
+                if (Application.IsConnected)
                 {
                     ProcessCommandsAndEvents();
                 }
             }
             catch (IOException)
             {
-                Application.IsRunning = false;
+                Application.IsConnected = false;
             }
-            return Application.IsRunning;
+            return Application.IsConnected;
         }
 
         public void HandleEvents()
@@ -139,7 +139,7 @@ namespace Tivo.Hme.Host
             }
             catch (IOException)
             {
-                Application.IsRunning = false;
+                Application.IsConnected = false;
             }
         }
 
@@ -152,8 +152,8 @@ namespace Tivo.Hme.Host
         {
             try
             {
-                Application.IsRunning &= _reader.EndRead(asyncResult);
-                if (Application.IsRunning)
+                Application.IsConnected &= _reader.EndRead(asyncResult);
+                if (Application.IsConnected)
                 {
                     long eventType = _reader.ReadInt64();
                     ProcessEvent(eventType);
@@ -162,7 +162,7 @@ namespace Tivo.Hme.Host
             }
             catch (IOException)
             {
-                Application.IsRunning = false;
+                Application.IsConnected = false;
             }
         }
 
@@ -182,7 +182,7 @@ namespace Tivo.Hme.Host
         {
             lock (_commands)
             {
-                _commands.Add(command);
+                _commands.Enqueue(command);
                 _commandReceived.Set();
             }
         }
@@ -191,7 +191,10 @@ namespace Tivo.Hme.Host
         {
             lock (_commands)
             {
-                _commands.AddRange(batch);
+                foreach (Commands.IHmeCommand command in batch)
+                {
+                    _commands.Enqueue(command);
+                }
                 _commandReceived.Set();
             }
         }
@@ -207,11 +210,10 @@ namespace Tivo.Hme.Host
                     lock (_commands)
                     {
                         Application.CommandThreadId = Thread.CurrentThread.ManagedThreadId;
-                        foreach (Commands.IHmeCommand command in _commands)
+                        while (_commands.Count != 0)
                         {
-                            SendCommand(command);
+                            SendCommand(_commands.Dequeue());
                         }
-                        _commands.Clear();
                         Application.CommandThreadId = 0;
                     }
                 }
@@ -228,11 +230,10 @@ namespace Tivo.Hme.Host
                     // need second lock because that's what really protects the collection
                     lock (_events)
                     {
-                        foreach (Events.EventInfo eventInfo in _events)
+                        while (_events.Count != 0)
                         {
-                            eventInfo.RaiseEvent(Application);
+                            _events.Dequeue().RaiseEvent(Application);
                         }
-                        _events.Clear();
                     }
                 }
                 finally
@@ -280,7 +281,7 @@ namespace Tivo.Hme.Host
         {
             lock (_events)
             {
-                _events.Add(eventInfo);
+                _events.Enqueue(eventInfo);
                 _eventReceived.Set();
             }
             ProtocolLog.Write(eventInfo);
