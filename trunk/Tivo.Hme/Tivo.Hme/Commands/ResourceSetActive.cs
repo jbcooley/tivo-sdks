@@ -69,7 +69,8 @@ namespace Tivo.Hme.Commands
         public override void SendCommand(HmeConnection connection)
         {
             base.SendCommand(connection);
-            connection.Application.IsRunning = false;
+            System.Diagnostics.Debug.Assert(connection.Application.IsRunning == false);
+            connection.Application.IsConnected = false;
         }
     }
 }
