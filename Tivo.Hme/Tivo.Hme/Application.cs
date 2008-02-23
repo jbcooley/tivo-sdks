@@ -36,6 +36,7 @@ namespace Tivo.Hme
         private View _root;
         private View _activeView;
         private bool _running = true;
+        private bool _connected = true;
         private ResolutionInfo _currentResolution = new ResolutionInfo(640, 480, 1, 1);
         private ReadOnlyCollection<ResolutionInfo> _readonlySupportedResolutions =
             new ReadOnlyCollection<ResolutionInfo>(new ResolutionInfo[] { new ResolutionInfo(640, 480, 1, 1) });
@@ -111,9 +112,23 @@ namespace Tivo.Hme
                     _running = value;
                     OnPropertyChanged(new PropertyChangedEventArgs("IsRunning"));
                     if (!_running)
+                    {
+                        Root.Dispose();
                         OnClosed(EventArgs.Empty);
-                    Root.Dispose();
+                    }
                 }
+            }
+        }
+
+        public bool IsConnected
+        {
+            get { return _connected; }
+            internal set
+            {
+                bool changed = _connected != value;
+                _connected = value;
+                if (changed && !_connected)
+                    CloseDisconnected();
             }
         }
 
@@ -325,12 +340,14 @@ namespace Tivo.Hme
 
         public void Close()
         {
+            IsRunning = false;
             PostCommand(new ApplicationEnd());
         }
 
         public void CloseDisconnected()
         {
             IsRunning = false;
+            IsConnected = false;
         }
 
         #region Events
@@ -349,13 +366,21 @@ namespace Tivo.Hme
             if (applicationInfo.Info.TryGetValue("active", out value) &&
                 bool.TryParse(value, out active))
             {
-                EventHandler<ApplicationStateChangedArgs> handler = ApplicationStateChanged;
-                if (handler != null)
+                try
                 {
-                    ApplicationStateChangedArgs args = new ApplicationStateChangedArgs();
-                    args.ApplicationStarting = active;
-                    args.ApplicationStopping = !active;
-                    handler(this, args);
+                    EventHandler<ApplicationStateChangedArgs> handler = ApplicationStateChanged;
+                    if (handler != null)
+                    {
+                        ApplicationStateChangedArgs args = new ApplicationStateChangedArgs();
+                        args.ApplicationStarting = active;
+                        args.ApplicationStopping = !active;
+                        handler(this, args);
+                    }
+                }
+                finally
+                {
+                    if (!active)
+                        IsConnected = false;
                 }
             }
             string errorText = null;
