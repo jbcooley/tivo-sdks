@@ -14,15 +14,15 @@ namespace Tivo.Hme.Samples
         {
             List<HmeServer> servers = new List<HmeServer>();
 
-            servers.Add(new HmeServer<Animate>("Animate", new Uri("http://localhost:7688/Animate/")));
-            servers.Add(new HmeServer<Clock>("Clock", new Uri("http://localhost:7688/Clock/")));
-            servers.Add(new HmeServer<Effects>("Effects", new Uri("http://localhost:7688/Effects/")));
-            servers.Add(new HmeServer<FontInfo>("Font Info", new Uri("http://localhost:7688/FontInfo/")));
-            servers.Add(new HmeServer<Fractal>("Fractal", new Uri("http://localhost:7688/Fractal/")));
-            servers.Add(new HmeServer<Pictures>("Pictures", new Uri("http://localhost:7688/Pictures/")));
-            servers.Add(new HmeServer<TicTacToe>("Tic Tac Toe", new Uri("http://localhost:7688/TicTacToe/")));
-            servers.Add(new HmeServer<Music>("Music", new Uri("http://localhost:7688/Music/")));
-            HmeServer helloWorld = new HmeServer("Hello World", new Uri("http://localhost:7688/HelloWorld/"));
+            servers.Add(new HmeServer<Animate>("Animate", new Uri("http://localhost:9688/Animate/")));
+            servers.Add(new HmeServer<Clock>("Clock", new Uri("http://localhost:9688/Clock/")));
+            servers.Add(new HmeServer<Effects>("Effects", new Uri("http://localhost:9688/Effects/")));
+            servers.Add(new HmeServer<FontInfo>("Font Info", new Uri("http://localhost:9688/FontInfo/")));
+            servers.Add(new HmeServer<Fractal>("Fractal", new Uri("http://localhost:9688/Fractal/")));
+            servers.Add(new HmeServer<Pictures>("Pictures", new Uri("http://localhost:9688/Pictures/")));
+            servers.Add(new HmeServer<TicTacToe>("Tic Tac Toe", new Uri("http://localhost:9688/TicTacToe/")));
+            servers.Add(new HmeServer<Music>("Music", new Uri("http://localhost:9688/Music/")));
+            HmeServer helloWorld = new HmeServer("Hello World", new Uri("http://localhost:9688/HelloWorld/"));
             helloWorld.ApplicationConnected += new EventHandler<HmeApplicationConnectedEventArgs>(server_ApplicationConnected);
             servers.Add(helloWorld);
 

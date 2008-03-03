@@ -74,11 +74,27 @@ namespace Tivo.Hme.Host
             try
             {
                 TcpClient client = _listener.EndAcceptTcpClient(asyncResult);
-                HttpRequest request = new HttpRequest(client);
+                HttpRequest request = null;
+                try
+                {
+                    request = new HttpRequest(client);
+                }
+                catch (NotSupportedException)
+                {
+                    // this can happen when a bad request comes in
+                    // leave request as null, close the client
+                    // and accept another request.
+                    NetworkStream stream = client.GetStream();
+                    stream.Close();
+                    client.Close();
+                }
 
                 // start accepting next one before raising event in case the event handlers take too long
                 _listener.BeginAcceptTcpClient(OnConnectionReceived, null);
-                OnHttpRequestReceived(new HttpRequestReceivedArgs(request));
+                if (request != null)
+                {
+                    OnHttpRequestReceived(new HttpRequestReceivedArgs(request));
+                }
             }
             catch (SocketException)
             {

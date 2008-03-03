@@ -156,6 +156,22 @@ namespace Tivo.Hme
         }
 
         /// <summary>
+        /// Occurs when the View.Bounds changes.
+        /// </summary>
+        public event EventHandler<BoundsChangedArgs> BoundsChanged;
+
+        /// <summary>
+        /// Raises the BoundsChanged event
+        /// </summary>
+        /// <param name="e">Contains the old bounds and the new bounds.</param>
+        protected virtual void OnBoundsChanged(BoundsChangedArgs e)
+        {
+            EventHandler<BoundsChangedArgs> handler = BoundsChanged;
+            if (handler != null)
+                handler(this, e);
+        }
+
+        /// <summary>
         /// The location of this view in parent coordinates.
         /// (0,0) is the upper left corner of <see cref="View.Parent"/>.
         /// </summary>
@@ -599,10 +615,16 @@ namespace Tivo.Hme
             bool changedBounds = _bounds != value;
             bool changedLocation = _bounds.Location != value.Location;
             bool changedSize = _bounds.Size != value.Size;
+            BoundsChangedArgs boundsArgs = new BoundsChangedArgs();
+            boundsArgs.NewBounds = value;
+            boundsArgs.OldBounds = _bounds;
             _bounds = value;
             PostCommand(new Commands.ViewSetBounds(this));
             if (changedBounds)
+            {
                 OnPropertyChanged(new PropertyChangedEventArgs("Bounds"));
+                OnBoundsChanged(boundsArgs);
+            }
             if (changedLocation)
                 OnPropertyChanged(new PropertyChangedEventArgs("Location"));
             if (changedSize)
@@ -614,5 +636,11 @@ namespace Tivo.Hme
         {
             get { return _id == RootId; }
         }
+    }
+
+    public class BoundsChangedArgs : EventArgs
+    {
+        public Rectangle OldBounds { get; set; }
+        public Rectangle NewBounds { get; set; }
     }
 }
