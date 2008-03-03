@@ -178,6 +178,12 @@ namespace Tivo.Hme
             }
         }
 
+        // TODO: implement this and make it work well with above method
+        //public TextStyleInfo GetTextStyleInfo(TextStyle style)
+        //{
+        //    return null;
+        //}
+
         public TrueTypeFontResource GetTrueTypeFontResource(string name)
         {
             long resourceId;
