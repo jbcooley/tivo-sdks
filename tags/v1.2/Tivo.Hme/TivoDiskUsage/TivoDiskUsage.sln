@@ -1,0 +1,42 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TivoDiskUsage", "TivoDiskUsage.csproj", "{C68867F3-30AA-496C-A370-833A900B3ECE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tivo.Hmo", "..\Tivo.Hmo\Tivo.Hmo.csproj", "{D3927A83-8CFA-4F11-B041-6373348133D6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tivo.Hme", "..\Tivo.Hme\Tivo.Hme.csproj", "{08BD3EA4-334C-4A30-9E36-19827F1EBC6A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tivo.Hme.Host", "..\Tivo.Hme.Host\Tivo.Hme.Host.csproj", "{96790110-C502-4730-831B-64BF06FE7B3B}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "TivoDiskUsageSetup", "..\TivoDiskUsageSetup\TivoDiskUsageSetup.vdproj", "{38E5EA7A-653A-4A47-8922-7227D0F53E6A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C68867F3-30AA-496C-A370-833A900B3ECE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C68867F3-30AA-496C-A370-833A900B3ECE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C68867F3-30AA-496C-A370-833A900B3ECE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C68867F3-30AA-496C-A370-833A900B3ECE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D3927A83-8CFA-4F11-B041-6373348133D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3927A83-8CFA-4F11-B041-6373348133D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3927A83-8CFA-4F11-B041-6373348133D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3927A83-8CFA-4F11-B041-6373348133D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{08BD3EA4-334C-4A30-9E36-19827F1EBC6A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08BD3EA4-334C-4A30-9E36-19827F1EBC6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08BD3EA4-334C-4A30-9E36-19827F1EBC6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08BD3EA4-334C-4A30-9E36-19827F1EBC6A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{96790110-C502-4730-831B-64BF06FE7B3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{96790110-C502-4730-831B-64BF06FE7B3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{96790110-C502-4730-831B-64BF06FE7B3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{96790110-C502-4730-831B-64BF06FE7B3B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38E5EA7A-653A-4A47-8922-7227D0F53E6A}.Debug|Any CPU.ActiveCfg = Debug
+		{38E5EA7A-653A-4A47-8922-7227D0F53E6A}.Release|Any CPU.ActiveCfg = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

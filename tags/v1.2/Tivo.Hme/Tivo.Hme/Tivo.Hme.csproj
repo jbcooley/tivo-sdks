@@ -1,0 +1,124 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{08BD3EA4-334C-4A30-9E36-19827F1EBC6A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Tivo.Hme</RootNamespace>
+    <AssemblyName>Tivo.Hme</AssemblyName>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\Tivo.Hme.XML</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\Tivo.Hme.XML</DocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Drawing" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Animation.cs" />
+    <Compile Include="Application.cs" />
+    <Compile Include="ApplicationStateChangedArgs.cs" />
+    <Compile Include="ColorView.cs" />
+    <Compile Include="Commands\IHmeCommand.cs" />
+    <Compile Include="Commands\IResourceCommand.cs" />
+    <Compile Include="Commands\IViewCommand.cs" />
+    <Compile Include="Commands\ReceiverAcknowledgeIdle.cs" />
+    <Compile Include="Commands\ReceiverSetResolution.cs" />
+    <Compile Include="Commands\ResourceAddAnimation.cs" />
+    <Compile Include="Commands\ResourceAddColor.cs" />
+    <Compile Include="Commands\ResourceAddFont.cs" />
+    <Compile Include="Commands\ResourceAddImage.cs" />
+    <Compile Include="Commands\ResourceAddSound.cs" />
+    <Compile Include="Commands\ResourceAddStream.cs" />
+    <Compile Include="Commands\ResourceAddText.cs" />
+    <Compile Include="Commands\ResourceAddTrueTypeFont.cs" />
+    <Compile Include="Commands\ResourceClose.cs" />
+    <Compile Include="Commands\ResourceRemove.cs" />
+    <Compile Include="Commands\ResourceSendEvent.cs" />
+    <Compile Include="Commands\ResourceSetActive.cs" />
+    <Compile Include="Commands\ResourceSetPosition.cs" />
+    <Compile Include="Commands\ResourceSetSpeed.cs" />
+    <Compile Include="Commands\ViewAdd.cs" />
+    <Compile Include="Commands\ViewRemove.cs" />
+    <Compile Include="Commands\ViewSetBounds.cs" />
+    <Compile Include="Commands\ViewSetPainting.cs" />
+    <Compile Include="Commands\ViewSetResource.cs" />
+    <Compile Include="Commands\ViewSetScale.cs" />
+    <Compile Include="Commands\ViewSetTranslation.cs" />
+    <Compile Include="Commands\ViewSetTransparency.cs" />
+    <Compile Include="Commands\ViewSetVisible.cs" />
+    <Compile Include="DeviceConnectedArgs.cs" />
+    <Compile Include="Events\ApplicationInfo.cs" />
+    <Compile Include="Events\DeviceInfo.cs" />
+    <Compile Include="Events\DisplayInfo.cs" />
+    <Compile Include="Events\EventInfo.cs" />
+    <Compile Include="Events\FontInfo.cs" />
+    <Compile Include="Events\IdleInfo.cs" />
+    <Compile Include="Events\KeyInfo.cs" />
+    <Compile Include="Events\ResourceInfo.cs" />
+    <Compile Include="Events\UnknownEventInfo.cs" />
+    <Compile Include="Host\HmeReader.cs" />
+    <Compile Include="HmeResourceCollection.cs" />
+    <Compile Include="HmeApplicationHandler.cs" />
+    <Compile Include="Host\HmeWriter.cs" />
+    <Compile Include="Host\HmeConnection.cs" />
+    <Compile Include="IdleEventArgs.cs" />
+    <Compile Include="ImageLayout.cs" />
+    <Compile Include="ImageResource.cs" />
+    <Compile Include="ImageView.cs" />
+    <Compile Include="KeyCode.cs" />
+    <Compile Include="KeyEventArgs.cs" />
+    <Compile Include="Loggers.cs" />
+    <Compile Include="Margin.cs" />
+    <Compile Include="Mp3Helper.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ResolutionInfo.cs" />
+    <Compile Include="Resource.cs" />
+    <Compile Include="ResourceStateChangedArgs.cs" />
+    <Compile Include="ResourceStatus.cs" />
+    <Compile Include="SafetyViewMargin.cs" />
+    <Compile Include="Sound.cs" />
+    <Compile Include="StreamedMusic.cs" />
+    <Compile Include="SuspendPainting.cs" />
+    <Compile Include="TextLayout.cs" />
+    <Compile Include="TextStyle.cs" />
+    <Compile Include="TextStyleCreatedArgs.cs" />
+    <Compile Include="TextStyleInfo.cs" />
+    <Compile Include="TextView.cs" />
+    <Compile Include="TrueTypeFontResource.cs" />
+    <Compile Include="View.cs" />
+    <Compile Include="ViewCollection.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
