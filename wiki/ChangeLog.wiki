@@ -1,6 +1,12 @@
 #labels Featured
 = Tivo.Hme and Tivo.Hme.Host Change Log =
 
+*1.2 Mar 4, 2008*
+
+  * Fixed application exit again.  This time the fix is for sending additional commands during cleanup.
+  * Changed root view dispose to happen before the application ends.
+  * Change Application.IsRunning to only indicate application state.  Introduced Application.IsConnected to handle terminating sending and receiving commands.
+
 *1.1 Feb 13, 2008*
 
   * Added support for custom icons
