@@ -19,20 +19,13 @@
 // THE SOFTWARE.
 
 using System;
-using System.IO;
+using System.Collections.Generic;
+using System.Text;
 
-namespace Tivo.Hme.Host
+namespace Tivo.Hme.Host.Http
 {
-    class HmeApplicationHttpResponse : HttpResponse
+    public abstract class HttpResponse
     {
-        public override void Write(Stream responseStream)
-        {
-            // start response
-            StreamWriter writer = new StreamWriter(responseStream);
-            writer.WriteLine("HTTP/1.1 200 OK");
-            writer.WriteLine("Content-type: application/x-hme");
-            writer.WriteLine();
-            writer.Flush();
-        }
+        public abstract void Write(System.IO.Stream responseStream);
     }
 }

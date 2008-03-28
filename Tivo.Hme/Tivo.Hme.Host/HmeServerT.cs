@@ -21,6 +21,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Tivo.Hme.Host.Http;
 
 namespace Tivo.Hme.Host
 {
@@ -31,27 +32,27 @@ namespace Tivo.Hme.Host
         public HmeServer(string name, Uri applicationPrefix, HmeServerOptions options)
             : base(name, applicationPrefix, options)
         {
-            ApplicationConnected += new EventHandler<HmeApplicationConnectedEventArgs>(HmeServer_ApplicationConnected);
         }
 
         public HmeServer(string name, Uri applicationPrefix)
             : base(name, applicationPrefix)
         {
-            ApplicationConnected += new EventHandler<HmeApplicationConnectedEventArgs>(HmeServer_ApplicationConnected);
         }
 
-        void HmeServer_ApplicationConnected(object sender, HmeApplicationConnectedEventArgs e)
+        protected override void OnApplicationConnected(HmeApplicationConnectedEventArgs args)
         {
             ApplicationT applicationT = new ApplicationT();
             // store copy associated to application so it can be used in closed event
-            _applications.Add(e.Application, applicationT);
-            e.Application.Closed += new EventHandler<EventArgs>(Application_Closed);
+            _applications.Add(args.Application, applicationT);
+            args.Application.Closed += new EventHandler<EventArgs>(Application_Closed);
             // set the base uri for the application
-            applicationT.BaseUri = e.BaseUri;
+            applicationT.BaseUri = args.BaseUri;
             // start the application
             HmeApplicationStartArgs startArgs = new HmeApplicationStartArgs();
-            startArgs.Application = e.Application;
+            startArgs.Application = args.Application;
             applicationT.OnApplicationStart(startArgs);
+
+            base.OnApplicationConnected(args);
         }
 
         void Application_Closed(object sender, EventArgs e)
@@ -64,7 +65,7 @@ namespace Tivo.Hme.Host
             }
         }
 
-        protected override void NonApplicationRequestRecieved(NonApplicationRequestReceivedArgs e)
+        protected override void OnNonApplicationRequestReceived(NonApplicationRequestReceivedArgs e)
         {
             if (e.HttpRequest.RequestUri.OriginalString.EndsWith("/icon.png", StringComparison.OrdinalIgnoreCase))
             {
@@ -74,7 +75,7 @@ namespace Tivo.Hme.Host
                     e.HttpResponse = new ApplicationIconHttpResponse(((ApplicationIconAttribute)attributes[0]).Icon);
                 }
             }
-            base.NonApplicationRequestRecieved(e);
+            base.OnNonApplicationRequestReceived(e);
         }
     }
 }

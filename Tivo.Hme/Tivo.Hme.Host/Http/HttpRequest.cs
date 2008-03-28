@@ -23,7 +23,7 @@ using System.Net.Sockets;
 using System.IO;
 using System.Text;
 
-namespace Tivo.Hme.Host
+namespace Tivo.Hme.Host.Http
 {
     public class HttpRequest
     {
