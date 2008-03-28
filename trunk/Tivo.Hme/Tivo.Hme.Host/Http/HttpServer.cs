@@ -23,7 +23,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 
-namespace Tivo.Hme.Host
+namespace Tivo.Hme.Host.Http
 {
     public class HttpRequestReceivedArgs : EventArgs
     {

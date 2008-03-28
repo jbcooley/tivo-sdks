@@ -23,6 +23,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Net;
 using System.Threading;
+using Tivo.Hme.Host.Http;
 
 namespace Tivo.Hme.Host
 {
@@ -90,18 +91,14 @@ namespace Tivo.Hme.Host
         private short _usePort;
         private Mono.Zeroconf.RegisterService _service;
         private bool _started;
-        private bool _advertise = true;
+        private bool _advertise;
+        private IHmeApplicationPump _pump;
 
-        public HmeServer(string name, Uri applicationPrefix, HmeServerOptions options)
-            : this(name, applicationPrefix)
-        {
-            _advertise = (options & HmeServerOptions.AdvertiseOnLocalNetwork) == HmeServerOptions.AdvertiseOnLocalNetwork;
-        }
-
-        public HmeServer(string name, Uri applicationPrefix)
+        public HmeServer(string name, Uri applicationPrefix, HmeServerOptions options, IHmeApplicationPump pump)
         {
             _name = name;
             _applicationPrefix = applicationPrefix;
+            _pump = pump;
 
             _usePort = 7688;
             if (applicationPrefix.IsAbsoluteUri)
@@ -118,6 +115,18 @@ namespace Tivo.Hme.Host
                 }
                 portServer.HttpServer.HttpRequestReceived += new EventHandler<HttpRequestReceivedArgs>(HttpServer_HttpRequestReceived);
             }
+
+            _advertise = (options & HmeServerOptions.AdvertiseOnLocalNetwork) == HmeServerOptions.AdvertiseOnLocalNetwork;
+        }
+
+        public HmeServer(string name, Uri applicationPrefix, HmeServerOptions options)
+            : this(name, applicationPrefix, options, new StandardHmeApplicationPump())
+        {
+        }
+
+        public HmeServer(string name, Uri applicationPrefix)
+            : this(name, applicationPrefix, HmeServerOptions.AdvertiseOnLocalNetwork)
+        {
         }
 
         public void Start()
@@ -150,7 +159,7 @@ namespace Tivo.Hme.Host
         public event EventHandler<HmeApplicationConnectedEventArgs> ApplicationConnected;
         public event EventHandler<NonApplicationRequestReceivedArgs> NonApplicationRequestReceivedArgs;
 
-        protected virtual void NonApplicationRequestRecieved(NonApplicationRequestReceivedArgs e)
+        protected virtual void OnNonApplicationRequestReceived(NonApplicationRequestReceivedArgs e)
         {
             EventHandler<NonApplicationRequestReceivedArgs> handler = NonApplicationRequestReceivedArgs;
             if (handler != null)
@@ -163,134 +172,153 @@ namespace Tivo.Hme.Host
             }
         }
 
+        protected virtual void OnHmeApplicationRequestReceived(HttpRequestReceivedArgs e)
+        {
+            e.HttpRequest.WriteResponse(new HmeApplicationHttpResponse());
+            HmeConnection connection = new HmeConnection(e.HttpRequest.Stream, e.HttpRequest.Stream);
+            HmeApplicationConnectedEventArgs args = new HmeApplicationConnectedEventArgs();
+            args.Application = connection.Application;
+            args.BaseUri = new Uri("http://" + e.HttpRequest.Headers[HttpRequestHeader.Host] + _applicationPrefix.AbsolutePath);
+
+            OnApplicationConnected(args);
+            _pump.AddHmeConnection(connection);
+        }
+
+        protected virtual void OnApplicationConnected(HmeApplicationConnectedEventArgs args)
+        {
+            EventHandler<HmeApplicationConnectedEventArgs> handler = ApplicationConnected;
+            if (handler != null)
+            {
+                handler(this, args);
+            }
+        }
+
         private void HttpServer_HttpRequestReceived(object sender, HttpRequestReceivedArgs e)
         {
             if (_started &&
                 StringComparer.InvariantCultureIgnoreCase.Compare(e.HttpRequest.RequestUri.OriginalString, _applicationPrefix.AbsolutePath) == 0)
             {
-                e.HttpRequest.WriteResponse(new HmeApplicationHttpResponse());
-                HmeConnection connection = new HmeConnection(e.HttpRequest.Stream, e.HttpRequest.Stream);
-                HmeApplicationConnectedEventArgs args = new HmeApplicationConnectedEventArgs();
-                args.Application = connection.Application;
-                args.BaseUri = new Uri("http://" + e.HttpRequest.Headers[HttpRequestHeader.Host] + _applicationPrefix.AbsolutePath);
-
-                EventHandler<HmeApplicationConnectedEventArgs> handler = ApplicationConnected;
-                if (handler != null)
-                {
-                    handler(this, args);
-                    AddHmeConnection(connection);
-                }
+                OnHmeApplicationRequestReceived(e);
             }
             else if (_started && e.HttpRequest.RequestUri.OriginalString.StartsWith(_applicationPrefix.AbsolutePath, StringComparison.InvariantCultureIgnoreCase))
             {
                 NonApplicationRequestReceivedArgs args = new NonApplicationRequestReceivedArgs(e.HttpRequest);
-                NonApplicationRequestRecieved(args);
+                OnNonApplicationRequestReceived(args);
                 e.HttpRequest.WriteResponse(args.HttpResponse);
             }
         }
 
-        #region Static
-
         private static Dictionary<short, HmePortServer> _portServers = new Dictionary<short, HmePortServer>();
-        private static List<HmeConnection> _connections = new List<HmeConnection>();
-        private static AutoResetEvent _connectionAdded = new AutoResetEvent(false);
-        private static AutoResetEvent _connectionRemoved = new AutoResetEvent(false);
 
-        static HmeServer()
+        private class StandardHmeApplicationPump : IHmeApplicationPump
         {
-            System.Threading.Thread thread = new System.Threading.Thread(DispatchApplicationCommandsAndEvents);
-            thread.IsBackground = true;
-            thread.Start();
-        }
+            private static List<HmeConnection> _connections = new List<HmeConnection>();
+            private static AutoResetEvent _connectionAdded = new AutoResetEvent(false);
+            private static AutoResetEvent _connectionRemoved = new AutoResetEvent(false);
 
-        private static void AddHmeConnection(HmeConnection connection)
-        {
-            lock (_connections)
+            static StandardHmeApplicationPump()
             {
-                _connections.Add(connection);
+                System.Threading.Thread thread = new System.Threading.Thread(DispatchApplicationCommandsAndEvents);
+                thread.IsBackground = true;
+                thread.Start();
             }
-            _connectionAdded.Set();
-            connection.BeginHandleEvent(ApplicationEventsHandled, connection);
-        }
 
-        private static void RemoveHmeConnection(HmeConnection connection)
-        {
-            lock (_connections)
+            private static void AddHmeConnection(HmeConnection connection)
             {
-                _connections.Remove(connection);
-            }
-            _connectionRemoved.Set();
-        }
-
-        private static void DispatchApplicationCommandsAndEvents()
-        {
-            List<WaitHandle> connectionWaitHandleList = new List<WaitHandle>();
-            List<HmeConnection> runningConnections = new List<HmeConnection>();
-            connectionWaitHandleList.Add(_connectionAdded);
-            connectionWaitHandleList.Add(_connectionRemoved);
-            WaitHandle[] connectionWaitHandles = connectionWaitHandleList.ToArray();
-            while (true)
-            {
-                int handleIndex = WaitHandle.WaitAny(connectionWaitHandles);
-                // must clear collections during add and remove since
-                // other threads may change the _applications collection
-                // before we get a lock on the _applications field
-                if (handleIndex == 0 || handleIndex == 1)
+                lock (_connections)
                 {
-                    runningConnections.Clear();
-                    connectionWaitHandleList.Clear();
-                    connectionWaitHandleList.Add(_connectionAdded);
-                    connectionWaitHandleList.Add(_connectionRemoved);
-                    lock (_connections)
+                    _connections.Add(connection);
+                }
+                _connectionAdded.Set();
+                connection.BeginHandleEvent(ApplicationEventsHandled, connection);
+            }
+
+            private static void RemoveHmeConnection(HmeConnection connection)
+            {
+                lock (_connections)
+                {
+                    _connections.Remove(connection);
+                }
+                _connectionRemoved.Set();
+            }
+
+            private static void DispatchApplicationCommandsAndEvents()
+            {
+                List<WaitHandle> connectionWaitHandleList = new List<WaitHandle>();
+                List<HmeConnection> runningConnections = new List<HmeConnection>();
+                connectionWaitHandleList.Add(_connectionAdded);
+                connectionWaitHandleList.Add(_connectionRemoved);
+                WaitHandle[] connectionWaitHandles = connectionWaitHandleList.ToArray();
+                while (true)
+                {
+                    int handleIndex = WaitHandle.WaitAny(connectionWaitHandles);
+                    // must clear collections during add and remove since
+                    // other threads may change the _applications collection
+                    // before we get a lock on the _applications field
+                    if (handleIndex == 0 || handleIndex == 1)
                     {
-                        foreach (HmeConnection connection in _connections)
+                        runningConnections.Clear();
+                        connectionWaitHandleList.Clear();
+                        connectionWaitHandleList.Add(_connectionAdded);
+                        connectionWaitHandleList.Add(_connectionRemoved);
+                        lock (_connections)
                         {
-                            connectionWaitHandleList.Add(connection.CommandReceived);
-                            connectionWaitHandleList.Add(connection.EventReceived);
-                            runningConnections.Add(connection);
+                            foreach (HmeConnection connection in _connections)
+                            {
+                                connectionWaitHandleList.Add(connection.CommandReceived);
+                                connectionWaitHandleList.Add(connection.EventReceived);
+                                runningConnections.Add(connection);
+                            }
                         }
+                        connectionWaitHandles = connectionWaitHandleList.ToArray();
                     }
-                    connectionWaitHandles = connectionWaitHandleList.ToArray();
-                }
-                else
-                {
-                    // working on local copy of connections rather than member
-                    // in order to avoid races to get a lock on the _connections field
-                    int connectionIndex = (handleIndex - 2) / 2;
-                    ThreadPool.QueueUserWorkItem(ProcessApplicationCommands, runningConnections[connectionIndex]);
+                    else
+                    {
+                        // working on local copy of connections rather than member
+                        // in order to avoid races to get a lock on the _connections field
+                        int connectionIndex = (handleIndex - 2) / 2;
+                        ThreadPool.QueueUserWorkItem(ProcessApplicationCommands, runningConnections[connectionIndex]);
+                    }
                 }
             }
-        }
 
-        private static void ApplicationEventsHandled(IAsyncResult result)
-        {
-            HmeConnection connection = (HmeConnection)result.AsyncState;
-            // TODO: move this exception logic into Begin and End HandleEvent.
-            try
+            private static void ApplicationEventsHandled(IAsyncResult result)
             {
-                connection.EndHandleEvent(result);
-                if (connection.Application.IsConnected)
-                    connection.BeginHandleEvent(ApplicationEventsHandled, result.AsyncState);
-                else
+                HmeConnection connection = (HmeConnection)result.AsyncState;
+                // TODO: move this exception logic into Begin and End HandleEvent.
+                try
+                {
+                    connection.EndHandleEvent(result);
+                    if (connection.Application.IsConnected)
+                        connection.BeginHandleEvent(ApplicationEventsHandled, result.AsyncState);
+                    else
+                        RemoveHmeConnection(connection);
+                }
+                catch (System.IO.IOException ex)
+                {
+                    // just a disconnect so not a critical event
+                    ServerLog.Write(ex);
+                    connection.Application.CloseDisconnected();
+                    RemoveHmeConnection(connection);
+                }
+            }
+
+            private static void ProcessApplicationCommands(object hmeConnection)
+            {
+                HmeConnection connection = (HmeConnection)hmeConnection;
+                if (!connection.RunOne())
                     RemoveHmeConnection(connection);
             }
-            catch (System.IO.IOException ex)
+
+            #region IHmeApplicationPump Members
+
+            void IHmeApplicationPump.AddHmeConnection(HmeConnection connection)
             {
-                // just a disconnect so not a critical event
-                ServerLog.Write(ex);
-                connection.Application.CloseDisconnected();
-                RemoveHmeConnection(connection);
+                AddHmeConnection(connection);
             }
-        }
 
-        private static void ProcessApplicationCommands(object hmeConnection)
-        {
-            HmeConnection connection = (HmeConnection)hmeConnection;
-            if (!connection.RunOne())
-                RemoveHmeConnection(connection);
+            #endregion
         }
-
-        #endregion
 
         private class HmePortServer
         {
