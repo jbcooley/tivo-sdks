@@ -31,6 +31,7 @@ namespace TivoDiskUsage
     {
         private TivoConnection _connection;
         private string _tivoName;
+        private WaitingView _waitingView;
 
         static DiskUsageApp()
         {
@@ -46,7 +47,8 @@ namespace TivoDiskUsage
             app.DeviceConnected += new EventHandler<DeviceConnectedArgs>(app_DeviceConnected);
             app.SupportedResolutionsChanged += new EventHandler<EventArgs>(app_SupportedResolutionsChanged);
 
-            app.Root.Children.Add(new WaitingView());
+            _waitingView = new WaitingView()
+            app.Root.Children.Add(_waitingView);
         }
 
         public override void OnApplicationEnd()
@@ -65,9 +67,16 @@ namespace TivoDiskUsage
         void app_DeviceConnected(object sender, DeviceConnectedArgs e)
         {
             // TODO: provide better feedback
-            _tivoName = e.Host;
-            string server = DiscoveryBeacon.GetServer(_tivoName, TimeSpan.FromMinutes(1));
-            GetNowPlaying(server, Properties.Settings.Default.MediaAccessKey, (Application)sender);
+            try
+            {
+                _tivoName = e.Host;
+                string server = DiscoveryBeacon.GetServer(_tivoName, TimeSpan.FromMinutes(1));
+                GetNowPlaying(server, Properties.Settings.Default.MediaAccessKey, (Application)sender);
+            }
+            catch (TimeoutException ex)
+            {
+                _waitingView.DisplayFailure("Unable to connect connect back to tivo. Please be sure tivo to go is enabled");
+            }
         }
 
         void app_SupportedResolutionsChanged(object sender, EventArgs e)

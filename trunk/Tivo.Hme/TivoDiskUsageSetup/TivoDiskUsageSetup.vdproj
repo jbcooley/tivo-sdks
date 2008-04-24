@@ -33,12 +33,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_81A7339858A75518542A380047AE52C6"
-        "OwnerKey" = "8:_4943306DC0FE45A59A6EE557F645EC62"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_88F782B0874831028B35CCC25C9DF26C"
         "OwnerKey" = "8:_4943306DC0FE45A59A6EE557F645EC62"
         "MsmSig" = "8:_UNDEFINED"
@@ -70,19 +64,7 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_88F782B0874831028B35CCC25C9DF26C"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_4943306DC0FE45A59A6EE557F645EC62"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_81A7339858A75518542A380047AE52C6"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -101,6 +83,12 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_7B59C6D7C6FC43916A0F82A5F8DD278B"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_88F782B0874831028B35CCC25C9DF26C"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -158,6 +146,14 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+            }
         }
     }
     "Deployable"
@@ -247,7 +243,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Tivo.Hme.Host, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:Tivo.Hme.Host, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_722895A77B268DD26B6C4328C26A076A"
@@ -305,37 +301,6 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_81A7339858A75518542A380047AE52C6"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Tivo.Hmo, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_81A7339858A75518542A380047AE52C6"
-                    {
-                    "Name" = "8:Tivo.Hmo.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:Tivo.Hmo.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_E8719274AC704815859A78734DA1B9B6"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_88F782B0874831028B35CCC25C9DF26C"
             {
             "AssemblyRegister" = "3:1"
@@ -371,7 +336,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Tivo.Hme, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:Tivo.Hme, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_B67FD1600EA06F45A298C1B943C7C442"
@@ -454,14 +419,14 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Tivo Disk Usage"
-        "ProductCode" = "8:{966560EE-3006-4F86-A855-D23981DA8004}"
-        "PackageCode" = "8:{856372AE-C5CB-4C93-AF81-BF3D02DBF9A4}"
+        "ProductCode" = "8:{B8ADB638-EC93-40F3-A80C-F9E1195DDBA8}"
+        "PackageCode" = "8:{D53CFD9C-3E9E-4D73-A182-B6C793CB2958}"
         "UpgradeCode" = "8:{5798BED5-5C44-4C0E-BB9C-2B42F38AD822}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:1.0.0"
+        "ProductVersion" = "8:0.1.0"
         "Manufacturer" = "8:Josh Cooley"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -1245,7 +1210,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_4943306DC0FE45A59A6EE557F645EC62"
             {
-            "SourcePath" = "8:..\\TivoDiskUsage\\obj\\Debug\\TivoDiskUsage.exe"
+            "SourcePath" = "8:..\\TivoDiskUsage\\obj\\Release\\TivoDiskUsage.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_E8719274AC704815859A78734DA1B9B6"

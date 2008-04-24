@@ -107,7 +107,8 @@ namespace Tivo.Hmo
                 }
             } while (server == null && timeoutTimer.ElapsedMilliseconds < millisecondsTimeout);
             timeoutTimer.Stop();
-            // TODO: consider throwing an exception instead of returning null
+            if (server == null)
+                throw new TimeoutException();
             return server;
         }
 
