@@ -31,6 +31,7 @@ namespace TivoDiskUsage
         private static readonly Color ForeColor = Color.FromArgb(173, 191, 209);
         private ColorView _indicator;
         private bool _disposed;
+        private bool _waiting = true;
 
         public WaitingView()
             : base("Loading Data...", new TextStyle("system", FontStyle.Italic | FontStyle.Bold, 40), ForeColor)
@@ -38,6 +39,14 @@ namespace TivoDiskUsage
             Margin = SafetyViewMargin.TitleMargin;
             _indicator = new ColorView(ForeColor);
             Children.Add(_indicator);
+        }
+
+        public void DisplayFailure(string reason)
+        {
+            _waiting = false;
+            Update("Unable to load data. " + reason,
+                new TextStyle("system", FontStyle.Italic | FontStyle.Regular, 20),
+                ForeColor, TextLayout.HorizontalAlignLeft | TextLayout.TextWrap);
         }
 
         protected override void OnNewApplication()
@@ -65,7 +74,7 @@ namespace TivoDiskUsage
 
         private void MoveIndicator(object ignore)
         {
-            if (!_disposed)
+            if (!_disposed && _waiting)
             {
                 _indicator.Bounds = new Rectangle(-40, Bounds.Height * 2 / 3, 60, 10);
                 _indicator.Animate(Animation.Move(new Point(Bounds.Right - 20, _indicator.Bounds.Top), 0, indicatorDuration));

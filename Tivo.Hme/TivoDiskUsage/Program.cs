@@ -29,12 +29,18 @@ namespace TivoDiskUsage
     {
         static void Main(string[] args)
         {
+            AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
             Tivo.Hmo.DiscoveryBeacon.Start();
             HmeServer<DiskUsageApp> server = new HmeServer<DiskUsageApp>("Disk Usage", new Uri("http://localhost:9688/DiskUsage/"));
             server.Start();
             Console.WriteLine("Tivo disk usage application started.  Press enter to exit.");
             Console.ReadLine();
             server.Stop();
+        }
+
+        static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            Console.WriteLine("Unexpected error occured: {0}", e.ExceptionObject);
         }
     }
 }
