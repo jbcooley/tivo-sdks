@@ -4,7 +4,6 @@ using System.AddIn.Pipeline;
 
 namespace Tivo.Has.Contracts
 {
-    [AddInContract]
     public interface IHmeApplicationIdentityContract : IContract
     {
         string Name { get; }

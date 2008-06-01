@@ -5,10 +5,9 @@ using System.AddIn.Pipeline;
 
 namespace Tivo.Has.Contracts
 {
-    [AddInContract]
     public interface IHmeConnectionContract : IContract
     {
-        WaitHandle CommandReceived { get; }
-        WaitHandle EventReceived { get; }
+        string CommandReceivedName { get; }
+        string EventReceivedName { get; }
     }
 }
