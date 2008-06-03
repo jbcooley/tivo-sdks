@@ -35,11 +35,11 @@
   <ItemGroup>
     <Reference Include="Mono.Zeroconf, Version=1.0.0.0, Culture=neutral, PublicKeyToken=e60c4f4a95e1099e, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\mono-zeroconf-0.7.3\bin\Mono.Zeroconf.dll</HintPath>
+      <HintPath>..\..\mono-zeroconf-0.7.5-binary\bin\Mono.Zeroconf.dll</HintPath>
     </Reference>
     <Reference Include="Mono.Zeroconf.Providers.Bonjour, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\mono-zeroconf-0.7.3\bin\Mono.Zeroconf.Providers.Bonjour.dll</HintPath>
+      <HintPath>..\..\mono-zeroconf-0.7.5-binary\bin\Mono.Zeroconf.Providers.Bonjour.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
