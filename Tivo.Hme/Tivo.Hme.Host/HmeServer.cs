@@ -285,22 +285,12 @@ namespace Tivo.Hme.Host
             private static void ApplicationEventsHandled(IAsyncResult result)
             {
                 HmeConnection connection = (HmeConnection)result.AsyncState;
-                // TODO: move this exception logic into Begin and End HandleEvent.
-                try
-                {
-                    connection.EndHandleEvent(result);
-                    if (connection.Application.IsConnected)
-                        connection.BeginHandleEvent(ApplicationEventsHandled, result.AsyncState);
-                    else
-                        RemoveHmeConnection(connection);
-                }
-                catch (System.IO.IOException ex)
-                {
-                    // just a disconnect so not a critical event
-                    ServerLog.Write(ex);
-                    connection.Application.CloseDisconnected();
+
+                connection.EndHandleEvent(result);
+                if (connection.Application.IsConnected)
+                    connection.BeginHandleEvent(ApplicationEventsHandled, result.AsyncState);
+                else
                     RemoveHmeConnection(connection);
-                }
             }
 
             private static void ProcessApplicationCommands(object hmeConnection)
