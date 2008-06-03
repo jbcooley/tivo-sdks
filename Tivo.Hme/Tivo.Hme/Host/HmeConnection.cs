@@ -25,13 +25,21 @@ using System.Threading;
 
 namespace Tivo.Hme.Host
 {
-    public sealed class HmeConnection : IDisposable
+    public enum ConnectionSyncronizationType
+    {
+        Local,
+        System
+    }
+
+    public sealed class HmeConnection : IDisposable, IHmeConnectionSyncronizationInfo
     {
         private Application _application;
         private HmeWriter _writer;
         private HmeReader _reader;
-        private AutoResetEvent _eventReceived = new AutoResetEvent(false);
-        private AutoResetEvent _commandReceived = new AutoResetEvent(false);
+        private string _eventReceivedName;
+        private string _commandReceivedName;
+        private EventWaitHandle _eventReceived;
+        private EventWaitHandle _commandReceived;
         private Queue<Events.EventInfo> _events = new Queue<Events.EventInfo>();
         private Queue<Commands.IHmeCommand> _commands = new Queue<Commands.IHmeCommand>();
         // used for locks
@@ -39,7 +47,25 @@ namespace Tivo.Hme.Host
         private object _processEvents = new object();
 
         public HmeConnection(Stream inputStream, Stream outputStream)
+            : this(inputStream, outputStream, ConnectionSyncronizationType.Local)
         {
+        }
+
+        public HmeConnection(Stream inputStream, Stream outputStream, ConnectionSyncronizationType syncronizationType)
+        {
+            if (syncronizationType == ConnectionSyncronizationType.Local)
+            {
+                _eventReceivedName = null;
+                _commandReceivedName = null;
+            }
+            else
+            {
+                _eventReceivedName = Guid.NewGuid().ToString();
+                _commandReceivedName = Guid.NewGuid().ToString();
+            }
+            _eventReceived = new EventWaitHandle(false, EventResetMode.AutoReset, _eventReceivedName);
+            _commandReceived = new EventWaitHandle(false, EventResetMode.AutoReset, _commandReceivedName);
+
             // write handshake to output stream
             byte[] handshake = new byte[] {
                 // magic number
@@ -95,6 +121,20 @@ namespace Tivo.Hme.Host
             get { return _commandReceived; }
         }
 
+        #region IHmeConnectionSyncronizationInfo Members
+
+        string IHmeConnectionSyncronizationInfo.EventReceivedName
+        {
+            get { return _eventReceivedName; }
+        }
+
+        string IHmeConnectionSyncronizationInfo.CommandReceivedName
+        {
+            get { return _commandReceivedName; }
+        }
+
+        #endregion
+
         public void Run()
         {
             try
@@ -143,26 +183,91 @@ namespace Tivo.Hme.Host
             }
         }
 
+        #region BeginHandleEventErrorResult
+
+        private class BeginHandleEventErrorResult : IAsyncResult
+        {
+            private WaitHandle _handle;
+            private object _asyncState;
+            private Exception _exception;
+
+            public BeginHandleEventErrorResult(object asyncState, Exception exception)
+            {
+                _asyncState = asyncState;
+                _exception = exception;
+            }
+
+            public Exception Exception
+            {
+                get { return _exception; }
+            }
+
+            #region IAsyncResult Members
+
+            public object AsyncState
+            {
+                get { return _asyncState; }
+            }
+
+            public WaitHandle AsyncWaitHandle
+            {
+                get
+                {
+                    if (_handle == null)
+                        Interlocked.CompareExchange(ref _handle, new Mutex(), null);
+                    return _handle;
+                }
+            }
+
+            public bool CompletedSynchronously
+            {
+                get { return true; }
+            }
+
+            public bool IsCompleted
+            {
+                get { return true; }
+            }
+
+            #endregion
+        }
+
+        #endregion
+
         public IAsyncResult BeginHandleEvent(AsyncCallback callback, object state)
         {
-            return _reader.BeginRead(callback, state);
+            try
+            {
+                return _reader.BeginRead(callback, state);
+            }
+            catch (IOException ex)
+            {
+                BeginHandleEventErrorResult result = new BeginHandleEventErrorResult(state, ex);
+                callback(result);
+                return result;
+            }
         }
 
         public void EndHandleEvent(IAsyncResult asyncResult)
         {
             try
             {
+                if (asyncResult is BeginHandleEventErrorResult)
+                {
+                    throw ((BeginHandleEventErrorResult)asyncResult).Exception;
+                }
                 Application.IsConnected &= _reader.EndRead(asyncResult);
                 if (Application.IsConnected)
                 {
                     long eventType = _reader.ReadInt64();
                     ProcessEvent(eventType);
                 }
-
             }
-            catch (IOException)
+            catch (IOException ex)
             {
+                StatusLog.Write(ex);
                 Application.IsConnected = false;
+                Application.CloseDisconnected();
             }
         }
 
