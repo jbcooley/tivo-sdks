@@ -11,15 +11,20 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tivo.Has", "Tivo.Has\Tivo.H
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tivo.Has.Contracts", "Tivo.Has.Contracts\Tivo.Has.Contracts.csproj", "{CCBA44F0-DEBC-4EA2-82C1-2B05836373BE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tivo.Has.AddInSideAdapters", "Tivo.Has.AddInSideAdapters\Tivo.Has.AddInSideAdapters.csproj", "{F35DA565-A6E0-4F01-B8FF-EC66FA91AEDC}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tivo.Has.HostSideAdapter", "Tivo.Has.HostSideAdapter\Tivo.Has.HostSideAdapter.csproj", "{2AFF8C15-468A-412E-87A1-7898DDD921E0}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tivo.Has.AddInView", "Tivo.Has.AddInView\Tivo.Has.AddInView.csproj", "{1D8685D3-DAF7-4B09-BEDD-6B6142DEBB81}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tivo.Has.HostView", "Tivo.Has.HostView\Tivo.Has.HostView.csproj", "{2275AC3C-664B-43A0-BA52-F5943D18FDC7}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tivo.Has.AddIn", "Tivo.Has.AddIn\Tivo.Has.AddIn.csproj", "{4FD99795-7C4A-45B5-A165-BB55DB9CB3A1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tivo.Has.ConfigurationClient", "Tivo.Has.ConfigurationClient\Tivo.Has.ConfigurationClient.csproj", "{94B04125-5E13-4982-9942-81A0236FDA05}"
+	ProjectSection(ProjectDependencies) = postProject
+		{610984E6-3DE8-4CA1-A1BE-AC549F9F9D14} = {610984E6-3DE8-4CA1-A1BE-AC549F9F9D14}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tivo.Has.AddInSideAdapters", "Tivo.Has.AddInSideAdapters\Tivo.Has.AddInSideAdapters.csproj", "{9BA5CDFB-E578-430D-994C-9D293DD8F62B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tivo.Has.HostSideAdapter", "Tivo.Has.HostSideAdapter\Tivo.Has.HostSideAdapter.csproj", "{F85568B8-0343-409F-973B-6AF74B723A92}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tivo.Has.AddInView", "Tivo.Has.AddInView\Tivo.Has.AddInView.csproj", "{9E178393-D0E6-455F-9F29-22C1C9642872}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tivo.Has.HostView", "Tivo.Has.HostView\Tivo.Has.HostView.csproj", "{1EC3AEBD-A14E-46D8-B3BB-0501BFD0FBF9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,26 +52,30 @@ Global
 		{CCBA44F0-DEBC-4EA2-82C1-2B05836373BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CCBA44F0-DEBC-4EA2-82C1-2B05836373BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CCBA44F0-DEBC-4EA2-82C1-2B05836373BE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F35DA565-A6E0-4F01-B8FF-EC66FA91AEDC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F35DA565-A6E0-4F01-B8FF-EC66FA91AEDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F35DA565-A6E0-4F01-B8FF-EC66FA91AEDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F35DA565-A6E0-4F01-B8FF-EC66FA91AEDC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2AFF8C15-468A-412E-87A1-7898DDD921E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2AFF8C15-468A-412E-87A1-7898DDD921E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2AFF8C15-468A-412E-87A1-7898DDD921E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2AFF8C15-468A-412E-87A1-7898DDD921E0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1D8685D3-DAF7-4B09-BEDD-6B6142DEBB81}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1D8685D3-DAF7-4B09-BEDD-6B6142DEBB81}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1D8685D3-DAF7-4B09-BEDD-6B6142DEBB81}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1D8685D3-DAF7-4B09-BEDD-6B6142DEBB81}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2275AC3C-664B-43A0-BA52-F5943D18FDC7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2275AC3C-664B-43A0-BA52-F5943D18FDC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2275AC3C-664B-43A0-BA52-F5943D18FDC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2275AC3C-664B-43A0-BA52-F5943D18FDC7}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4FD99795-7C4A-45B5-A165-BB55DB9CB3A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4FD99795-7C4A-45B5-A165-BB55DB9CB3A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4FD99795-7C4A-45B5-A165-BB55DB9CB3A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4FD99795-7C4A-45B5-A165-BB55DB9CB3A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94B04125-5E13-4982-9942-81A0236FDA05}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94B04125-5E13-4982-9942-81A0236FDA05}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94B04125-5E13-4982-9942-81A0236FDA05}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94B04125-5E13-4982-9942-81A0236FDA05}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9BA5CDFB-E578-430D-994C-9D293DD8F62B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9BA5CDFB-E578-430D-994C-9D293DD8F62B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9BA5CDFB-E578-430D-994C-9D293DD8F62B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9BA5CDFB-E578-430D-994C-9D293DD8F62B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F85568B8-0343-409F-973B-6AF74B723A92}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F85568B8-0343-409F-973B-6AF74B723A92}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F85568B8-0343-409F-973B-6AF74B723A92}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F85568B8-0343-409F-973B-6AF74B723A92}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9E178393-D0E6-455F-9F29-22C1C9642872}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E178393-D0E6-455F-9F29-22C1C9642872}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E178393-D0E6-455F-9F29-22C1C9642872}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E178393-D0E6-455F-9F29-22C1C9642872}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1EC3AEBD-A14E-46D8-B3BB-0501BFD0FBF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1EC3AEBD-A14E-46D8-B3BB-0501BFD0FBF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1EC3AEBD-A14E-46D8-B3BB-0501BFD0FBF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1EC3AEBD-A14E-46D8-B3BB-0501BFD0FBF9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
