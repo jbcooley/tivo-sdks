@@ -1,19 +1,48 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using Tivo.Hme.Host;
 
 namespace Tivo.Has.AddIn
 {
-    sealed class HmeApplicationDriver : IHmeApplicationDriver
+    [System.AddIn.AddIn("Application Driver")]
+    public sealed class HmeApplicationDriver : IHmeApplicationDriver
     {
+        private List<IHmeApplicationIdentity> _applicationIdentities = new List<IHmeApplicationIdentity>();
+        // jump through hoops to make this streams work across appdomains
+        // without sharing types
+        private static Dictionary<Guid, HmeApplicationDriver> _instances = new Dictionary<Guid, HmeApplicationDriver>();
+        private Guid _thisGuid = Guid.NewGuid();
+        private Dictionary<Guid, HmeConnection> _connections = new Dictionary<Guid, HmeConnection>();
+
+        public HmeApplicationDriver()
+        {
+            for (int i = 0; i < Properties.Settings.Default.ApplicationName.Count; ++i)
+            {
+                _applicationIdentities.Add(new HmeApplicationIdentity(i));
+            }
+            _instances.Add(_thisGuid, this);
+        }
+
         #region IHmeApplicationDriver Members
+
+        public IList<IHmeApplicationIdentity> ApplicationIdentities
+        {
+            get { return _applicationIdentities; }
+        }
 
         public event EventHandler<ApplicationEndedEventArgs> ApplicationEnded;
 
-        public IHmeConnection CreateHmeConnection(IHmeApplicationIdentity identity, Stream inputStream, Stream outputStream)
+        public IHmeConnection CreateHmeConnection(IHmeApplicationIdentity identity, IHmeStream inputStream, IHmeStream outputStream)
         {
-            return new HmeConnectionWrapper(inputStream, outputStream);
+            if (identity == null)
+                throw new ArgumentNullException("identity");
+
+            HmeConnectionWrapper wrapper = new HmeConnectionWrapper(inputStream, outputStream);
+            ((HmeApplicationIdentity)identity).CreateApplication(wrapper.HmeConnection);
+
+            return wrapper;
         }
 
         public void HandleEventsAsync(IHmeConnection connection)
@@ -21,7 +50,9 @@ namespace Tivo.Has.AddIn
             HmeConnectionWrapper wrapper = connection as HmeConnectionWrapper;
             if (wrapper != null)
             {
-                wrapper.HmeConnection.BeginHandleEvent(ApplicationEventsHandled, wrapper.HmeConnection);
+                ApplicationEventsData data = new ApplicationEventsData { DriverGuid = _thisGuid, ConnectionGuid = Guid.NewGuid() };
+                _connections.Add(data.ConnectionGuid, wrapper.HmeConnection);
+                wrapper.HmeConnection.BeginHandleEvent(ApplicationEventsHandled, data);
             }
         }
 
@@ -45,25 +76,19 @@ namespace Tivo.Has.AddIn
             }
         }
 
-        private void ApplicationEventsHandled(IAsyncResult result)
+        private static void ApplicationEventsHandled(IAsyncResult result)
         {
-            HmeConnection connection = (HmeConnection)result.AsyncState;
-            // TODO: move this exception logic into Begin and End HandleEvent.
-            try
-            {
-                connection.EndHandleEvent(result);
-                if (connection.Application.IsConnected)
-                    connection.BeginHandleEvent(ApplicationEventsHandled, result.AsyncState);
-                else
-                    OnApplicationEnded(MyApplicationEndedEventArgs.Empty);
-            }
-            catch (IOException ex)
-            {
-                // just a disconnect so not a critical event
-                //ServerLog.Write(ex);
-                connection.Application.CloseDisconnected();
-                OnApplicationEnded(MyApplicationEndedEventArgs.Empty);
-            }
+            // this is done so that only guids cross appdomain boundary
+            ApplicationEventsData eventsData = (ApplicationEventsData)result.AsyncState;
+            HmeApplicationDriver driver = _instances[eventsData.DriverGuid];
+            HmeConnection connection = driver._connections[eventsData.ConnectionGuid];
+            driver._connections.Remove(eventsData.ConnectionGuid);
+
+            connection.EndHandleEvent(result);
+            if (connection.Application.IsConnected)
+                connection.BeginHandleEvent(ApplicationEventsHandled, result.AsyncState);
+            else
+                driver.OnApplicationEnded(MyApplicationEndedEventArgs.Empty);
         }
 
         private void ProcessApplicationCommands(object hmeConnection)
@@ -81,6 +106,13 @@ namespace Tivo.Has.AddIn
             {
                 get { return _empty; }
             }
+        }
+
+        [Serializable]
+        private class ApplicationEventsData
+        {
+            public Guid DriverGuid { get; set; }
+            public Guid ConnectionGuid { get; set; }
         }
     }
 }

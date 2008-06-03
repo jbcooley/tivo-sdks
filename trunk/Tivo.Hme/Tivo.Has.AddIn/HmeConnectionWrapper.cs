@@ -7,23 +7,25 @@ namespace Tivo.Has.AddIn
 {
     class HmeConnectionWrapper : IHmeConnection
     {
-        public HmeConnectionWrapper(Stream inputStream, Stream outputStream)
+        public HmeConnectionWrapper(IHmeStream inputStream, IHmeStream outputStream)
         {
-            HmeConnection = new HmeConnection(inputStream, outputStream);
+            HmeStream hmeInputStream = new HmeStream(inputStream);
+            HmeStream hmeOutputStream = new HmeStream(outputStream);
+            HmeConnection = new HmeConnection(hmeInputStream, hmeOutputStream, ConnectionSyncronizationType.System);
         }
 
         public HmeConnection HmeConnection { get; private set; }
 
         #region IHmeConnection Members
 
-        public WaitHandle CommandReceived
+        public string CommandReceivedName
         {
-            get { return HmeConnection.CommandReceived; }
+            get { return ((IHmeConnectionSyncronizationInfo)HmeConnection).CommandReceivedName; }
         }
 
-        public WaitHandle EventReceived
+        public string EventReceivedName
         {
-            get { return HmeConnection.EventReceived; }
+            get { return ((IHmeConnectionSyncronizationInfo)HmeConnection).EventReceivedName; }
         }
 
         #endregion
