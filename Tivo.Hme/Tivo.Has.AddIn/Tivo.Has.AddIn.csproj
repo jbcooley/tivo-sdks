@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30428</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{4FD99795-7C4A-45B5-A165-BB55DB9CB3A1}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -32,6 +32,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.AddIn">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -45,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HmeStream.cs" />
     <Compile Include="HmeApplicationDriver.cs" />
     <Compile Include="HmeApplicationIdentity.cs" />
     <Compile Include="HmeConnectionWrapper.cs" />
@@ -57,7 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Tivo.Has.AddInView\Tivo.Has.AddInView.csproj">
-      <Project>{1D8685D3-DAF7-4B09-BEDD-6B6142DEBB81}</Project>
+      <Project>{9E178393-D0E6-455F-9F29-22C1C9642872}</Project>
       <Name>Tivo.Has.AddInView</Name>
     </ProjectReference>
     <ProjectReference Include="..\Tivo.Hme\Tivo.Hme.csproj">
