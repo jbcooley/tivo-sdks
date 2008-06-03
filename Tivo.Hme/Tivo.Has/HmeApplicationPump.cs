@@ -9,7 +9,7 @@ namespace Tivo.Has
 {
     class HmeApplicationPump
     {
-        private static Dictionary<IHmeConnection, IHmeApplicationDriver> _connections = new Dictionary<IHmeConnection, IHmeApplicationDriver>();
+        private static Dictionary<IHmeConnection, ConnectionData> _connections = new Dictionary<IHmeConnection, ConnectionData>();
         private static AutoResetEvent _connectionAdded = new AutoResetEvent(false);
         private static AutoResetEvent _connectionRemoved = new AutoResetEvent(false);
 
@@ -30,7 +30,11 @@ namespace Tivo.Has
         {
             lock (_connections)
             {
-                _connections.Add(connection, _driver);
+                ConnectionData connectionData = new ConnectionData();
+                connectionData.Driver = _driver;
+                connectionData.CommandReceived = EventWaitHandle.OpenExisting(connection.CommandReceivedName);
+                connectionData.EventReceived = EventWaitHandle.OpenExisting(connection.EventReceivedName);
+                _connections.Add(connection, connectionData);
             }
             _connectionAdded.Set();
             _driver.HandleEventsAsync(connection);
@@ -68,8 +72,8 @@ namespace Tivo.Has
                     {
                         foreach (var entry in _connections)
                         {
-                            connectionWaitHandleList.Add(entry.Key.CommandReceived);
-                            connectionWaitHandleList.Add(entry.Key.EventReceived);
+                            connectionWaitHandleList.Add(entry.Value.CommandReceived);
+                            connectionWaitHandleList.Add(entry.Value.EventReceived);
                             runningConnections.Add(entry.Key);
                         }
                     }
@@ -81,10 +85,17 @@ namespace Tivo.Has
                     // in order to avoid races to get a lock on the _connections field
                     int connectionIndex = (handleIndex - 2) / 2;
                     IHmeConnection connection = runningConnections[connectionIndex];
-                    IHmeApplicationDriver driver = _connections[connection];
-                    driver.RunOneAsync(connection);
+                    ConnectionData connectionData = _connections[connection];
+                    connectionData.Driver.RunOneAsync(connection);
                 }
             }
+        }
+
+        private class ConnectionData
+        {
+            public IHmeApplicationDriver Driver { get; set; }
+            public WaitHandle CommandReceived { get; set; }
+            public WaitHandle EventReceived { get; set; }
         }
     }
 }

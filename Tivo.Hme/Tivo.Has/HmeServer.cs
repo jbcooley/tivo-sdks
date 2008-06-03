@@ -17,12 +17,14 @@ namespace Tivo.Has
         {
             _pump = new HmeApplicationPump(driver);
             _driver = driver;
+            _identity = identity;
         }
 
         protected override void OnHmeApplicationRequestReceived(HttpRequestReceivedArgs e)
         {
             e.HttpRequest.WriteResponse(new HmeApplicationHttpResponse());
-            IHmeConnection connection = _driver.CreateHmeConnection(_identity, e.HttpRequest.Stream, e.HttpRequest.Stream);
+            HmeStream hmeStream = new HmeStream(e.HttpRequest.Stream);
+            IHmeConnection connection = _driver.CreateHmeConnection(_identity, hmeStream, hmeStream);
             _pump.AddHmeConnection(connection);
         }
 
