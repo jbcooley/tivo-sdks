@@ -7,8 +7,8 @@
     <ProjectGuid>{9E178393-D0E6-455F-9F29-22C1C9642872}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Template</RootNamespace>
-    <AssemblyName>Template</AssemblyName>
+    <RootNamespace>Tivo.Has</RootNamespace>
+    <AssemblyName>Tivo.Has.AddInView</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

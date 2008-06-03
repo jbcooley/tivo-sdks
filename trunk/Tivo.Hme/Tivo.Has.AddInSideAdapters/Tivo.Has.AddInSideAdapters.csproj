@@ -7,8 +7,8 @@
     <ProjectGuid>{9BA5CDFB-E578-430D-994C-9D293DD8F62B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Template</RootNamespace>
-    <AssemblyName>Template</AssemblyName>
+    <RootNamespace>Tivo.Has.AddInSideAdapters</RootNamespace>
+    <AssemblyName>Tivo.Has.AddInSideAdapters</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
