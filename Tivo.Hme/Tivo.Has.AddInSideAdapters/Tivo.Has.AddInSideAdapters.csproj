@@ -2,13 +2,13 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30428</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{F35DA565-A6E0-4F01-B8FF-EC66FA91AEDC}</ProjectGuid>
+    <ProjectGuid>{9BA5CDFB-E578-430D-994C-9D293DD8F62B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Template</RootNamespace>
-    <AssemblyName>Tivo.Has.AddInSideAdapters</AssemblyName>
+    <AssemblyName>Template</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -40,7 +40,7 @@
     <Reference Include="System.AddIn, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL" />
     <Reference Include="System.AddIn.Contract, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Windows\assembly\GAC_MSIL\System.AddIn.Contract\2.0.0.0__b03f5f7f11d50a3a\System.AddIn.Contract.dll</HintPath>
+      <HintPath>..\..\..\..\Windows\assembly\GAC_MSIL\System.AddIn.Contract\2.0.0.0__b03f5f7f11d50a3a\System.AddIn.Contract.dll</HintPath>
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Core">
@@ -59,18 +59,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Tivo.Has.AddInView\Tivo.Has.AddInView.csproj">
-      <Project>{1D8685D3-DAF7-4B09-BEDD-6B6142DEBB81}</Project>
-      <Name>Tivo.Has.AddInView</Name>
-      <Private>False</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\Tivo.Has.Contracts\Tivo.Has.Contracts.csproj">
-      <Project>{CCBA44F0-DEBC-4EA2-82C1-2B05836373BE}</Project>
-      <Name>Tivo.Has.Contracts</Name>
-      <Private>False</Private>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Generated Files\ApplicationEndedEventArgsAddInAdapter.g.cs" />
     <Compile Include="Generated Files\ApplicationEndedEventArgsContractToViewAddInAdapter.g.cs" />
     <Compile Include="Generated Files\ApplicationEndedEventArgsViewToContractAddInAdapter.g.cs" />
@@ -82,9 +70,30 @@
     <Compile Include="Generated Files\IHmeApplicationIdentityAddInAdapter.g.cs" />
     <Compile Include="Generated Files\IHmeApplicationIdentityContractToViewAddInAdapter.g.cs" />
     <Compile Include="Generated Files\IHmeApplicationIdentityViewToContractAddInAdapter.g.cs" />
+    <Compile Include="Generated Files\IHmeAsyncCallbackAddInAdapter.g.cs" />
+    <Compile Include="Generated Files\IHmeAsyncCallbackContractToViewAddInAdapter.g.cs" />
+    <Compile Include="Generated Files\IHmeAsyncCallbackViewToContractAddInAdapter.g.cs" />
+    <Compile Include="Generated Files\IHmeAsyncResultAddInAdapter.g.cs" />
+    <Compile Include="Generated Files\IHmeAsyncResultContractToViewAddInAdapter.g.cs" />
+    <Compile Include="Generated Files\IHmeAsyncResultViewToContractAddInAdapter.g.cs" />
     <Compile Include="Generated Files\IHmeConnectionAddInAdapter.g.cs" />
     <Compile Include="Generated Files\IHmeConnectionContractToViewAddInAdapter.g.cs" />
     <Compile Include="Generated Files\IHmeConnectionViewToContractAddInAdapter.g.cs" />
+    <Compile Include="Generated Files\IHmeStreamAddInAdapter.g.cs" />
+    <Compile Include="Generated Files\IHmeStreamContractToViewAddInAdapter.g.cs" />
+    <Compile Include="Generated Files\IHmeStreamViewToContractAddInAdapter.g.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Tivo.Has.AddInView\Tivo.Has.AddInView.csproj">
+      <Project>{9E178393-D0E6-455F-9F29-22C1C9642872}</Project>
+      <Name>Tivo.Has.AddInView</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Tivo.Has.Contracts\Tivo.Has.Contracts.csproj">
+      <Project>{CCBA44F0-DEBC-4EA2-82C1-2B05836373BE}</Project>
+      <Name>Tivo.Has.Contracts</Name>
+      <Private>False</Private>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

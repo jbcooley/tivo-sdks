@@ -2,13 +2,13 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30428</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{1D8685D3-DAF7-4B09-BEDD-6B6142DEBB81}</ProjectGuid>
+    <ProjectGuid>{9E178393-D0E6-455F-9F29-22C1C9642872}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Template</RootNamespace>
-    <AssemblyName>Tivo.Has.AddInView</AssemblyName>
+    <AssemblyName>Template</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -57,7 +57,10 @@
     <Compile Include="Generated Files\ApplicationEndedEventArgs.g.cs" />
     <Compile Include="Generated Files\IHmeApplicationDriver.g.cs" />
     <Compile Include="Generated Files\IHmeApplicationIdentity.g.cs" />
+    <Compile Include="Generated Files\IHmeAsyncCallback.g.cs" />
+    <Compile Include="Generated Files\IHmeAsyncResult.g.cs" />
     <Compile Include="Generated Files\IHmeConnection.g.cs" />
+    <Compile Include="Generated Files\IHmeStream.g.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
