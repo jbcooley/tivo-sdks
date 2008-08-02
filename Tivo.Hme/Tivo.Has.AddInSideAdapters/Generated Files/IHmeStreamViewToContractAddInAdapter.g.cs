@@ -61,17 +61,24 @@ namespace Tivo.Has.AddInSideAdapters
                 _view.WriteTimeout = value;
             }
         }
-        public virtual int Read(byte[] buffer, int offset, int count)
+        public byte[] ReadBuffer
         {
-            return _view.Read(buffer, offset, count);
+            get
+            {
+                return _view.ReadBuffer;
+            }
+        }
+        public virtual int Read(int count)
+        {
+            return _view.Read(count);
         }
         public virtual int ReadByte()
         {
             return _view.ReadByte();
         }
-        public virtual Tivo.Has.Contracts.IHmeAsyncResultContract BeginRead(byte[] buffer, int offset, int count, Tivo.Has.Contracts.IHmeAsyncCallbackContract callback)
+        public virtual Tivo.Has.Contracts.IHmeAsyncResultContract BeginRead(int count, Tivo.Has.Contracts.IHmeAsyncCallbackContract callback)
         {
-            return Tivo.Has.AddInSideAdapters.IHmeAsyncResultAddInAdapter.ViewToContractAdapter(_view.BeginRead(buffer, offset, count, Tivo.Has.AddInSideAdapters.IHmeAsyncCallbackAddInAdapter.ContractToViewAdapter(callback)));
+            return Tivo.Has.AddInSideAdapters.IHmeAsyncResultAddInAdapter.ViewToContractAdapter(_view.BeginRead(count, Tivo.Has.AddInSideAdapters.IHmeAsyncCallbackAddInAdapter.ContractToViewAdapter(callback)));
         }
         public virtual int EndRead(Tivo.Has.Contracts.IHmeAsyncResultContract asyncResult)
         {
