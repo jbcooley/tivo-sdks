@@ -16,6 +16,7 @@ namespace Tivo.Has.Contracts
     [AddInContract]
     public interface IHmeApplicationDriverContract : IContract
     {
+        IHasApplicationConfiguratorContract GetApplicationConfiguration();
         IListContract<IHmeApplicationIdentityContract> ApplicationIdentities { get; }
         IHmeConnectionContract CreateHmeConnection(IHmeApplicationIdentityContract identity, IHmeStreamContract inputStream, IHmeStreamContract outputStream);
         void HandleEventsAsync(IHmeConnectionContract connection);
