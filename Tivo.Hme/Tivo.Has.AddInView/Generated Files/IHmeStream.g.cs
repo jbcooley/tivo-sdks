@@ -35,9 +35,13 @@ namespace Tivo.Has
             get;
             set;
         }
-        int Read(byte[] buffer, int offset, int count);
+        byte[] ReadBuffer
+        {
+            get;
+        }
+        int Read(int count);
         int ReadByte();
-        IHmeAsyncResult BeginRead(byte[] buffer, int offset, int count, IHmeAsyncCallback callback);
+        IHmeAsyncResult BeginRead(int count, IHmeAsyncCallback callback);
         int EndRead(IHmeAsyncResult asyncResult);
         void Write(byte[] buffer, int offset, int count);
         void WriteByte(byte value);

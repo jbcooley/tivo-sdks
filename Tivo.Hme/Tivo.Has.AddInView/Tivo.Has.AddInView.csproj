@@ -38,6 +38,9 @@
     </Reference>
     <Reference Include="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL" />
     <Reference Include="System.AddIn, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL" />
+    <Reference Include="System.AddIn.Contract">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -55,6 +58,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Generated Files\ApplicationEndedEventArgs.g.cs" />
+    <Compile Include="Generated Files\HasApplicationConfiguration.g.cs" />
+    <Compile Include="Generated Files\IHasApplicationConfigurator.g.cs" />
     <Compile Include="Generated Files\IHmeApplicationDriver.g.cs" />
     <Compile Include="Generated Files\IHmeApplicationIdentity.g.cs" />
     <Compile Include="Generated Files\IHmeAsyncCallback.g.cs" />
