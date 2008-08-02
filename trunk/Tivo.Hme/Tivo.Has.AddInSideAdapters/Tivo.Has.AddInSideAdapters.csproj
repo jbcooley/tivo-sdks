@@ -59,11 +59,28 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Tivo.Has.AddInView\Tivo.Has.AddInView.csproj">
+      <Project>{9E178393-D0E6-455F-9F29-22C1C9642872}</Project>
+      <Name>Tivo.Has.AddInView</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Tivo.Has.Contracts\Tivo.Has.Contracts.csproj">
+      <Project>{CCBA44F0-DEBC-4EA2-82C1-2B05836373BE}</Project>
+      <Name>Tivo.Has.Contracts</Name>
+      <Private>False</Private>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="Generated Files\ApplicationEndedEventArgsAddInAdapter.g.cs" />
     <Compile Include="Generated Files\ApplicationEndedEventArgsContractToViewAddInAdapter.g.cs" />
     <Compile Include="Generated Files\ApplicationEndedEventArgsViewToContractAddInAdapter.g.cs" />
+    <Compile Include="Generated Files\HasApplicationConfigurationAddInAdapter.g.cs" />
+    <Compile Include="Generated Files\HasApplicationConfigurationArrayAddInAdapter.g.cs" />
     <Compile Include="Generated Files\IApplicationEndedEventHandlerContractToViewAddInAdapter.g.cs" />
     <Compile Include="Generated Files\IApplicationEndedEventHandlerViewToContractAddInAdapter.g.cs" />
+    <Compile Include="Generated Files\IHasApplicationConfiguratorAddInAdapter.g.cs" />
+    <Compile Include="Generated Files\IHasApplicationConfiguratorContractToViewAddInAdapter.g.cs" />
+    <Compile Include="Generated Files\IHasApplicationConfiguratorViewToContractAddInAdapter.g.cs" />
     <Compile Include="Generated Files\IHmeApplicationDriverAddInAdapter.g.cs" />
     <Compile Include="Generated Files\IHmeApplicationDriverContractToViewAddInAdapter.g.cs" />
     <Compile Include="Generated Files\IHmeApplicationDriverViewToContractAddInAdapter.g.cs" />
@@ -82,18 +99,6 @@
     <Compile Include="Generated Files\IHmeStreamAddInAdapter.g.cs" />
     <Compile Include="Generated Files\IHmeStreamContractToViewAddInAdapter.g.cs" />
     <Compile Include="Generated Files\IHmeStreamViewToContractAddInAdapter.g.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Tivo.Has.AddInView\Tivo.Has.AddInView.csproj">
-      <Project>{9E178393-D0E6-455F-9F29-22C1C9642872}</Project>
-      <Name>Tivo.Has.AddInView</Name>
-      <Private>False</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\Tivo.Has.Contracts\Tivo.Has.Contracts.csproj">
-      <Project>{CCBA44F0-DEBC-4EA2-82C1-2B05836373BE}</Project>
-      <Name>Tivo.Has.Contracts</Name>
-      <Private>False</Private>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -28,6 +28,10 @@ namespace Tivo.Has.AddInSideAdapters
                 return System.AddIn.Pipeline.CollectionAdapters.ToIListContract<Tivo.Has.IHmeApplicationIdentity, Tivo.Has.Contracts.IHmeApplicationIdentityContract>(_view.ApplicationIdentities, Tivo.Has.AddInSideAdapters.IHmeApplicationIdentityAddInAdapter.ViewToContractAdapter, Tivo.Has.AddInSideAdapters.IHmeApplicationIdentityAddInAdapter.ContractToViewAdapter);
             }
         }
+        public virtual Tivo.Has.Contracts.IHasApplicationConfiguratorContract GetApplicationConfiguration()
+        {
+            return Tivo.Has.AddInSideAdapters.IHasApplicationConfiguratorAddInAdapter.ViewToContractAdapter(_view.GetApplicationConfiguration());
+        }
         public virtual Tivo.Has.Contracts.IHmeConnectionContract CreateHmeConnection(Tivo.Has.Contracts.IHmeApplicationIdentityContract identity, Tivo.Has.Contracts.IHmeStreamContract inputStream, Tivo.Has.Contracts.IHmeStreamContract outputStream)
         {
             return Tivo.Has.AddInSideAdapters.IHmeConnectionAddInAdapter.ViewToContractAdapter(_view.CreateHmeConnection(Tivo.Has.AddInSideAdapters.IHmeApplicationIdentityAddInAdapter.ContractToViewAdapter(identity), Tivo.Has.AddInSideAdapters.IHmeStreamAddInAdapter.ContractToViewAdapter(inputStream), Tivo.Has.AddInSideAdapters.IHmeStreamAddInAdapter.ContractToViewAdapter(outputStream)));
