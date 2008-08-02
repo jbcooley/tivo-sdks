@@ -11,10 +11,11 @@ namespace Tivo.Has.Contracts
         bool CanTimeout { get; }
         int ReadTimeout { get; set; }
         int WriteTimeout { get; set; }
+        byte[] ReadBuffer { get; }
 
-        int Read(byte[] buffer, int offset, int count);
+        int Read(int count);
         int ReadByte();
-        IHmeAsyncResultContract BeginRead(byte[] buffer, int offset, int count, IHmeAsyncCallbackContract callback);
+        IHmeAsyncResultContract BeginRead(int count, IHmeAsyncCallbackContract callback);
         int EndRead(IHmeAsyncResultContract asyncResult);
         void Write(byte[] buffer, int offset, int count);
         void WriteByte(byte value);
