@@ -9,7 +9,7 @@ namespace Tivo.Has
 {
     public partial class HmeApplicationService : ServiceBase
     {
-        private ServiceHost _configurationServiceHost = new ServiceHost(typeof(Configuration.HasConfigurationService));
+        //private ServiceHost _configurationServiceHost = new ServiceHost(typeof(Configuration.HasConfigurationService));
         private HmeServersController _controller = new HmeServersController();
 
         public HmeApplicationService()
@@ -22,7 +22,7 @@ namespace Tivo.Has
             ThreadPool.QueueUserWorkItem(StartApplications);
             // this opens the configuration host
             // with a thread to respond to requests
-            _configurationServiceHost.Open();
+//            _configurationServiceHost.Open();
         }
 
         protected override void OnStop()
@@ -32,7 +32,7 @@ namespace Tivo.Has
                 _controller.StopAllServers();
                 _controller.Clear();
             }
-            _configurationServiceHost.Close();
+//            _configurationServiceHost.Close();
         }
 
         public void StartApplications(object unused)
