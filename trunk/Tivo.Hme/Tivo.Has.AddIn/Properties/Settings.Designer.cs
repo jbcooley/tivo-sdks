@@ -23,7 +23,7 @@ namespace Tivo.Has.AddIn.Properties {
             }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<ArrayOfString xmlns:xsi=\"http://www.w3." +
             "org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\r\n  <s" +
@@ -32,9 +32,12 @@ namespace Tivo.Has.AddIn.Properties {
             get {
                 return ((global::System.Collections.Specialized.StringCollection)(this["ApplicationName"]));
             }
+            set {
+                this["ApplicationName"] = value;
+            }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<ArrayOfString xmlns:xsi=\"http://www.w3." +
             "org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\r\n  <s" +
@@ -43,9 +46,12 @@ namespace Tivo.Has.AddIn.Properties {
             get {
                 return ((global::System.Collections.Specialized.StringCollection)(this["EndPoint"]));
             }
+            set {
+                this["EndPoint"] = value;
+            }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<ArrayOfString xmlns:xsi=\"http://www.w3." +
             "org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\r\n  <s" +
@@ -53,6 +59,21 @@ namespace Tivo.Has.AddIn.Properties {
         public global::System.Collections.Specialized.StringCollection ApplicationType {
             get {
                 return ((global::System.Collections.Specialized.StringCollection)(this["ApplicationType"]));
+            }
+            set {
+                this["ApplicationType"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Sample")]
+        public string ApplicationPoolName {
+            get {
+                return ((string)(this["ApplicationPoolName"]));
+            }
+            set {
+                this["ApplicationPoolName"] = value;
             }
         }
     }
