@@ -52,6 +52,10 @@ namespace Tivo.Has.HostSideAdapters
             }
         }
         private event System.EventHandler<Tivo.Has.ApplicationEndedEventArgs> _ApplicationEnded;
+        public IHasApplicationConfigurator GetApplicationConfiguration()
+        {
+            return Tivo.Has.HostSideAdapters.IHasApplicationConfiguratorHostAdapter.ContractToViewAdapter(_contract.GetApplicationConfiguration());
+        }
         public IHmeConnection CreateHmeConnection(IHmeApplicationIdentity identity, IHmeStream inputStream, IHmeStream outputStream)
         {
             return Tivo.Has.HostSideAdapters.IHmeConnectionHostAdapter.ContractToViewAdapter(_contract.CreateHmeConnection(Tivo.Has.HostSideAdapters.IHmeApplicationIdentityHostAdapter.ViewToContractAdapter(identity), Tivo.Has.HostSideAdapters.IHmeStreamHostAdapter.ViewToContractAdapter(inputStream), Tivo.Has.HostSideAdapters.IHmeStreamHostAdapter.ViewToContractAdapter(outputStream)));

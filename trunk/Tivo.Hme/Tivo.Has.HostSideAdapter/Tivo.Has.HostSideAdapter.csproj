@@ -59,11 +59,28 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Tivo.Has.Contracts\Tivo.Has.Contracts.csproj">
+      <Project>{CCBA44F0-DEBC-4EA2-82C1-2B05836373BE}</Project>
+      <Name>Tivo.Has.Contracts</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Tivo.Has.HostView\Tivo.Has.HostView.csproj">
+      <Project>{1EC3AEBD-A14E-46D8-B3BB-0501BFD0FBF9}</Project>
+      <Name>Tivo.Has.HostView</Name>
+      <Private>False</Private>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="Generated Files\ApplicationEndedEventArgsContractToViewHostAdapter.g.cs" />
     <Compile Include="Generated Files\ApplicationEndedEventArgsHostAdapter.g.cs" />
     <Compile Include="Generated Files\ApplicationEndedEventArgsViewToContractHostAdapter.g.cs" />
+    <Compile Include="Generated Files\HasApplicationConfigurationArrayHostAdapter.g.cs" />
+    <Compile Include="Generated Files\HasApplicationConfigurationHostAdapter.g.cs" />
     <Compile Include="Generated Files\IApplicationEndedEventHandlerContractToViewHostAdapter.g.cs" />
     <Compile Include="Generated Files\IApplicationEndedEventHandlerViewToContractHostAdapter.g.cs" />
+    <Compile Include="Generated Files\IHasApplicationConfiguratorContractToViewHostAdapter.g.cs" />
+    <Compile Include="Generated Files\IHasApplicationConfiguratorHostAdapter.g.cs" />
+    <Compile Include="Generated Files\IHasApplicationConfiguratorViewToContractHostAdapter.g.cs" />
     <Compile Include="Generated Files\IHmeApplicationDriverContractToViewHostAdapter.g.cs" />
     <Compile Include="Generated Files\IHmeApplicationDriverHostAdapter.g.cs" />
     <Compile Include="Generated Files\IHmeApplicationDriverViewToContractHostAdapter.g.cs" />
@@ -82,18 +99,6 @@
     <Compile Include="Generated Files\IHmeStreamContractToViewHostAdapter.g.cs" />
     <Compile Include="Generated Files\IHmeStreamHostAdapter.g.cs" />
     <Compile Include="Generated Files\IHmeStreamViewToContractHostAdapter.g.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Tivo.Has.Contracts\Tivo.Has.Contracts.csproj">
-      <Project>{CCBA44F0-DEBC-4EA2-82C1-2B05836373BE}</Project>
-      <Name>Tivo.Has.Contracts</Name>
-      <Private>False</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\Tivo.Has.HostView\Tivo.Has.HostView.csproj">
-      <Project>{1EC3AEBD-A14E-46D8-B3BB-0501BFD0FBF9}</Project>
-      <Name>Tivo.Has.HostView</Name>
-      <Private>False</Private>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
