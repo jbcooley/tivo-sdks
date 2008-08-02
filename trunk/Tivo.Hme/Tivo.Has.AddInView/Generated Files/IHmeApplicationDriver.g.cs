@@ -19,6 +19,7 @@ namespace Tivo.Has
             get;
         }
         event System.EventHandler<ApplicationEndedEventArgs> ApplicationEnded;
+        IHasApplicationConfigurator GetApplicationConfiguration();
         IHmeConnection CreateHmeConnection(IHmeApplicationIdentity identity, IHmeStream inputStream, IHmeStream outputStream);
         void HandleEventsAsync(IHmeConnection connection);
         void RunOneAsync(IHmeConnection connection);
