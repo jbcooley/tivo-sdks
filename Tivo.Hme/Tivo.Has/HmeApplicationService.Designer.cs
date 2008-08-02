@@ -31,7 +31,7 @@
             // 
             // HmeApplicationService
             // 
-            this.ServiceName = "HmeApplicationService";
+            this.ServiceName = "HME Application Service";
 
         }
 
