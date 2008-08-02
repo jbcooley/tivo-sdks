@@ -27,6 +27,11 @@ namespace Tivo.Has.AddIn
 
         #region IHmeApplicationDriver Members
 
+        public IHasApplicationConfigurator GetApplicationConfiguration()
+        {
+            return new HasApplicationConfigurator();
+        }
+
         public IList<IHmeApplicationIdentity> ApplicationIdentities
         {
             get { return _applicationIdentities; }
@@ -82,13 +87,17 @@ namespace Tivo.Has.AddIn
             ApplicationEventsData eventsData = (ApplicationEventsData)result.AsyncState;
             HmeApplicationDriver driver = _instances[eventsData.DriverGuid];
             HmeConnection connection = driver._connections[eventsData.ConnectionGuid];
-            driver._connections.Remove(eventsData.ConnectionGuid);
 
             connection.EndHandleEvent(result);
             if (connection.Application.IsConnected)
+            {
                 connection.BeginHandleEvent(ApplicationEventsHandled, result.AsyncState);
+            }
             else
+            {
+                driver._connections.Remove(eventsData.ConnectionGuid);
                 driver.OnApplicationEnded(MyApplicationEndedEventArgs.Empty);
+            }
         }
 
         private void ProcessApplicationCommands(object hmeConnection)
