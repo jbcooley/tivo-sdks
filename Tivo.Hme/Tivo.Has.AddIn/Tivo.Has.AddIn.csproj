@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HasApplicationConfigurator.cs" />
     <Compile Include="HmeStream.cs" />
     <Compile Include="HmeApplicationDriver.cs" />
     <Compile Include="HmeApplicationIdentity.cs" />
