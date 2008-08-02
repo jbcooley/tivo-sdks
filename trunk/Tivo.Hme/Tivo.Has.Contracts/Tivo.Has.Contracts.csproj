@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IHasApplicationConfiguratorContract.cs" />
     <Compile Include="IHmeApplicationDriverContract.cs" />
     <Compile Include="IHmeApplicationIdentityContract.cs" />
     <Compile Include="IHmeConnectionContract.cs" />
