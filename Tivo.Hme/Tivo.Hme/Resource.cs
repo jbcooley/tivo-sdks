@@ -121,6 +121,13 @@ namespace Tivo.Hme
             _addResourceCommand = new Commands.ResourceAddStream(uri, contentType, state == MusicStart.AutoPlay);
         }
 
+        public Resource(Uri uri, string contentType, VideoStart state)
+        {
+            _name = uri.OriginalString;
+            _hashString = "V:" + uri.OriginalString;
+            _addResourceCommand = new Commands.ResourceAddStream(uri, contentType, state == VideoStart.AutoPlay);
+        }
+
         public Commands.IResourceCommand AddResourceCommand
         {
             get { return _addResourceCommand; }
