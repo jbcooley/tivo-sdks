@@ -106,6 +106,7 @@
     <Compile Include="SafetyViewMargin.cs" />
     <Compile Include="Sound.cs" />
     <Compile Include="StreamedMusic.cs" />
+    <Compile Include="StreamedVideoView.cs" />
     <Compile Include="SuspendPainting.cs" />
     <Compile Include="TextLayout.cs" />
     <Compile Include="TextStyle.cs" />
