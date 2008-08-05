@@ -24,6 +24,7 @@ using System.Text;
 using System.Net;
 using System.Threading;
 using Tivo.Hme.Host.Http;
+using System.Diagnostics;
 
 namespace Tivo.Hme.Host
 {
@@ -161,6 +162,7 @@ namespace Tivo.Hme.Host
 
         protected virtual void OnNonApplicationRequestReceived(NonApplicationRequestReceivedArgs e)
         {
+            ServerLog.Write(TraceEventType.Verbose, "Enter HmeServer.OnNonApplicationRequestReceived");
             EventHandler<NonApplicationRequestReceivedArgs> handler = NonApplicationRequestReceivedArgs;
             if (handler != null)
             {
@@ -170,10 +172,12 @@ namespace Tivo.Hme.Host
             {
                 e.HttpResponse = new ApplicationIconHttpResponse();
             }
+            ServerLog.Write(TraceEventType.Verbose, "Exit HmeServer.OnNonApplicationRequestReceived");
         }
 
         protected virtual void OnHmeApplicationRequestReceived(HttpRequestReceivedArgs e)
         {
+            ServerLog.Write(TraceEventType.Verbose, "Enter HmeServer.OnHmeApplicationRequestReceived");
             e.HttpRequest.WriteResponse(new HmeApplicationHttpResponse());
             HmeConnection connection = new HmeConnection(e.HttpRequest.Stream, e.HttpRequest.Stream);
             HmeApplicationConnectedEventArgs args = new HmeApplicationConnectedEventArgs();
@@ -182,6 +186,7 @@ namespace Tivo.Hme.Host
 
             OnApplicationConnected(args);
             _pump.AddHmeConnection(connection);
+            ServerLog.Write(TraceEventType.Verbose, "Exit HmeServer.OnHmeApplicationRequestReceived");
         }
 
         protected virtual void OnApplicationConnected(HmeApplicationConnectedEventArgs args)
