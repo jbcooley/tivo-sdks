@@ -1,6 +1,11 @@
 #labels Featured
 = Tivo.Hme and Tivo.Hme.Host Change Log =
 
+*1.3 Aug 4, 2008*
+
+  * Made minor changes to support Hme Application Server.
+  * Added StreamedVideoView to support streaming video.  The api for this feature may evolve as new information about tivo support for streaming video comes available.
+
 *1.2 Mar 4, 2008*
 
   * Fixed application exit again.  This time the fix is for sending additional commands during cleanup.
