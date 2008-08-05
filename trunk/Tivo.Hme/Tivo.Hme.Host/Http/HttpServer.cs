@@ -22,6 +22,7 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
+using System.Diagnostics;
 
 namespace Tivo.Hme.Host.Http
 {
@@ -64,13 +65,16 @@ namespace Tivo.Hme.Host.Http
 
         protected virtual void OnHttpRequestReceived(HttpRequestReceivedArgs e)
         {
+            ServerLog.Write(TraceEventType.Verbose, "Enter HttpServer.OnHttpRequestReceived " + e.HttpRequest.RequestUri.OriginalString);
             EventHandler<HttpRequestReceivedArgs> handler = HttpRequestReceived;
             if (handler != null)
                 handler(this, e);
+            ServerLog.Write(TraceEventType.Verbose, "Exit HttpServer.OnHttpRequestReceived");
         }
 
         private void OnConnectionReceived(IAsyncResult asyncResult)
         {
+            ServerLog.Write(TraceEventType.Verbose, "Enter HttpServer.OnConnectionReceived");
             try
             {
                 TcpClient client = _listener.EndAcceptTcpClient(asyncResult);
@@ -96,10 +100,12 @@ namespace Tivo.Hme.Host.Http
                     OnHttpRequestReceived(new HttpRequestReceivedArgs(request));
                 }
             }
-            catch (SocketException)
+            catch (SocketException ex)
             {
                 // ignore socket exceptions.  Just don't try to accept another connection
+                ServerLog.Write(ex);
             }
+            ServerLog.Write(TraceEventType.Verbose, "Exit HttpServer.OnConnectionReceived");
         }
     }
 }
