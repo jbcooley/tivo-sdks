@@ -86,12 +86,17 @@ namespace Tivo.Hme
             get { return _resource.Name; }
         }
 
-        public void Close()
+        void IHmeResource.Close()
         {
             ReleaseResource();
         }
 
         #endregion
+
+        public void Stop()
+        {
+            ((IHmeResource)this).Close();
+        }
 
         #region IEquatable<IHmeResource> Members
 
