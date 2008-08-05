@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30428</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{96790110-C502-4730-831B-64BF06FE7B3B}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -33,13 +33,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Mono.Zeroconf, Version=1.0.0.0, Culture=neutral, PublicKeyToken=e60c4f4a95e1099e, processorArchitecture=MSIL">
+    <Reference Include="Mono.Zeroconf, Version=2.0.0.76, Culture=neutral, PublicKeyToken=e60c4f4a95e1099e, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\mono-zeroconf-0.7.5-binary\bin\Mono.Zeroconf.dll</HintPath>
+      <HintPath>..\..\mono-zeroconf-0.7.6-binary\bin\Mono.Zeroconf.dll</HintPath>
     </Reference>
-    <Reference Include="Mono.Zeroconf.Providers.Bonjour, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Mono.Zeroconf.Providers.Bonjour, Version=2.0.0.76, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\mono-zeroconf-0.7.5-binary\bin\Mono.Zeroconf.Providers.Bonjour.dll</HintPath>
+      <HintPath>..\..\mono-zeroconf-0.7.6-binary\bin\Mono.Zeroconf.Providers.Bonjour.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
