@@ -304,6 +304,7 @@ namespace Tivo.Hme
         public event EventHandler<ResourceStateChangedArgs> ResourceStateChanged;
         public event EventHandler<EventArgs> Closed;
         public event EventHandler<EventArgs> SupportedResolutionsChanged;
+        public event EventHandler<ApplicationParametersReceivedArgs> ApplicationParametersReceived;
 
         #endregion
 
@@ -356,6 +357,56 @@ namespace Tivo.Hme
             IsConnected = false;
         }
 
+        public void TransitionForward(string destination)
+        {
+            TransitionForward(destination, null, null);
+        }
+
+        public void TransitionForward(string destination, TivoTree parameters, byte[] savedData)
+        {
+            PostCommand(new ReceiverTransition(destination, Transition.Forward, parameters, savedData));
+        }
+
+        public void TransitionForward(Uri destination)
+        {
+            TransitionForward(destination.OriginalString);
+        }
+
+        public void TransitionForward(Uri destination, TivoTree parameters, byte[] savedData)
+        {
+            TransitionForward(destination.OriginalString, parameters, savedData);
+        }
+
+        public void TransitionBack()
+        {
+            TransitionBack(null);
+        }
+
+        public void TransitionBack(TivoTree parameters)
+        {
+            PostCommand(new ReceiverTransition(null, Transition.Back, parameters, null));
+        }
+
+        public void TransitionStartNew(string destination)
+        {
+            TransitionStartNew(destination, null);
+        }
+
+        public void TransitionStartNew(string destination, TivoTree parameters)
+        {
+            PostCommand(new ReceiverTransition(destination, Transition.Teleport, parameters, null));
+        }
+
+        public void TransitionStartNew(Uri destination)
+        {
+            TransitionStartNew(destination.OriginalString);
+        }
+
+        public void TransitionStartNew(Uri destination, TivoTree parameters)
+        {
+            TransitionStartNew(destination.OriginalString, parameters);
+        }
+
         #region Events
 
         private void OnClosed(EventArgs eventArgs)
@@ -405,6 +456,15 @@ namespace Tivo.Hme
                 }
             }
             // TODO: propogate additional data if any
+        }
+
+        internal void OnApplicationParametersInfoReceived(Events.ApplicationParametersInfo applicationParametersInfo)
+        {
+            EventHandler<ApplicationParametersReceivedArgs> handler = ApplicationParametersReceived;
+            if (handler != null)
+            {
+                handler(this, new ApplicationParametersReceivedArgs(applicationParametersInfo.Parameters, applicationParametersInfo.Data));
+            }
         }
 
         internal void OnDeviceInfoReceived(Events.DeviceInfo deviceInfo)
