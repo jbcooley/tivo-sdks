@@ -371,6 +371,9 @@ namespace Tivo.Hme.Host
                 case Events.ResourceInfo.Type:
                     eventInfo = new Events.ResourceInfo();
                     break;
+                case Events.ApplicationParametersInfo.Type:
+                    eventInfo = new Events.ApplicationParametersInfo();
+                    break;
                 case Events.DisplayInfo.Type:
                     eventInfo = new Events.DisplayInfo();
                     break;
