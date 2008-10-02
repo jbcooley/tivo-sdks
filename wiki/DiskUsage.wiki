@@ -2,3 +2,9 @@
 ==Disk Usage running on TiVo==
 
 [http://tivo-sdks.googlecode.com/files/DiskUsage1.jpg]
+
+===Estimating Disk Size===
+
+The disk size is estimated by storing the largest used disk space.  The tivo doesn't provide any information about deleted items or free space.  The only information available to Disk Usage is the ammount of space used.  When less space is used, Disk Usage shows the difference as estimated free.
+
+To get a good estimate, allow suggestions to fill all unused space at least once.  If you do not wish to keep suggestions turned on, you should run Disk Usage while you have a full disk.  You can then delete the suggestions and see the space now in the estimated free section.
