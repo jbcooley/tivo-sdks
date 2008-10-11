@@ -30,6 +30,7 @@ namespace TivoDiskUsage
     class DiskUsageApp : HmeApplicationHandler
     {
         private TivoConnection _connection;
+        private TivoContainerQuery _query;
         private string _tivoName;
         private WaitingView _waitingView;
 
@@ -47,7 +48,7 @@ namespace TivoDiskUsage
             app.DeviceConnected += new EventHandler<DeviceConnectedArgs>(app_DeviceConnected);
             app.SupportedResolutionsChanged += new EventHandler<EventArgs>(app_SupportedResolutionsChanged);
 
-            _waitingView = new WaitingView()
+            _waitingView = new WaitingView();
             app.Root.Children.Add(_waitingView);
         }
 
@@ -88,13 +89,18 @@ namespace TivoDiskUsage
         private void GetNowPlaying(string hmoServer, string mediaAccessKey, Application app)
         {
             _connection = new TivoConnection(hmoServer, mediaAccessKey);
-            _connection.BeginQueryContainer("/NowPlaying", true, QueryUsage, app);
+            _connection.Open();
+            _query = _connection.CreateContainerQuery("/NowPlaying").Recurse();
+            _query.BeginExecute(QueryUsage, app);
+            //_connection.BeginQueryContainer("/NowPlaying", true, QueryUsage, app);
         }
 
         public void QueryUsage(IAsyncResult result)
         {
             Application app = (Application)result.AsyncState;
-            TiVoContainer container = _connection.EndQueryContainer(result);
+            //TivoContainer container = _connection.EndQueryContainer(result);
+            //_connection.Dispose();
+            TivoContainer container = _query.EndExecute(result);
             _connection.Dispose();
 
             CategoryPieView pieView = new CategoryPieView(DiskUsageCalculator.Calculate(container, _tivoName));

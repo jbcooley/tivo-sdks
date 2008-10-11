@@ -21,6 +21,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 using Tivo.Hmo;
 
 namespace TivoDiskUsage
@@ -41,7 +42,7 @@ namespace TivoDiskUsage
         {
         }
 
-        public static DiskUsageCalculator Calculate(TiVoContainer container, string tivoName)
+        public static DiskUsageCalculator Calculate(TivoContainer container, string tivoName)
         {
             DiskUsageCalculator calculator = new DiskUsageCalculator();
             calculator.CurrentSpaceUsed = calculator.CalculateCategoryTotals(container);
@@ -113,19 +114,19 @@ namespace TivoDiskUsage
             }
         }
 
-        private ulong CalculateCategoryTotals(TiVoContainer container)
+        private ulong CalculateCategoryTotals(TivoContainer container)
         {
             ulong total = 0;
-            foreach (TiVoContainerItem item in Array.FindAll(container.Item, match => match.Details.ContentType.StartsWith("video/")))
+            foreach (TivoVideo video in container.TivoItems.Where(item => item is TivoVideo))
             {
-                total += item.Details.SourceSize;
-                if (item.Links.CustomIcon != null)
+                total += (ulong)video.Length;
+                if (video.CustomIcon != null)
                 {
-                    string categoryName = GetPrettyName(item.Links.CustomIcon.Url);
+                    string categoryName = GetPrettyName(video.CustomIcon.Uri.AbsoluteUri);
                     if (_categoryTotals.ContainsKey(categoryName))
-                        _categoryTotals[categoryName] += item.Details.SourceSize;
+                        _categoryTotals[categoryName] += (ulong)video.Length;
                     else
-                        _categoryTotals.Add(categoryName, item.Details.SourceSize);
+                        _categoryTotals.Add(categoryName, (ulong)video.Length);
                 }
             }
             return total;
