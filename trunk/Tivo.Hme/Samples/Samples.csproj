@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30428</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{82CD1B79-2B77-43C8-9431-C68C36DF791E}</ProjectGuid>
     <OutputType>Exe</OutputType>
@@ -35,7 +35,7 @@
   <ItemGroup>
     <Reference Include="Mono.Zeroconf.Providers.Bonjour, Version=2.0.0.76, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\mono-zeroconf-0.7.6-binary\bin\Mono.Zeroconf.Providers.Bonjour.dll</HintPath>
+      <HintPath>..\..\mono-zeroconf-0.8.0-binary\bin\Mono.Zeroconf.Providers.Bonjour.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -65,7 +65,11 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="StreamingVideo.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="TicTacToe.cs" />
+    <Compile Include="Transition.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Tivo.Hme.Host\Tivo.Hme.Host.csproj">
@@ -93,6 +97,9 @@
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="tivoStartup.mp4">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
