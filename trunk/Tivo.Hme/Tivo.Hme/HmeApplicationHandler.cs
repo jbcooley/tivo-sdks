@@ -26,13 +26,8 @@ namespace Tivo.Hme
 {
     public class HmeApplicationStartArgs
     {
-        private Application _application;
-
-        public Application Application
-        {
-            get { return _application; }
-            set { _application = value; }
-        }
+        public Application Application { get; set; }
+        public IServiceProvider HostServices { get; set; }
     }
 
     public abstract class HmeApplicationHandler

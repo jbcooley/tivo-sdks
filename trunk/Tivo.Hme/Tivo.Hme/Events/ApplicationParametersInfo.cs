@@ -58,7 +58,7 @@ namespace Tivo.Hme.Events
             reader.ReadTerminator();
         }
 
-        private static void ReadParameters(HmeReader reader, TivoTree currentLevel)
+        internal static void ReadParameters(HmeReader reader, TivoTree currentLevel)
         {
             for (string value = reader.ReadString(); value.Length != 0; value = reader.ReadString())
             {

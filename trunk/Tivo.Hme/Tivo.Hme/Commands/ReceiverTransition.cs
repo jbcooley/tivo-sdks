@@ -81,7 +81,7 @@ namespace Tivo.Hme.Commands
 
         #endregion
 
-        private static void WriteParameters(HmeConnection connection, TivoTree _parameters)
+        internal static void WriteParameters(HmeConnection connection, TivoTree _parameters)
         {
             // TODO: values must be sorted when there is a child (ie, this is a dictionary entry)
             foreach (string key in _parameters)
