@@ -22,6 +22,8 @@ namespace Tivo.Hme.Samples
             servers.Add(new HmeServer<Pictures>("Pictures", new Uri("http://localhost:9688/Pictures/")));
             servers.Add(new HmeServer<TicTacToe>("Tic Tac Toe", new Uri("http://localhost:9688/TicTacToe/")));
             servers.Add(new HmeServer<Music>("Music", new Uri("http://localhost:9688/Music/")));
+            servers.Add(new HmeServer<StreamingVideo>("Video", new Uri("http://localhost:9688/Video/")));
+            servers.Add(new HmeServer<Transition>("Transition", new Uri("http://localhost:9688/Transition/")));
             HmeServer helloWorld = new HmeServer("Hello World", new Uri("http://localhost:9688/HelloWorld/"));
             helloWorld.ApplicationConnected += new EventHandler<HmeApplicationConnectedEventArgs>(server_ApplicationConnected);
             servers.Add(helloWorld);
