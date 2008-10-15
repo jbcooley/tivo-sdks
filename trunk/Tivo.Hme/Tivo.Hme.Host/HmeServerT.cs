@@ -22,21 +22,33 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Tivo.Hme.Host.Http;
+using System.ComponentModel.Design;
 
 namespace Tivo.Hme.Host
 {
     public class HmeServer<ApplicationT> : HmeServer where ApplicationT : HmeApplicationHandler, new()
     {
         private Dictionary<Application, ApplicationT> _applications = new Dictionary<Application, ApplicationT>();
+        private ServiceContainer _services = new ServiceContainer();
 
         public HmeServer(string name, Uri applicationPrefix, HmeServerOptions options)
             : base(name, applicationPrefix, options)
         {
+            InitializeServices();
         }
 
         public HmeServer(string name, Uri applicationPrefix)
             : base(name, applicationPrefix)
         {
+            InitializeServices();
+        }
+
+        private void InitializeServices()
+        {
+            _services.AddService(typeof(Services.IHttpHandlerRegistryService), delegate(IServiceContainer container, Type serviceType)
+            {
+                return new Services.HttpHandlerRegistryService(this);
+            });
         }
 
         protected override void OnApplicationConnected(HmeApplicationConnectedEventArgs args)
@@ -50,6 +62,7 @@ namespace Tivo.Hme.Host
             // start the application
             HmeApplicationStartArgs startArgs = new HmeApplicationStartArgs();
             startArgs.Application = args.Application;
+            startArgs.HostServices = _services;
             applicationT.OnApplicationStart(startArgs);
 
             base.OnApplicationConnected(args);

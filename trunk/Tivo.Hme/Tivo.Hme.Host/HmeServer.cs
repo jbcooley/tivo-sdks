@@ -88,7 +88,6 @@ namespace Tivo.Hme.Host
     public class HmeServer
     {
         private string _name;
-        private Uri _applicationPrefix;
         private short _usePort;
         private Mono.Zeroconf.RegisterService _service;
         private bool _started;
@@ -98,7 +97,7 @@ namespace Tivo.Hme.Host
         public HmeServer(string name, Uri applicationPrefix, HmeServerOptions options, IHmeApplicationPump pump)
         {
             _name = name;
-            _applicationPrefix = applicationPrefix;
+            ApplicationPrefix = applicationPrefix;
             _pump = pump;
 
             _usePort = 7688;
@@ -140,7 +139,7 @@ namespace Tivo.Hme.Host
                 _service.RegType = "_tivo-hme._tcp";
                 _service.TxtRecord = new Mono.Zeroconf.TxtRecord();
                 _service.TxtRecord.Add("version", "0.40");
-                _service.TxtRecord.Add("path", _applicationPrefix.AbsolutePath);
+                _service.TxtRecord.Add("path", ApplicationPrefix.AbsolutePath);
                 _service.Register();
 
             }
@@ -156,6 +155,8 @@ namespace Tivo.Hme.Host
                 _service = null;
             }
         }
+
+        public Uri ApplicationPrefix { get; private set; }
 
         public event EventHandler<HmeApplicationConnectedEventArgs> ApplicationConnected;
         public event EventHandler<NonApplicationRequestReceivedArgs> NonApplicationRequestReceivedArgs;
@@ -182,7 +183,7 @@ namespace Tivo.Hme.Host
             HmeConnection connection = new HmeConnection(e.HttpRequest.Stream, e.HttpRequest.Stream);
             HmeApplicationConnectedEventArgs args = new HmeApplicationConnectedEventArgs();
             args.Application = connection.Application;
-            args.BaseUri = new Uri("http://" + e.HttpRequest.Headers[HttpRequestHeader.Host] + _applicationPrefix.AbsolutePath);
+            args.BaseUri = new Uri("http://" + e.HttpRequest.Headers[HttpRequestHeader.Host] + ApplicationPrefix.AbsolutePath);
 
             OnApplicationConnected(args);
             _pump.AddHmeConnection(connection);
@@ -201,11 +202,11 @@ namespace Tivo.Hme.Host
         private void HttpServer_HttpRequestReceived(object sender, HttpRequestReceivedArgs e)
         {
             if (_started &&
-                StringComparer.InvariantCultureIgnoreCase.Compare(e.HttpRequest.RequestUri.OriginalString, _applicationPrefix.AbsolutePath) == 0)
+                StringComparer.InvariantCultureIgnoreCase.Compare(e.HttpRequest.RequestUri.OriginalString, ApplicationPrefix.AbsolutePath) == 0)
             {
                 OnHmeApplicationRequestReceived(e);
             }
-            else if (_started && e.HttpRequest.RequestUri.OriginalString.StartsWith(_applicationPrefix.AbsolutePath, StringComparison.InvariantCultureIgnoreCase))
+            else if (_started && e.HttpRequest.RequestUri.OriginalString.StartsWith(ApplicationPrefix.AbsolutePath, StringComparison.InvariantCultureIgnoreCase))
             {
                 NonApplicationRequestReceivedArgs args = new NonApplicationRequestReceivedArgs(e.HttpRequest);
                 OnNonApplicationRequestReceived(args);

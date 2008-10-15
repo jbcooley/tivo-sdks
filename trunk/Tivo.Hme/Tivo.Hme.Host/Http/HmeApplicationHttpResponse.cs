@@ -27,12 +27,20 @@ namespace Tivo.Hme.Host.Http
     {
         public override void Write(Stream responseStream)
         {
+            if (Request == null)
+                throw new InvalidOperationException();
             // start response
             StreamWriter writer = new StreamWriter(responseStream);
-            writer.WriteLine("HTTP/1.1 200 OK");
-            writer.WriteLine("Content-type: application/x-hme");
+            WriteResponse(writer, Request.Protocol + " 200 OK");
+            WriteResponse(writer, "Content-type: application/x-hme");
             writer.WriteLine();
             writer.Flush();
+        }
+
+        private static void WriteResponse(TextWriter writer, string message)
+        {
+            HttpLog.WriteHttpOut(message);
+            writer.WriteLine(message);
         }
     }
 }
