@@ -25,8 +25,9 @@ using System.Text;
 
 namespace Tivo.Hme.Host.Http
 {
-    public class HttpRequest
+    public class HttpRequest : Services.IHttpRequest
     {
+        private string _protocol;
         private HttpHeaderCollection _headers = new HttpHeaderCollection();
         private NetworkStream _stream;
         private Uri _requestUri;
@@ -44,6 +45,7 @@ namespace Tivo.Hme.Host.Http
             {
                 throw new NotSupportedException();
             }
+            _protocol = firstLineTokens[2];
             _requestUri = new Uri(firstLineTokens[1], UriKind.RelativeOrAbsolute);
             string headerLine;
             while ((headerLine = GetNextLine()).Length != 0)
@@ -54,7 +56,13 @@ namespace Tivo.Hme.Host.Http
 
         public void WriteResponse(HttpResponse httpResponse)
         {
+            httpResponse.Request = this;
             httpResponse.Write(Stream);
+        }
+
+        public string Protocol
+        {
+            get { return _protocol; }
         }
 
         public HttpHeaderCollection Headers
@@ -81,7 +89,28 @@ namespace Tivo.Hme.Host.Http
                 if (readByte != '\r')
                     builder.Append((char)readByte);
             }
-            return builder.ToString();
+            string line = builder.ToString();
+            HttpLog.WriteHttpIn(line);
+            return line;
         }
+
+        #region IHttpRequest Members
+
+        string Services.IHttpRequest.Action
+        {
+            get { return "GET"; }
+        }
+
+        System.Collections.Specialized.NameValueCollection Services.IHttpRequest.Headers
+        {
+            get { return Headers; }
+        }
+
+        Stream Services.IHttpRequest.Stream
+        {
+            get { return Stream; }
+        }
+
+        #endregion
     }
 }

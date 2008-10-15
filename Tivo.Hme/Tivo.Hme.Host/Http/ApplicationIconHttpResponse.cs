@@ -40,15 +40,29 @@ namespace Tivo.Hme.Host.Http
 
         public override void Write(Stream responseStream)
         {
+            if (Request == null)
+                throw new InvalidOperationException();
             StreamWriter writer = new StreamWriter(responseStream);
-            writer.WriteLine("HTTP/1.1 200 OK");
-            writer.WriteLine("Content-type: image/png");
-            writer.WriteLine("Content-Length: {0}", _icon.Length);
-            writer.WriteLine("Connection: close");
+            WriteResponse(writer, Request.Protocol + " 200 OK");
+            WriteResponse(writer, "Content-type: image/png");
+            WriteResponse(writer, "Content-Length: {0}", _icon.Length);
             writer.WriteLine();
             writer.Flush();
             responseStream.Write(_icon, 0, _icon.Length);
             responseStream.Close();
+        }
+
+        private static void WriteResponse(TextWriter writer, string message, params object[] args)
+        {
+            string line = string.Format(message, args);
+            HttpLog.WriteHttpOut(line);
+            writer.WriteLine(line);
+        }
+
+        private static void WriteResponse(TextWriter writer, string message)
+        {
+            HttpLog.WriteHttpOut(message);
+            writer.WriteLine(message);
         }
     }
 }

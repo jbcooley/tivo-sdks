@@ -26,6 +26,7 @@ namespace Tivo.Hme.Host.Http
 {
     public abstract class HttpResponse
     {
+        public HttpRequest Request { get; set; }
         public abstract void Write(System.IO.Stream responseStream);
     }
 }
