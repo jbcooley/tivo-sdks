@@ -7,17 +7,14 @@ namespace Tivo.Hme.Samples
 {
     class Music : HmeApplicationHandler
     {
+        static List<string> _fileNames = new List<string>();
+        private static int _initialized;
+
         // list of tracks
         MusicList _musicList;
-        static List<string> _fileNames = new List<string>();
-        static HttpListener _listener = new HttpListener();
-
         Track _track;
-
         Application _application;
-
         int _playingIndex = -1;
-
         DateTime _lastSelectionChange;
 
         static Music()
@@ -27,28 +24,41 @@ namespace Tivo.Hme.Samples
             {
                 _fileNames.Add(musicFileName);
             }
-            _listener.Prefixes.Add("http://192.168.0.102:8010/Music/");
-            _listener.Start();
-            _listener.BeginGetContext(new AsyncCallback(TrackRequest), null);
         }
 
-        private static void TrackRequest(IAsyncResult result)
+        private static void InitializeMusicHandler(IServiceProvider hostServices)
         {
-            HttpListenerContext context = _listener.EndGetContext(result);
-            _listener.BeginGetContext(new AsyncCallback(TrackRequest), null);
-            int musicLength = 7;
-            if (context.Request.Url.AbsolutePath.Length > musicLength)
+            // if not initialized - set = 1
+            // if equal to 1, then already initialized
+            if (System.Threading.Interlocked.Exchange(ref _initialized, 1) != 1)
             {
-                string filename = context.Request.Url.AbsolutePath.Substring(musicLength);
+                var registry = (Tivo.Hme.Host.Services.IHttpHandlerRegistryService)hostServices.GetService(typeof(Tivo.Hme.Host.Services.IHttpHandlerRegistryService));
+                string registeredUri = "music/";
+                registry.RegisterHandler(registeredUri, MusicRequestHandler);
+            }
+        }
+        
+        private static void MusicRequestHandler(Tivo.Hme.Host.Services.HttpHandlerArgs args)
+        {
+            //TODO: must support query
+            string path = args.Request.RequestUri.OriginalString.Substring(args.RegisteredUri.Length);
+            int musicLength = 7;
+            if (path.Length > musicLength)
+            {
+                string filename = path.Substring(musicLength);
                 byte[] trackBytes = System.IO.File.ReadAllBytes(System.IO.Path.Combine(Properties.Settings.Default.MusicPath, filename));
-                string position = context.Request.QueryString["Seek"];
-                context.Response.OutputStream.Write(trackBytes, 0, trackBytes.Length);
-                context.Response.Close();
+                // string position = args.Request.RequestUri.QueryString["Seek"];
+                // read query portion of RequestUri for seek if supporting trick play.
+                // the syntax above is no supported
+                var stream = args.Response.GetResponseStream(200, null);
+                stream.Write(trackBytes, 0, trackBytes.Length);
+                stream.Close();
             }
         }
 
         public override void OnApplicationStart(HmeApplicationStartArgs e)
         {
+            InitializeMusicHandler(e.HostServices);
             _musicList = new MusicList(27);
             _musicList.Bounds = new System.Drawing.Rectangle(64, 40, 640 - 64 * 2, 480 - 150);
             _musicList.SelectionChanged += new EventHandler<EventArgs>(_musicList_SelectionChanged);
@@ -144,7 +154,7 @@ namespace Tivo.Hme.Samples
             {
                 _playingIndex = index;
 
-                Uri uri = new Uri("http://" + BaseUri.Host + ":8010/Music/" + MapUrl(_fileNames[_playingIndex]));
+                Uri uri = new Uri(BaseUri, "music/" + MapUrl(_fileNames[_playingIndex]));
                 _track.PlayTrack(uri);
             }
         }
