@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Tivo.Hmo")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Tivo HMO library")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Hewlett-Packard Company")]
+[assembly: AssemblyCompany("Josh Cooley")]
 [assembly: AssemblyProduct("Tivo.Hmo")]
-[assembly: AssemblyCopyright("Copyright © Hewlett-Packard Company 2007")]
+[assembly: AssemblyCopyright("Copyright © 2008")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
