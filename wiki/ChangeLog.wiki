@@ -1,6 +1,13 @@
 #labels Featured
 = Tivo.Hme and Tivo.Hme.Host Change Log =
 
+*1.4 Oct 21, 2008*
+
+  * Added support for application transitions.
+  * Added support for exposing host services
+  * Added temporary support for http to Tivo.Hme.Host.  This will be replaced soon with an alternate http service.
+  * Added sample for transitions and streaming video
+
 *1.3 Aug 4, 2008*
 
   * Made minor changes to support Hme Application Server.
