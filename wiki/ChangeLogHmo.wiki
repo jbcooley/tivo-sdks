@@ -1,0 +1,6 @@
+= Tivo.Hmo Change Log =
+
+*2.0 Oct 21, 2008*
+
+  * Move towards a public HMO SDK.  1.0 was just an internal implementation for DiskUsage.
+  * Using XLinq (requires .NET 3.5)
