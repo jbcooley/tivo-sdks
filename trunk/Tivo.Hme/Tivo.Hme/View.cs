@@ -408,7 +408,8 @@ namespace Tivo.Hme
                 {
                     Application.ReleaseResourceId(ResourceId);
                 }
-                foreach (View child in Children)
+                // create wrapper list since the collection may be mutated
+                foreach (View child in new List<View>(Children))
                 {
                     child.Dispose();
                 }
