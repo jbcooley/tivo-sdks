@@ -24,80 +24,92 @@ namespace Tivo.Has.Configuration
             _controller = controller;
         }
 
-        #region IHasConfigurationService Members
-
-        public string[] GetApplicationDirectories()
+        public void PrepareApplication(string applicationName)
         {
-            return Properties.Settings.Default.ApplicationDirectories.Cast<string>().ToArray();
         }
 
-        public void AddApplicationDirectory(string directory)
+        public void DisableApplication(string applicationName)
         {
-            _controller.LoadApplications(directory);
-            Properties.Settings.Default.ApplicationDirectories.Add(directory);
-            Properties.Settings.Default.Save();
         }
 
-        public void RemoveApplicationDirectory(string directory)
+        public void RemoveApplication(string applicationName)
         {
-            var servers = from s in _controller.Servers
-                          where s.ServerPath == directory
-                          select s.HmeServer;
-
-            foreach (var server in servers)
-            {
-                server.Stop();
-            }
-            _controller.Remove(server => server.ServerPath == directory);
-
-            Properties.Settings.Default.ApplicationDirectories.Remove(directory);
-            Properties.Settings.Default.Save();
         }
 
-        public void StopAllApplications()
-        {
-            _controller.StopAllServers();
-        }
+        //#region IHasConfigurationService Members
 
-        public void StopApplication(string applicationName)
-        {
-            StopApplications(new string[] { applicationName });
-        }
+        //public string[] GetApplicationDirectories()
+        //{
+        //    return Properties.Settings.Default.ApplicationDirectories.Cast<string>().ToArray();
+        //}
 
-        public void StopApplications(string[] applicationNames)
-        {
-            var servers = from s in _controller.Servers
-                          where applicationNames.Contains(s.Identity.Name)
-                          select s.HmeServer;
-            foreach (var server in servers)
-            {
-                server.Stop();
-            }
-        }
+        //public void AddApplicationDirectory(string directory)
+        //{
+        //    _controller.LoadApplications(directory);
+        //    Properties.Settings.Default.ApplicationDirectories.Add(directory);
+        //    Properties.Settings.Default.Save();
+        //}
 
-        public void StartApplication(string applicationName)
-        {
-            StartApplications(new string[] { applicationName });
-        }
+        //public void RemoveApplicationDirectory(string directory)
+        //{
+        //    var servers = from s in _controller.Servers
+        //                  where s.ServerPath == directory
+        //                  select s.HmeServer;
 
-        public void StartApplications(string[] applicationNames)
-        {
-            var servers = from s in _controller.Servers
-                          where applicationNames.Contains(s.Identity.Name)
-                          select s.HmeServer;
-            foreach (var server in servers)
-            {
-                server.Start();
-            }
-        }
+        //    foreach (var server in servers)
+        //    {
+        //        server.Stop();
+        //    }
+        //    _controller.Remove(server => server.ServerPath == directory);
 
-        public string[] GetApplicationNames(string directory)
-        {
-            return (from s in _controller.Servers
-                    where s.ServerPath == directory
-                    select s.Identity.Name).ToArray();
-        }
+        //    Properties.Settings.Default.ApplicationDirectories.Remove(directory);
+        //    Properties.Settings.Default.Save();
+        //}
 
-        #endregion
+        //public void StopAllApplications()
+        //{
+        //    _controller.StopAllServers();
+        //}
+
+        //public void StopApplication(string applicationName)
+        //{
+        //    StopApplications(new string[] { applicationName });
+        //}
+
+        //public void StopApplications(string[] applicationNames)
+        //{
+        //    var servers = from s in _controller.Servers
+        //                  where applicationNames.Contains(s.Identity.Name)
+        //                  select s.HmeServer;
+        //    foreach (var server in servers)
+        //    {
+        //        server.Stop();
+        //    }
+        //}
+
+        //public void StartApplication(string applicationName)
+        //{
+        //    StartApplications(new string[] { applicationName });
+        //}
+
+        //public void StartApplications(string[] applicationNames)
+        //{
+        //    var servers = from s in _controller.Servers
+        //                  where applicationNames.Contains(s.Identity.Name)
+        //                  select s.HmeServer;
+        //    foreach (var server in servers)
+        //    {
+        //        server.Start();
+        //    }
+        //}
+
+        //public string[] GetApplicationNames(string directory)
+        //{
+        //    return (from s in _controller.Servers
+        //            where s.ServerPath == directory
+        //            select s.Identity.Name).ToArray();
+        //}
+
+        //#endregion
     }
 }
