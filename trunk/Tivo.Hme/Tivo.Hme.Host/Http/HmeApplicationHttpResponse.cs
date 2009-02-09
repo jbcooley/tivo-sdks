@@ -23,24 +23,12 @@ using System.IO;
 
 namespace Tivo.Hme.Host.Http
 {
-    public class HmeApplicationHttpResponse : HttpResponse
+    public static class HmeApplicationHttpResponse
     {
-        public override void Write(Stream responseStream)
+        public static void BeginResponse(HttpListenerContext context)
         {
-            if (Request == null)
-                throw new InvalidOperationException();
-            // start response
-            StreamWriter writer = new StreamWriter(responseStream);
-            WriteResponse(writer, Request.Protocol + " 200 OK");
-            WriteResponse(writer, "Content-type: application/x-hme");
-            writer.WriteLine();
-            writer.Flush();
-        }
-
-        private static void WriteResponse(TextWriter writer, string message)
-        {
-            HttpLog.WriteHttpOut(message);
-            writer.WriteLine(message);
+            context.Response.NeverChunked = true;
+            context.Response.ContentType = "application/x-hme";
         }
     }
 }
