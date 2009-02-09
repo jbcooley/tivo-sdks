@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Tivo.Hme;
 using Tivo.Hme.Host;
+using Tivo.Hme.Host.Services;
 
 namespace Tivo.Has.AddIn
 {
@@ -12,6 +13,7 @@ namespace Tivo.Has.AddIn
     {
         private Type _hmeApplicationHandler;
         private Dictionary<Application, HmeApplicationHandler> _applications = new Dictionary<Application, HmeApplicationHandler>();
+        private System.ComponentModel.Design.ServiceContainer _services = new System.ComponentModel.Design.ServiceContainer();
 
         public HmeApplicationIdentity(int index)
         {
@@ -23,20 +25,25 @@ namespace Tivo.Has.AddIn
             {
                 Icon = ((ApplicationIconAttribute)attributes[0]).Icon;
             }
+            attributes = _hmeApplicationHandler.GetCustomAttributes(typeof(UsesHostHttpServicesAttribute), true);
+            UsesHostHttpServices = attributes.Length != 0 && attributes[0] is UsesHostHttpServicesAttribute;
             // TODO: else set Icon = default icon
+            // TODO: allow WebPath to be configured
+            WebPath = AppDomain.CurrentDomain.BaseDirectory;
         }
 
-        public HmeApplicationHandler CreateApplication(HmeConnection connection)
+        public HmeApplicationHandler CreateApplication(HmeConnection connection, string baseUri)
         {
             HmeApplicationHandler application = (HmeApplicationHandler)Activator.CreateInstance(_hmeApplicationHandler);
             // store copy associated to application so it can be used in closed event
             _applications.Add(connection.Application, application);
             connection.Application.Closed += new EventHandler<EventArgs>(Application_Closed);
 
-            application.BaseUri = EndPoint;
+            application.BaseUri = new Uri(baseUri);
             // start the application
             HmeApplicationStartArgs startArgs = new HmeApplicationStartArgs();
             startArgs.Application = connection.Application;
+            startArgs.HostServices = _services;
             application.OnApplicationStart(startArgs);
             return application;
         }
@@ -59,6 +66,10 @@ namespace Tivo.Has.AddIn
 
         public Uri EndPoint { get; private set; }
 
+        public bool UsesHostHttpServices { get; private set; }
+
         #endregion
+
+        public string WebPath { get; private set; }
     }
 }
