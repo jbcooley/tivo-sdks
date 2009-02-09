@@ -39,15 +39,24 @@ namespace Tivo.Has.AddIn
 
         public event EventHandler<ApplicationEndedEventArgs> ApplicationEnded;
 
-        public IHmeConnection CreateHmeConnection(IHmeApplicationIdentity identity, IHmeStream inputStream, IHmeStream outputStream)
+        public IHmeConnection CreateHmeConnection(IHmeApplicationIdentity identity, string baseUri, IHmeStream inputStream, IHmeStream outputStream)
         {
             if (identity == null)
                 throw new ArgumentNullException("identity");
 
             HmeConnectionWrapper wrapper = new HmeConnectionWrapper(inputStream, outputStream);
-            ((HmeApplicationIdentity)identity).CreateApplication(wrapper.HmeConnection);
+            ((HmeApplicationIdentity)identity).CreateApplication(wrapper.HmeConnection, baseUri);
 
             return wrapper;
+        }
+
+        public string GetWebPath(IHmeApplicationIdentity identity)
+        {
+            if (identity is HmeApplicationIdentity)
+            {
+                return ((HmeApplicationIdentity)identity).WebPath;
+            }
+            return AppDomain.CurrentDomain.BaseDirectory;
         }
 
         public void HandleEventsAsync(IHmeConnection connection)
