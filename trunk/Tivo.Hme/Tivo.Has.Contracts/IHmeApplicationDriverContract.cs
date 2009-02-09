@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.IO;
 using System.AddIn.Contract;
 using System.AddIn.Pipeline;
@@ -18,7 +19,8 @@ namespace Tivo.Has.Contracts
     {
         IHasApplicationConfiguratorContract GetApplicationConfiguration();
         IListContract<IHmeApplicationIdentityContract> ApplicationIdentities { get; }
-        IHmeConnectionContract CreateHmeConnection(IHmeApplicationIdentityContract identity, IHmeStreamContract inputStream, IHmeStreamContract outputStream);
+        IHmeConnectionContract CreateHmeConnection(IHmeApplicationIdentityContract identity, string baseUri, IHmeStreamContract inputStream, IHmeStreamContract outputStream);
+        string GetWebPath(IHmeApplicationIdentityContract identity);
         void HandleEventsAsync(IHmeConnectionContract connection);
         void RunOneAsync(IHmeConnectionContract connection);
         

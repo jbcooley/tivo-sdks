@@ -9,5 +9,6 @@ namespace Tivo.Has.Contracts
         string Name { get; }
         byte[] Icon { get; }
         Uri EndPoint { get; }
+        bool UsesHostHttpServices { get; }
     }
 }
