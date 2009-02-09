@@ -67,6 +67,7 @@ namespace Tivo.Hme.Host.Http {
 			this.context = context;
 			headers = new WebHeaderCollection ();
 			input_stream = Stream.Null;
+			version = HttpVersion.Version10;
 		}
 
 		static char [] separators = new char [] { ' ' };
