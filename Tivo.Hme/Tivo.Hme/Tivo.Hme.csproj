@@ -92,6 +92,7 @@
     <Compile Include="Host\HmeWriter.cs" />
     <Compile Include="Host\HmeConnection.cs" />
     <Compile Include="Host\IHmeConnectionSyncronizationInfo.cs" />
+    <Compile Include="Host\Services\UsesHostHttpServicesAttribute.cs" />
     <Compile Include="IdleEventArgs.cs" />
     <Compile Include="ImageLayout.cs" />
     <Compile Include="ImageResource.cs" />
