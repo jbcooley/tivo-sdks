@@ -5,37 +5,13 @@ using System.Net;
 
 namespace Tivo.Hme.Samples
 {
+    [Tivo.Hme.Host.Services.UsesHostHttpServices]
     class StreamingVideo : HmeApplicationHandler
     {
-        private static int _initialized;
-
-        private static void InitializeVideoHandler(IServiceProvider hostServices)
-        {
-            // if not initialized - set = 1
-            // if equal to 1, then already initialized
-            if (System.Threading.Interlocked.Exchange(ref _initialized, 1) != 1)
-            {
-                var registry = (Tivo.Hme.Host.Services.IHttpHandlerRegistryService)hostServices.GetService(typeof(Tivo.Hme.Host.Services.IHttpHandlerRegistryService));
-                string registeredUri = "tivoStartup.mp4";
-                registry.RegisterHandler(registeredUri, VideoRequestHandler);
-            }
-        }
-
-        private static void VideoRequestHandler(Tivo.Hme.Host.Services.HttpHandlerArgs args)
-        {
-            var stream = args.Response.GetResponseStream(200, null);
-            byte[] trackBytes = System.IO.File.ReadAllBytes("tivoStartup.mp4");
-            stream.Write(trackBytes, 0, trackBytes.Length);
-            stream.Close();
-        }
-
-        private IServiceProvider _hostServices;
         private StreamedVideoView _videoView;
 
         public override void OnApplicationStart(HmeApplicationStartArgs e)
         {
-            _hostServices = e.HostServices;
-            InitializeVideoHandler(_hostServices);
             _videoView = new StreamedVideoView();
             e.Application.Root = _videoView;
             Uri uri = new Uri(BaseUri, "tivoStartup.mp4");
@@ -48,10 +24,11 @@ namespace Tivo.Hme.Samples
         {
             if (e.Resource == _videoView && e.Status == ResourceStatus.Complete)
                 _videoView.Stop();
-            if (e.Resource == _videoView && e.Status > ResourceStatus.Error)
-            {
-                int x = 0;
-            }
+            //if (e.Resource == _videoView && e.Status > ResourceStatus.Error)
+            //{
+            //    // just a place to set a break point for debugging
+            //    int x = 0;
+            //}
         }
 
         int _speedIndex = 3;
