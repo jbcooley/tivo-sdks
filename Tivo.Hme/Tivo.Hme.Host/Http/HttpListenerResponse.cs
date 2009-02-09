@@ -196,7 +196,7 @@ namespace Tivo.Hme.Host.Http {
         public bool NeverChunked
         {
             get { return _neverChuncked; }
-            set { SendChunked = !value; _neverChuncked = value; }
+            set { SendChunked = value; _neverChuncked = value; }
         }
 
 		public bool SendChunked {
@@ -435,7 +435,7 @@ namespace Tivo.Hme.Host.Http {
 			}
 
 			Version v = context.Request.ProtocolVersion;
-			if (!cl_set && !chunked && v >= HttpVersion.Version11 && !NeverChunked)
+			if (!cl_set && !chunked && v >= HttpVersion.Version11)
 				chunked = true;
 				
 			/* Apache forces closing the connection for these status codes:

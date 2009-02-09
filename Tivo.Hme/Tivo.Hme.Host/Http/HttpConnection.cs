@@ -306,8 +306,8 @@ namespace Tivo.Hme.Host.Http {
 
 		public void Close ()
 		{
-			if (o_stream != null) {
-				Stream st = o_stream;
+			if (sock != null) {
+				Stream st = GetResponseStream ();
 				st.Close ();
 				o_stream = null;
 			}
@@ -326,6 +326,7 @@ namespace Tivo.Hme.Host.Http {
 					sock = null;
 					try {
 						s.Shutdown (SocketShutdown.Both);
+					} catch {
 					} finally {
 						s.Close ();
 					}
