@@ -12,22 +12,31 @@ namespace Tivo.Has.Configuration
     public interface IHasConfigurationService
     {
         [OperationContract]
-        string[] GetApplicationDirectories();
+        void PrepareApplication(string applicationName);
         [OperationContract]
-        void AddApplicationDirectory(string directory);
+        void RemoveApplication(string applicationName);
         [OperationContract]
-        void RemoveApplicationDirectory(string directory);
-        [OperationContract]
-        void StopAllApplications();
-        [OperationContract]
-        void StopApplication(string applicationName);
-        [OperationContract]
-        void StopApplications(string[] applicationNames);
-        [OperationContract]
-        void StartApplication(string applicationName);
-        [OperationContract]
-        void StartApplications(string[] applicationNames);
-        [OperationContract]
-        string[] GetApplicationNames(string directory);
+        void DisableApplication(string applicationName);
+        // Prepare Application // prepare for upload
+        // Remove Appliction
+        // Disable Application
+        //[OperationContract]
+        //string[] GetApplicationDirectories();
+        //[OperationContract]
+        //void AddApplicationDirectory(string directory);
+        //[OperationContract]
+        //void RemoveApplicationDirectory(string directory);
+        //[OperationContract]
+        //void StopAllApplications();
+        //[OperationContract]
+        //void StopApplication(string applicationName);
+        //[OperationContract]
+        //void StopApplications(string[] applicationNames);
+        //[OperationContract]
+        //void StartApplication(string applicationName);
+        //[OperationContract]
+        //void StartApplications(string[] applicationNames);
+        //[OperationContract]
+        //string[] GetApplicationNames(string directory);
     }
 }
