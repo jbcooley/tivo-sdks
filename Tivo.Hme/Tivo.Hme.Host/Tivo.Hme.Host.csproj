@@ -14,13 +14,14 @@
     <OldToolsVersion>2.0</OldToolsVersion>
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;NET_2_0;SECURITY_DEP</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -28,11 +29,15 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>TRACE;NET_2_0;SECURITY_DEP</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Mono.Security, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\mono.webserver\Mono.Security.dll</HintPath>
+    </Reference>
     <Reference Include="Mono.Zeroconf, Version=2.0.0.76, Culture=neutral, PublicKeyToken=e60c4f4a95e1099e, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\mono-zeroconf-0.8.0-binary\bin\Mono.Zeroconf.dll</HintPath>
@@ -42,18 +47,36 @@
       <HintPath>..\..\mono-zeroconf-0.8.0-binary\bin\Mono.Zeroconf.Providers.Bonjour.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
     <Reference Include="System.Data" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="HmeServer.cs" />
     <Compile Include="HmeServerT.cs" />
-    <Compile Include="Http\ApplicationIconHttpResponse.cs" />
+    <Compile Include="Http\ChunkedInputStream.cs" />
+    <Compile Include="Http\ChunkStream.cs" />
+    <Compile Include="Http\CookieHelper.cs" />
+    <Compile Include="Http\EndPointListener.cs" />
+    <Compile Include="Http\EndPointManager.cs" />
     <Compile Include="Http\HmeApplicationHttpResponse.cs" />
-    <Compile Include="Http\HttpHeadersCollection.cs" />
-    <Compile Include="Http\HttpRequest.cs" />
-    <Compile Include="Http\HttpResponse.cs" />
-    <Compile Include="Http\HttpServer.cs" />
+    <Compile Include="Http\HttpConnection.cs" />
+    <Compile Include="Http\HttpListener.cs" />
+    <Compile Include="Http\HttpListenerContext.cs" />
+    <Compile Include="Http\HttpListenerPrefixCollection.cs" />
+    <Compile Include="Http\HttpListenerRequest.cs" />
+    <Compile Include="Http\HttpListenerResponse.cs" />
+    <Compile Include="Http\HttpStreamAsyncResult.cs" />
+    <Compile Include="Http\HttpUtility.cs" />
+    <Compile Include="Http\ListenerAsyncResult.cs" />
+    <Compile Include="Http\ListenerPrefix.cs" />
+    <Compile Include="Http\RequestStream.cs" />
+    <Compile Include="Http\ResponseStream.cs" />
+    <Compile Include="Http\UriHelper.cs" />
+    <Compile Include="Http\WebHeaderCollection.cs" />
     <Compile Include="IHmeApplicationPump.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -62,20 +85,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Services\HttpHandlerArgs.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Services\HttpHandlerRegistryService.cs" />
-    <Compile Include="Services\HttpResponse.cs" />
-    <Compile Include="Services\IHttpHandlerRegistryService.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Services\IHttpRequest.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Services\IHttpResponse.cs">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="Services\HmeHostWorkerRequest.cs" />
+    <Compile Include="Services\IHttpApplicationHost.cs" />
+    <Compile Include="Services\IHttpApplicationHostPool.cs" />
+    <Compile Include="Services\HttpResponseWrapper.cs" />
+    <Compile Include="Services\Mp3Handler.cs" />
+    <Compile Include="Services\SimpleAspNetHost.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Tivo.Hme\Tivo.Hme.csproj">

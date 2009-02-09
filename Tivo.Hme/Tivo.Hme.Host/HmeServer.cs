@@ -20,11 +20,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Net;
+using System.Diagnostics;
+using System.IO;
 using System.Threading;
 using Tivo.Hme.Host.Http;
-using System.Diagnostics;
+using Tivo.Hme.Host.Services;
 
 namespace Tivo.Hme.Host
 {
@@ -44,23 +44,23 @@ namespace Tivo.Hme.Host
             get { return _baseUri; }
             set { _baseUri = value; }
         }
-	
     }
 
-    public class NonApplicationRequestReceivedArgs : HttpRequestReceivedArgs
+    public class HttpConnectionEventArgs : EventArgs
     {
-        private HttpResponse _response;
-
-        public NonApplicationRequestReceivedArgs(HttpRequest request)
-            : base(request)
+        public HttpConnectionEventArgs(HttpListenerContext context)
         {
+            Context = context;
         }
 
-        public HttpResponse HttpResponse
-        {
-            get { return _response; }
-            set { _response = value; }
-        }
+        public HttpListenerContext Context { get; private set; }
+    }
+
+    public class HmeApplicationIconRequestedArgs : EventArgs
+    {
+        public byte[] Icon { get; set; }
+        public string ContentType { get; set; }
+        public Uri BaseUri { get; set; }
     }
 
     /// <summary>
@@ -85,7 +85,7 @@ namespace Tivo.Hme.Host
     /// and commands for all applications.  Uses thread pool to send commands and
     /// raise events.
     /// </summary>
-    public class HmeServer
+    public class HmeServer : System.ComponentModel.Design.IServiceContainer
     {
         private string _name;
         private short _usePort;
@@ -93,18 +93,27 @@ namespace Tivo.Hme.Host
         private bool _started;
         private bool _advertise;
         private IHmeApplicationPump _pump;
+        private string iconUri;
+        private System.ComponentModel.Design.IServiceContainer _serviceContainer;
 
-        public HmeServer(string name, Uri applicationPrefix, HmeServerOptions options, IHmeApplicationPump pump)
+        public HmeServer(string name, Uri applicationPrefix, HmeServerOptions options, IHmeApplicationPump pump, IServiceProvider parentProvider)
         {
             _name = name;
             ApplicationPrefix = applicationPrefix;
             _pump = pump;
+            iconUri = applicationPrefix.AbsolutePath + "icon.png";
+            _advertise = (options & HmeServerOptions.AdvertiseOnLocalNetwork) == HmeServerOptions.AdvertiseOnLocalNetwork;
+            _serviceContainer = new System.ComponentModel.Design.ServiceContainer(parentProvider);
+            _serviceContainer.AddService(typeof(IHttpApplicationHostPool), new HttpApplicationHostPool());
 
             _usePort = 7688;
             if (applicationPrefix.IsAbsoluteUri)
             {
                 _usePort = (short)applicationPrefix.Port;
             }
+
+            // everything important to initialization must happen before here since the events can
+            // be raised immediately.
             lock (_portServers)
             {
                 HmePortServer portServer;
@@ -113,10 +122,13 @@ namespace Tivo.Hme.Host
                     portServer = new HmePortServer(_usePort);
                     _portServers.Add(_usePort, portServer);
                 }
-                portServer.HttpServer.HttpRequestReceived += new EventHandler<HttpRequestReceivedArgs>(HttpServer_HttpRequestReceived);
+                portServer.ConnectionReceived += HttpServer_HttpConnectionReceived;
             }
+        }
 
-            _advertise = (options & HmeServerOptions.AdvertiseOnLocalNetwork) == HmeServerOptions.AdvertiseOnLocalNetwork;
+        public HmeServer(string name, Uri applicationPrefix, HmeServerOptions options, IHmeApplicationPump pump)
+            : this(name, applicationPrefix, options, pump, null)
+        {
         }
 
         public HmeServer(string name, Uri applicationPrefix, HmeServerOptions options)
@@ -156,34 +168,87 @@ namespace Tivo.Hme.Host
             }
         }
 
+        #region IServiceProvider Members
+
+        public virtual object GetService(Type serviceType)
+        {
+            return _serviceContainer.GetService(serviceType);
+        }
+
+        #endregion
+
+        #region IServiceContainer Members
+
+        void System.ComponentModel.Design.IServiceContainer.AddService(Type serviceType, System.ComponentModel.Design.ServiceCreatorCallback callback, bool promote)
+        {
+            _serviceContainer.AddService(serviceType, callback, promote);
+        }
+
+        void System.ComponentModel.Design.IServiceContainer.AddService(Type serviceType, System.ComponentModel.Design.ServiceCreatorCallback callback)
+        {
+            _serviceContainer.AddService(serviceType, callback);
+        }
+
+        void System.ComponentModel.Design.IServiceContainer.AddService(Type serviceType, object serviceInstance, bool promote)
+        {
+            _serviceContainer.AddService(serviceType, serviceInstance, promote);
+        }
+
+        void System.ComponentModel.Design.IServiceContainer.AddService(Type serviceType, object serviceInstance)
+        {
+            _serviceContainer.AddService(serviceType, serviceInstance);
+        }
+
+        void System.ComponentModel.Design.IServiceContainer.RemoveService(Type serviceType, bool promote)
+        {
+            _serviceContainer.RemoveService(serviceType, promote);
+        }
+
+        void System.ComponentModel.Design.IServiceContainer.RemoveService(Type serviceType)
+        {
+            _serviceContainer.RemoveService(serviceType);
+        }
+
+        #endregion
+
         public Uri ApplicationPrefix { get; private set; }
 
         public event EventHandler<HmeApplicationConnectedEventArgs> ApplicationConnected;
-        public event EventHandler<NonApplicationRequestReceivedArgs> NonApplicationRequestReceivedArgs;
+        public event EventHandler<HttpConnectionEventArgs> NonApplicationRequestReceived;
+        public event EventHandler<HmeApplicationIconRequestedArgs> ApplicationIconRequested;
 
-        protected virtual void OnNonApplicationRequestReceived(NonApplicationRequestReceivedArgs e)
+        protected virtual void OnNonApplicationRequestReceived(HttpConnectionEventArgs e)
         {
             ServerLog.Write(TraceEventType.Verbose, "Enter HmeServer.OnNonApplicationRequestReceived");
-            EventHandler<NonApplicationRequestReceivedArgs> handler = NonApplicationRequestReceivedArgs;
+            EventHandler<HttpConnectionEventArgs> handler = NonApplicationRequestReceived;
             if (handler != null)
             {
                 handler(this, e);
             }
-            if (e.HttpResponse == null)
-            {
-                e.HttpResponse = new ApplicationIconHttpResponse();
-            }
             ServerLog.Write(TraceEventType.Verbose, "Exit HmeServer.OnNonApplicationRequestReceived");
         }
 
-        protected virtual void OnHmeApplicationRequestReceived(HttpRequestReceivedArgs e)
+        protected virtual void OnHmeApplicationIconRequested(HmeApplicationIconRequestedArgs e)
+        {
+            EventHandler<HmeApplicationIconRequestedArgs> handler = ApplicationIconRequested;
+            if (handler != null)
+                handler(this, e);
+            if (e.Icon == null)
+            {
+                // provide default icon
+                e.Icon = Properties.Resources.iconpng;
+                e.ContentType = "image/png";
+            }
+        }
+
+        protected virtual void OnHmeApplicationRequestReceived(HttpListenerContext context)
         {
             ServerLog.Write(TraceEventType.Verbose, "Enter HmeServer.OnHmeApplicationRequestReceived");
-            e.HttpRequest.WriteResponse(new HmeApplicationHttpResponse());
-            HmeConnection connection = new HmeConnection(e.HttpRequest.Stream, e.HttpRequest.Stream);
+            HmeApplicationHttpResponse.BeginResponse(context);
+            HmeConnection connection = new HmeConnection(context.Request.InputStream, context.Response.OutputStream);
             HmeApplicationConnectedEventArgs args = new HmeApplicationConnectedEventArgs();
             args.Application = connection.Application;
-            args.BaseUri = new Uri("http://" + e.HttpRequest.Headers[HttpRequestHeader.Host] + ApplicationPrefix.AbsolutePath);
+            args.BaseUri = BuildBaseUri(context);
 
             OnApplicationConnected(args);
             _pump.AddHmeConnection(connection);
@@ -199,19 +264,42 @@ namespace Tivo.Hme.Host
             }
         }
 
-        private void HttpServer_HttpRequestReceived(object sender, HttpRequestReceivedArgs e)
+        private void HttpServer_HttpConnectionReceived(object sender, HttpConnectionEventArgs e)
         {
             if (_started &&
-                StringComparer.InvariantCultureIgnoreCase.Compare(e.HttpRequest.RequestUri.OriginalString, ApplicationPrefix.AbsolutePath) == 0)
+                ((e.Context.Request.Url.IsAbsoluteUri && StringComparer.InvariantCultureIgnoreCase.Compare(e.Context.Request.Url.AbsolutePath, ApplicationPrefix.AbsolutePath) == 0) ||
+                StringComparer.InvariantCultureIgnoreCase.Compare(e.Context.Request.Url.OriginalString, ApplicationPrefix.AbsolutePath) == 0))
             {
-                OnHmeApplicationRequestReceived(e);
+                OnHmeApplicationRequestReceived(e.Context);
             }
-            else if (_started && e.HttpRequest.RequestUri.OriginalString.StartsWith(ApplicationPrefix.AbsolutePath, StringComparison.InvariantCultureIgnoreCase))
+            else if (_started &&
+                ((e.Context.Request.Url.IsAbsoluteUri && e.Context.Request.Url.AbsolutePath.StartsWith(ApplicationPrefix.AbsolutePath, StringComparison.InvariantCultureIgnoreCase)) ||
+                e.Context.Request.Url.OriginalString.StartsWith(ApplicationPrefix.AbsolutePath, StringComparison.InvariantCultureIgnoreCase)))
             {
-                NonApplicationRequestReceivedArgs args = new NonApplicationRequestReceivedArgs(e.HttpRequest);
-                OnNonApplicationRequestReceived(args);
-                e.HttpRequest.WriteResponse(args.HttpResponse);
+                if (StringComparer.InvariantCultureIgnoreCase.Compare(e.Context.Request.Url.LocalPath, iconUri) == 0)
+                {
+                    HmeApplicationIconRequestedArgs iconArgs = new HmeApplicationIconRequestedArgs { BaseUri = BuildBaseUri(e.Context) };
+                    OnHmeApplicationIconRequested(iconArgs);
+                    e.Context.Response.ContentType = iconArgs.ContentType;
+                    e.Context.Response.ContentLength64 = iconArgs.Icon.LongLength;
+                    e.Context.Response.OutputStream.Write(iconArgs.Icon, 0, iconArgs.Icon.Length);
+                    //e.Context.Response.Close();
+                }
+                else
+                {
+                    OnNonApplicationRequestReceived(e);
+                }
             }
+        }
+
+        protected Uri BuildBaseUri(HttpListenerContext context)
+        {
+            string[] hostParts = (context.Request.UserHostName ?? context.Request.Url.Authority).Split(':');
+            UriBuilder builder = new UriBuilder("http", hostParts[0]);
+            if (hostParts.Length == 2)
+                builder.Port = int.Parse(hostParts[1]);
+            builder.Path = ApplicationPrefix.AbsolutePath;
+            return builder.Uri;
         }
 
         private static Dictionary<short, HmePortServer> _portServers = new Dictionary<short, HmePortServer>();
@@ -318,17 +406,39 @@ namespace Tivo.Hme.Host
 
         private class HmePortServer
         {
-            private HttpServer _httpServer;
+            private static HttpListener _httpListener = new HttpListener();
+
+            static HmePortServer()
+            {
+                _httpListener.Start();
+                _httpListener.BeginGetContext(OnConnectionReceived, null);
+            }
 
             public HmePortServer(int listenPort)
             {
-                _httpServer = new HttpServer(System.Net.IPAddress.Any, listenPort);
-                _httpServer.Start();
+                _httpListener.Prefixes.Add("http://+:" + listenPort + "/");
             }
 
-            public HttpServer HttpServer
+            public EventHandler<HttpConnectionEventArgs> ConnectionReceived;
+
+            private static void OnConnectionReceived(IAsyncResult asyncResult)
             {
-                get { return _httpServer; }
+                // start next one before processing
+                _httpListener.BeginGetContext(OnConnectionReceived, null);
+                // process connection received
+                HttpListenerContext context = _httpListener.EndGetContext(asyncResult);
+                HmePortServer portServer;
+                if (_portServers.TryGetValue((short)context.Request.Url.Port, out portServer))
+                {
+                    portServer.RaiseConnectionReceived(context);
+                }
+            }
+
+            private void RaiseConnectionReceived(HttpListenerContext context)
+            {
+                EventHandler<HttpConnectionEventArgs> handler = ConnectionReceived;
+                if (handler != null)
+                    handler(this, new HttpConnectionEventArgs(context));
             }
         }
     }

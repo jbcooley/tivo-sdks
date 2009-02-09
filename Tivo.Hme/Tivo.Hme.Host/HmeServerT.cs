@@ -20,16 +20,17 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
-using Tivo.Hme.Host.Http;
-using System.ComponentModel.Design;
+using System.Diagnostics;
+using Tivo.Hme.Host.Services;
 
 namespace Tivo.Hme.Host
 {
     public class HmeServer<ApplicationT> : HmeServer where ApplicationT : HmeApplicationHandler, new()
     {
         private Dictionary<Application, ApplicationT> _applications = new Dictionary<Application, ApplicationT>();
-        private ServiceContainer _services = new ServiceContainer();
+        private bool _usesHostHttpServices;
+        // use shared domain with this server
+        private static string WebAppPath = AppDomain.CurrentDomain.BaseDirectory;
 
         public HmeServer(string name, Uri applicationPrefix, HmeServerOptions options)
             : base(name, applicationPrefix, options)
@@ -45,10 +46,8 @@ namespace Tivo.Hme.Host
 
         private void InitializeServices()
         {
-            _services.AddService(typeof(Services.IHttpHandlerRegistryService), delegate(IServiceContainer container, Type serviceType)
-            {
-                return new Services.HttpHandlerRegistryService(this);
-            });
+            object[] attributes = typeof(ApplicationT).GetCustomAttributes(typeof(UsesHostHttpServicesAttribute), true);
+            _usesHostHttpServices = attributes.Length != 0 && attributes[0] is UsesHostHttpServicesAttribute;
         }
 
         protected override void OnApplicationConnected(HmeApplicationConnectedEventArgs args)
@@ -62,7 +61,7 @@ namespace Tivo.Hme.Host
             // start the application
             HmeApplicationStartArgs startArgs = new HmeApplicationStartArgs();
             startArgs.Application = args.Application;
-            startArgs.HostServices = _services;
+            startArgs.HostServices = this;
             applicationT.OnApplicationStart(startArgs);
 
             base.OnApplicationConnected(args);
@@ -78,17 +77,30 @@ namespace Tivo.Hme.Host
             }
         }
 
-        protected override void OnNonApplicationRequestReceived(NonApplicationRequestReceivedArgs e)
+        protected override void OnNonApplicationRequestReceived(HttpConnectionEventArgs e)
         {
-            if (e.HttpRequest.RequestUri.OriginalString.EndsWith("/icon.png", StringComparison.OrdinalIgnoreCase))
+            ServerLog.Write(TraceEventType.Verbose, "Enter HmeServer<T>.OnNonApplicationRequestReceived");
+            if (_usesHostHttpServices)
             {
-                object[] attributes = typeof(ApplicationT).GetCustomAttributes(typeof(ApplicationIconAttribute), true);
-                if (attributes.Length != 0)
-                {
-                    e.HttpResponse = new ApplicationIconHttpResponse(((ApplicationIconAttribute)attributes[0]).Icon);
-                }
+                var host = ((IHttpApplicationHostPool)GetService(typeof(IHttpApplicationHostPool))).GetHost(WebAppPath);
+                host.ProcessRequest(ApplicationPrefix, e.Context);
             }
-            base.OnNonApplicationRequestReceived(e);
+            else
+            {
+                base.OnNonApplicationRequestReceived(e);
+            }
+            ServerLog.Write(TraceEventType.Verbose, "Exit HmeServer<T>.OnNonApplicationRequestReceived");
+        }
+
+        protected override void OnHmeApplicationIconRequested(HmeApplicationIconRequestedArgs e)
+        {
+            object[] attributes = typeof(ApplicationT).GetCustomAttributes(typeof(ApplicationIconAttribute), true);
+            if (attributes.Length != 0)
+            {
+                e.Icon = ((ApplicationIconAttribute)attributes[0]).Icon;
+                e.ContentType = "image/png";
+            }
+            base.OnHmeApplicationIconRequested(e);
         }
     }
 }
