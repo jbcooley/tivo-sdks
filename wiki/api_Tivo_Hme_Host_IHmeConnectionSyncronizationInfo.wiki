@@ -1,4 +1,5 @@
 #sidebar api_sidebar
+#labels CodeDocs
 =Tivo.Hme.Host.IHmeConnectionSyncronizationInfo=
  Provides access to the names of the connection events used in syncronization. 
 ==Properties==

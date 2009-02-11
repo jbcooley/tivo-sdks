@@ -1,4 +1,5 @@
 #sidebar api_sidebar
+#labels Featured,CodeDocs
 =Tivo.Hme=
 ==Classes==
 || *Class Name* || *Description* ||

@@ -1,4 +1,5 @@
 #sidebar api_sidebar
+#labels CodeDocs
 =Tivo.Hme.ApplicationErrorCode=
 
 ==Members==

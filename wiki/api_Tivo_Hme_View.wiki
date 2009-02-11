@@ -1,4 +1,5 @@
 #sidebar api_sidebar
+#labels CodeDocs
 =Tivo.Hme.View=
  A basic type for representing a viewable area of the screen. 
 ==Properties==
