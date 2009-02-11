@@ -5,5 +5,4 @@
 || *Member Name* || *Description* ||
 || AutoPlay ||  ||
 || Pause ||  ||
-|| value__ ||  ||
 

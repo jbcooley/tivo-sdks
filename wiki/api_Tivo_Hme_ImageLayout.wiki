@@ -8,7 +8,6 @@
 || HorizontalAlignLeft ||  Align the image with the left border of the view.  ||
 || HorizontalAlignRight ||  Align the image with the right border of the view.  ||
 || HorizontalFit ||  Size image to fit the width of the view.  Height is adjusted as needed.  ||
-|| value__ ||  ||
 || VerticalAlignBottom ||  Align the image with the bottom border of the view.  ||
 || VerticalAlignCenter ||  Center the image vertically between the borders of the view.  ||
 || VerticalAlignTop ||  Align the image with the top border of the view.  ||

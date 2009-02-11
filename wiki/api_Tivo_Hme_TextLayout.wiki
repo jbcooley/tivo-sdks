@@ -7,7 +7,6 @@
 || HorizontalAlignLeft ||  ||
 || HorizontalAlignRight ||  ||
 || TextWrap ||  ||
-|| value__ ||  ||
 || VerticalAlignBottom ||  ||
 || VerticalAlignCenter ||  ||
 || VerticalAlignTop ||  ||

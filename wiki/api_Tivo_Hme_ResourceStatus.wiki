@@ -14,5 +14,4 @@
 || Ready ||  ||
 || Seeking ||  ||
 || Unknown ||  ||
-|| value__ ||  ||
 

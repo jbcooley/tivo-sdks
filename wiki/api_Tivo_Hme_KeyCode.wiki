@@ -48,7 +48,6 @@
 || TopMenu ||  dvd top menu  ||
 || Unknown ||  key not known  ||
 || Up ||  arrow up  ||
-|| value__ ||  ||
 || VolumeDown ||  volume down  ||
 || VolumeUp ||  volume up  ||
 || Window ||  window  ||
