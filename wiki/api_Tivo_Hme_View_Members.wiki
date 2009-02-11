@@ -1,6 +1,8 @@
 #sidebar api_sidebar
+=Tivo.Hme.View=
+A basic type for representing a viewable area of the screen.
 ==Properties==
-|| ===Property Name=== || ===Description=== ||
+|| *Property Name* || *Description* ||
 || ViewId || An identifier that uniquely identifies this view for the . ||
 || Parent || If this view is not the root view, then the parent view. ||
 || Children || A  containing all child views of this view. ||
@@ -18,7 +20,7 @@
 || CanFocus || true if this view can recieve focus and be the ; false otherwise. ||
 || Focused || true if this view has focus and is the . ||
 ==Methods==
-|| ===Method Name=== || ===Description=== ||
+|| *Method Name* || *Description* ||
 || SuspendPainting || Temporarily stop updating the view while adjustments are made. ||
 || ResumePainting || Update the view with adjustments mad while painting was suspended. ||
 || Animate || Animate view using instructions set in an . ||
