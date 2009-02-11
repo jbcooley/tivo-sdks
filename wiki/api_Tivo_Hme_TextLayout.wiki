@@ -1,8 +1,8 @@
 #sidebar api_sidebar
 =Tivo.Hme.TextLayout=
 
-==Fields==
-|| *Field Name* || *Description* ||
+==Members==
+|| *Member Name* || *Description* ||
 || HorizontalAlignCenter ||  ||
 || HorizontalAlignLeft ||  ||
 || HorizontalAlignRight ||  ||
@@ -11,13 +11,4 @@
 || VerticalAlignBottom ||  ||
 || VerticalAlignCenter ||  ||
 || VerticalAlignTop ||  ||
-
-==Methods==
-|| *Method Name* || *Description* ||
-|| CompareTo || Inherited from System.Enum. ||
-|| Equals || Inherited from System.Enum. ||
-|| GetHashCode || Inherited from System.Enum. ||
-|| GetType || Inherited from System.Object. ||
-|| GetTypeCode || Inherited from System.Enum. ||
-|| ToString || overloaded ||
 

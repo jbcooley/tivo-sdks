@@ -1,18 +1,9 @@
 #sidebar api_sidebar
 =Tivo.Hme.MusicStart=
  Initial status of streamed audio 
-==Fields==
-|| *Field Name* || *Description* ||
+==Members==
+|| *Member Name* || *Description* ||
 || AutoPlay ||  Start playing stream immediately  ||
 || Pause ||  Buffer audio stream and wait for Play to be called.  ||
 || value__ ||  ||
-
-==Methods==
-|| *Method Name* || *Description* ||
-|| CompareTo || Inherited from System.Enum. ||
-|| Equals || Inherited from System.Enum. ||
-|| GetHashCode || Inherited from System.Enum. ||
-|| GetType || Inherited from System.Object. ||
-|| GetTypeCode || Inherited from System.Enum. ||
-|| ToString || overloaded ||
 

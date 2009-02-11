@@ -1,8 +1,8 @@
 #sidebar api_sidebar
 =Tivo.Hme.KeyCode=
  Represents the key pressed on a remote. 
-==Fields==
-|| *Field Name* || *Description* ||
+==Members==
+|| *Member Name* || *Description* ||
 || Advance ||  advance to the next marker  ||
 || Angle ||  angle  ||
 || Aspect ||  aspect, same as window  ||
@@ -52,13 +52,4 @@
 || VolumeDown ||  volume down  ||
 || VolumeUp ||  volume up  ||
 || Window ||  window  ||
-
-==Methods==
-|| *Method Name* || *Description* ||
-|| CompareTo || Inherited from System.Enum. ||
-|| Equals || Inherited from System.Enum. ||
-|| GetHashCode || Inherited from System.Enum. ||
-|| GetType || Inherited from System.Object. ||
-|| GetTypeCode || Inherited from System.Enum. ||
-|| ToString || overloaded ||
 
