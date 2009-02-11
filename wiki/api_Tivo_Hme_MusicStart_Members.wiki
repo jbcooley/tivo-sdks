@@ -1,3 +1,4 @@
+#sidebar api_sidebar
 ==Methods==
 || Method Name || Description ||
 || SuspendPainting || 
