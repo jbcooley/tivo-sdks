@@ -2,13 +2,13 @@
 =Tivo.Hme.Host=
 ==Classes==
 || *Class Name* || *Description* ||
-|| HmeConnection ||  ||
+|| [api_Tivo_Hme_Host_HmeConnection HmeConnection] ||  ||
 
 ==Interfaces==
 || *Interface Name* || *Description* ||
-|| IHmeConnectionSyncronizationInfo ||  Provides access to the names of the connection events used in syncronization.  ||
+|| [api_Tivo_Hme_Host_IHmeConnectionSyncronizationInfo IHmeConnectionSyncronizationInfo] ||  Provides access to the names of the connection events used in syncronization.  ||
 
 ==Enumerations==
 || *Enumeration Name* || *Description* ||
-|| ConnectionSyncronizationType ||  ||
+|| [api_Tivo_Hme_Host_ConnectionSyncronizationType ConnectionSyncronizationType] ||  ||
 
