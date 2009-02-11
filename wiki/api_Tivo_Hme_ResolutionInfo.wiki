@@ -1,15 +1,15 @@
 #sidebar api_sidebar
 =Tivo.Hme.ResolutionInfo=
-Resolution and aspect ratio
+ Resolution and aspect ratio 
 ==Properties==
 || *Property Name* || *Description* ||
-|| Horizontal || Horizontal resolution ||
-|| Vertical || Vertical resolution ||
-|| PixelAspectWidth || pixel aspect ratio - width ||
-|| PixelAspectHeight || pixel aspect ratio - height ||
+|| Horizontal ||  Horizontal resolution  ||
+|| Vertical ||  Vertical resolution  ||
+|| PixelAspectWidth ||  pixel aspect ratio - width  ||
+|| PixelAspectHeight ||  pixel aspect ratio - height  ||
 ==Methods==
 || *Method Name* || *Description* ||
-|| ToString || Returns a readable version of the resolution data. ||
+|| ToString ||  Returns a readable version of the resolution data.  ||
 || Equals || overloaded ||
-|| GetHashCode || returns the hash code such that two equal resources have the same hash code value. ||
+|| GetHashCode ||  returns the hash code such that two equal resources have the same hash code value.  ||
 || GetType ||  ||

@@ -1,18 +1,18 @@
 #sidebar api_sidebar
 =Tivo.Hme.ImageLayout=
-Settings to be combined in specifying how an image should be placed in a view.
+ Settings to be combined in specifying how an image should be placed in a view. 
 ==Fields==
 || *Field Name* || *Description* ||
 || value__ ||  ||
-|| HorizontalAlignLeft || Align the image with the left border of the view. ||
-|| HorizontalAlignCenter || Center the image horizontally between the borders of the view. ||
-|| HorizontalAlignRight || Align the image with the right border of the view. ||
-|| VerticalAlignTop || Align the image with the top border of the view. ||
-|| VerticalAlignCenter || Center the image vertically between the borders of the view. ||
-|| VerticalAlignBottom || Align the image with the bottom border of the view. ||
-|| HorizontalFit || Size image to fit the width of the view.  Height is adjusted as needed. ||
-|| VerticalFit || Size image to fit the height of the view.  Width is adjusted as needed. ||
-|| BestFit || Size image to fit width or height, which ever will show the entire image without exceeding the bounds. ||
+|| HorizontalAlignLeft ||  Align the image with the left border of the view.  ||
+|| HorizontalAlignCenter ||  Center the image horizontally between the borders of the view.  ||
+|| HorizontalAlignRight ||  Align the image with the right border of the view.  ||
+|| VerticalAlignTop ||  Align the image with the top border of the view.  ||
+|| VerticalAlignCenter ||  Center the image vertically between the borders of the view.  ||
+|| VerticalAlignBottom ||  Align the image with the bottom border of the view.  ||
+|| HorizontalFit ||  Size image to fit the width of the view.  Height is adjusted as needed.  ||
+|| VerticalFit ||  Size image to fit the height of the view.  Width is adjusted as needed.  ||
+|| BestFit ||  Size image to fit width or height, which ever will show the entire image without exceeding the bounds.  ||
 ==Methods==
 || *Method Name* || *Description* ||
 || Equals ||  ||

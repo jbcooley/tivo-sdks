@@ -1,6 +1,6 @@
 #sidebar api_sidebar
 =Tivo.Hme.ImageResourceCollection=
-Represents a name, value collection used to store raw image resources
+ Represents a name, value collection used to store raw image resources 
 ==Properties==
 || *Property Name* || *Description* ||
 || Count ||  ||

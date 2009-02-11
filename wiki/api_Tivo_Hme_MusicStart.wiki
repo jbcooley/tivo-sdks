@@ -1,11 +1,11 @@
 #sidebar api_sidebar
 =Tivo.Hme.MusicStart=
-Initial status of streamed audio
+ Initial status of streamed audio 
 ==Fields==
 || *Field Name* || *Description* ||
 || value__ ||  ||
-|| AutoPlay || Start playing stream immediately ||
-|| Pause || Buffer audio stream and wait for Play to be called. ||
+|| AutoPlay ||  Start playing stream immediately  ||
+|| Pause ||  Buffer audio stream and wait for Play to be called.  ||
 ==Methods==
 || *Method Name* || *Description* ||
 || Equals ||  ||

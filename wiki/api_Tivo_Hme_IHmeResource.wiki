@@ -1,9 +1,9 @@
 #sidebar api_sidebar
 =Tivo.Hme.IHmeResource=
-Used internally by the framework
+ Used internally by the framework 
 ==Properties==
 || *Property Name* || *Description* ||
-|| Name || A unique name usually used as the key in an . ||
+|| Name ||  A unique name usually used as the key in an .  ||
 ==Methods==
 || *Method Name* || *Description* ||
-|| Close || Releases the resource allocated to the application. ||
+|| Close ||  Releases the resource allocated to the application.  ||
