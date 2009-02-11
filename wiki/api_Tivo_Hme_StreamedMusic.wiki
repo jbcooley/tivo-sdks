@@ -4,16 +4,18 @@
 ==Properties==
 || *Property Name* || *Description* ||
 || Name ||  Name that uniquely identifies this stream.  This value may be the same for multiple streams over multiple instance of the application when the audio source is the same.  ||
+
 ==Methods==
 || *Method Name* || *Description* ||
-|| Pause ||  Pause audio at the currently played location  ||
-|| Play ||  Begin or continue playing audio.  ||
-|| Seek ||  Set starting point of playing or paused stream.  ||
-|| Forward ||  Set forward speed, often used to fast forward through a stream.  ||
-|| Reverse ||  Set the reverse speed, used in rewinding through a stream.  ||
 || Close ||  Release client side resources used in playing the stream.  ||
 || Dispose ||  Release client side resources used in playing the stream.  ||
 || Equals || overloaded ||
+|| Forward ||  Set forward speed, often used to fast forward through a stream.  ||
 || GetHashCode ||  hash value for use in hash tables.  Does not uniquely identify object.  ||
-|| ToString ||  ||
-|| GetType ||  ||
+|| GetType || Inherited from System.Object. ||
+|| Pause ||  Pause audio at the currently played location  ||
+|| Play ||  Begin or continue playing audio.  ||
+|| Reverse ||  Set the reverse speed, used in rewinding through a stream.  ||
+|| Seek ||  Set starting point of playing or paused stream.  ||
+|| ToString || Inherited from System.Object. ||
+

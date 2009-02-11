@@ -3,24 +3,26 @@
 
 ==Fields==
 || *Field Name* || *Description* ||
-|| value__ ||  ||
-|| Unknown ||  ||
+|| BadArgument ||  ||
 || BadDataFormat ||  ||
 || BadMagicNumber ||  ||
-|| MediaVersionNotSupported ||  ||
+|| BadState ||  ||
+|| ConnectionFailed ||  ||
 || ConnectionLost ||  ||
 || ConnectionTimeout ||  ||
-|| ConnectionFailed ||  ||
 || HostNotFound ||  ||
 || IncompatibleMediaVersion ||  ||
 || MediaTypeNotSupported ||  ||
-|| BadArgument ||  ||
-|| BadState ||  ||
+|| MediaVersionNotSupported ||  ||
+|| Unknown ||  ||
+|| value__ ||  ||
+
 ==Methods==
 || *Method Name* || *Description* ||
-|| Equals ||  ||
-|| GetHashCode ||  ||
+|| CompareTo || Inherited from System.Enum. ||
+|| Equals || Inherited from System.Enum. ||
+|| GetHashCode || Inherited from System.Enum. ||
+|| GetType || Inherited from System.Object. ||
+|| GetTypeCode || Inherited from System.Enum. ||
 || ToString || overloaded ||
-|| CompareTo ||  ||
-|| GetTypeCode ||  ||
-|| GetType ||  ||
+

@@ -3,12 +3,14 @@
 
 ==Properties==
 || *Property Name* || *Description* ||
-|| GlyphId ||  ||
 || AdvanceWidth ||  ||
 || BoundingWidth ||  ||
+|| GlyphId ||  ||
+
 ==Methods==
 || *Method Name* || *Description* ||
-|| ToString ||  ||
-|| Equals ||  ||
-|| GetHashCode ||  ||
-|| GetType ||  ||
+|| Equals || Inherited from System.Object. ||
+|| GetHashCode || Inherited from System.Object. ||
+|| GetType || Inherited from System.Object. ||
+|| ToString || Inherited from System.Object. ||
+

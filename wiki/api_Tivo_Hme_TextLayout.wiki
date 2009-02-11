@@ -3,19 +3,21 @@
 
 ==Fields==
 || *Field Name* || *Description* ||
-|| value__ ||  ||
-|| HorizontalAlignLeft ||  ||
 || HorizontalAlignCenter ||  ||
+|| HorizontalAlignLeft ||  ||
 || HorizontalAlignRight ||  ||
-|| VerticalAlignTop ||  ||
-|| VerticalAlignCenter ||  ||
-|| VerticalAlignBottom ||  ||
 || TextWrap ||  ||
+|| value__ ||  ||
+|| VerticalAlignBottom ||  ||
+|| VerticalAlignCenter ||  ||
+|| VerticalAlignTop ||  ||
+
 ==Methods==
 || *Method Name* || *Description* ||
-|| Equals ||  ||
-|| GetHashCode ||  ||
+|| CompareTo || Inherited from System.Enum. ||
+|| Equals || Inherited from System.Enum. ||
+|| GetHashCode || Inherited from System.Enum. ||
+|| GetType || Inherited from System.Object. ||
+|| GetTypeCode || Inherited from System.Enum. ||
 || ToString || overloaded ||
-|| CompareTo ||  ||
-|| GetTypeCode ||  ||
-|| GetType ||  ||
+

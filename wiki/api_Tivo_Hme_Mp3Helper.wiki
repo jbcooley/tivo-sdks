@@ -3,8 +3,9 @@
 
 ==Methods==
 || *Method Name* || *Description* ||
+|| Equals || Inherited from System.Object. ||
+|| GetHashCode || Inherited from System.Object. ||
+|| GetType || Inherited from System.Object. ||
 || SeekToTime ||  ||
-|| ToString ||  ||
-|| Equals ||  ||
-|| GetHashCode ||  ||
-|| GetType ||  ||
+|| ToString || Inherited from System.Object. ||
+

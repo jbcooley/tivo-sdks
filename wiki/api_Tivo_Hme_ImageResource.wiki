@@ -4,11 +4,13 @@
 ==Properties==
 || *Property Name* || *Description* ||
 || Name ||  The name of the image in the  collection.  ||
+
 ==Methods==
 || *Method Name* || *Description* ||
 || Close ||  Releases the resource allocated to the associated application.  ||
 || Dispose ||  Releases the resource allocated to the associated application.  ||
 || Equals || overloaded ||
 || GetHashCode ||  returns the hash code such that two equal resources have the same hash code value.  ||
-|| ToString ||  ||
-|| GetType ||  ||
+|| GetType || Inherited from System.Object. ||
+|| ToString || Inherited from System.Object. ||
+

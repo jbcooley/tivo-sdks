@@ -3,21 +3,22 @@
 
 ==Methods==
 || *Method Name* || *Description* ||
-|| SetBounds ||  ||
-|| AddSetBounds ||  ||
-|| Move ||  ||
-|| AddMove ||  ||
-|| Resize ||  ||
-|| AddResize ||  ||
-|| Scale ||  ||
-|| AddScale ||  ||
-|| Translate ||  ||
-|| AddTranslate ||  ||
-|| Fade ||  ||
 || AddFade ||  ||
-|| Visibility ||  ||
+|| AddMove ||  ||
+|| AddResize ||  ||
+|| AddScale ||  ||
+|| AddSetBounds ||  ||
+|| AddTranslate ||  ||
 || AddVisibility ||  ||
-|| ToString ||  ||
-|| Equals ||  ||
-|| GetHashCode ||  ||
-|| GetType ||  ||
+|| Equals || Inherited from System.Object. ||
+|| Fade ||  ||
+|| GetHashCode || Inherited from System.Object. ||
+|| GetType || Inherited from System.Object. ||
+|| Move ||  ||
+|| Resize ||  ||
+|| Scale ||  ||
+|| SetBounds ||  ||
+|| ToString || Inherited from System.Object. ||
+|| Translate ||  ||
+|| Visibility ||  ||
+

@@ -3,5 +3,6 @@
  Provides access to the names of the connection events used in syncronization. 
 ==Properties==
 || *Property Name* || *Description* ||
-|| EventReceivedName ||  The name of the event that is set when HME events are received.  ||
 || CommandReceivedName ||  The name of the event that is set when HME commands are ready to be sent.  ||
+|| EventReceivedName ||  The name of the event that is set when HME events are received.  ||
+

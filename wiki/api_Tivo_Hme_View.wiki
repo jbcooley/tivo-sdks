@@ -3,27 +3,29 @@
  A basic type for representing a viewable area of the screen. 
 ==Properties==
 || *Property Name* || *Description* ||
-|| ViewId ||  An identifier that uniquely identifies this view for the .  ||
-|| Parent ||  If this view is not the root view, then the parent view.  ||
-|| Children ||  A  containing all child views of this view.  ||
 || Bounds ||  The boundaries of this view in parent coordinates. (0,0) is the upper left corner of .  ||
+|| CanFocus ||  true if this view can recieve focus and be the ; false otherwise.  ||
+|| Children ||  A  containing all child views of this view.  ||
+|| Focused ||  true if this view has focus and is the .  ||
 || Location ||  The location of this view in parent coordinates. (0,0) is the upper left corner of .  ||
-|| Size ||  The size of this view  ||
 || Margin ||  The distance to maintain betwen this views  and its . Using Margin instead of  allows a flexible layout for different resolutions.  ||
 || Offset ||  Adjusts the positioning of child views.  ||
+|| Parent ||  If this view is not the root view, then the parent view.  ||
 || Scale ||  Scales resources in this view as well as child views.  ||
-|| Visible ||  true if this view is displayed; false otherwise.  ||
+|| Size ||  The size of this view  ||
 || Transparency ||  Level of transparency where 0 is opaque and 1 is completely transparent.  ||
-|| CanFocus ||  true if this view can recieve focus and be the ; false otherwise.  ||
-|| Focused ||  true if this view has focus and is the .  ||
+|| ViewId ||  An identifier that uniquely identifies this view for the .  ||
+|| Visible ||  true if this view is displayed; false otherwise.  ||
+
 ==Methods==
 || *Method Name* || *Description* ||
-|| SuspendPainting ||  Temporarily stop updating the view while adjustments are made.  ||
-|| ResumePainting ||  Update the view with adjustments mad while painting was suspended.  ||
 || Animate ||  Animate view using instructions set in an .  ||
-|| Focus ||  Make this view the .  ||
 || Dispose ||  Remove the view and its children from the screen.  ||
-|| ToString ||  ||
-|| Equals ||  ||
-|| GetHashCode ||  ||
-|| GetType ||  ||
+|| Equals || Inherited from System.Object. ||
+|| Focus ||  Make this view the .  ||
+|| GetHashCode || Inherited from System.Object. ||
+|| GetType || Inherited from System.Object. ||
+|| ResumePainting ||  Update the view with adjustments mad while painting was suspended.  ||
+|| SuspendPainting ||  Temporarily stop updating the view while adjustments are made.  ||
+|| ToString || Inherited from System.Object. ||
+

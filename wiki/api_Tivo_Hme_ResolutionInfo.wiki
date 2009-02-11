@@ -4,12 +4,14 @@
 ==Properties==
 || *Property Name* || *Description* ||
 || Horizontal ||  Horizontal resolution  ||
-|| Vertical ||  Vertical resolution  ||
-|| PixelAspectWidth ||  pixel aspect ratio - width  ||
 || PixelAspectHeight ||  pixel aspect ratio - height  ||
+|| PixelAspectWidth ||  pixel aspect ratio - width  ||
+|| Vertical ||  Vertical resolution  ||
+
 ==Methods==
 || *Method Name* || *Description* ||
-|| ToString ||  Returns a readable version of the resolution data.  ||
 || Equals || overloaded ||
 || GetHashCode ||  returns the hash code such that two equal resources have the same hash code value.  ||
-|| GetType ||  ||
+|| GetType || Inherited from System.Object. ||
+|| ToString ||  Returns a readable version of the resolution data.  ||
+

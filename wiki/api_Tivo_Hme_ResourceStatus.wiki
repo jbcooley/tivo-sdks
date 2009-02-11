@@ -3,23 +3,25 @@
 
 ==Fields==
 || *Field Name* || *Description* ||
-|| value__ ||  ||
-|| Unknown ||  ||
-|| Connecting ||  ||
-|| Connected ||  ||
-|| Loading ||  ||
-|| Ready ||  ||
-|| Playing ||  ||
-|| Paused ||  ||
-|| Seeking ||  ||
 || Closed ||  ||
 || Complete ||  ||
+|| Connected ||  ||
+|| Connecting ||  ||
 || Error ||  ||
+|| Loading ||  ||
+|| Paused ||  ||
+|| Playing ||  ||
+|| Ready ||  ||
+|| Seeking ||  ||
+|| Unknown ||  ||
+|| value__ ||  ||
+
 ==Methods==
 || *Method Name* || *Description* ||
-|| Equals ||  ||
-|| GetHashCode ||  ||
+|| CompareTo || Inherited from System.Enum. ||
+|| Equals || Inherited from System.Enum. ||
+|| GetHashCode || Inherited from System.Enum. ||
+|| GetType || Inherited from System.Object. ||
+|| GetTypeCode || Inherited from System.Enum. ||
 || ToString || overloaded ||
-|| CompareTo ||  ||
-|| GetTypeCode ||  ||
-|| GetType ||  ||
+

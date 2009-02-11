@@ -3,16 +3,19 @@
 
 ==Fields==
 || *Field Name* || *Description* ||
-|| Speed ||  ||
 || Position ||  ||
+|| Speed ||  ||
+
 ==Properties==
 || *Property Name* || *Description* ||
 || Resource ||  ||
-|| Status ||  ||
 || ResourceInfo ||  ||
+|| Status ||  ||
+
 ==Methods==
 || *Method Name* || *Description* ||
-|| ToString ||  ||
-|| Equals ||  ||
-|| GetHashCode ||  ||
-|| GetType ||  ||
+|| Equals || Inherited from System.Object. ||
+|| GetHashCode || Inherited from System.Object. ||
+|| GetType || Inherited from System.Object. ||
+|| ToString || Inherited from System.Object. ||
+

@@ -3,13 +3,15 @@
 
 ==Properties==
 || *Property Name* || *Description* ||
-|| Left ||  ||
-|| Top ||  ||
-|| Right ||  ||
 || Bottom ||  ||
+|| Left ||  ||
+|| Right ||  ||
+|| Top ||  ||
+
 ==Methods==
 || *Method Name* || *Description* ||
 || Equals || overloaded ||
 || GetHashCode ||  ||
+|| GetType || Inherited from System.Object. ||
 || ToString ||  ||
-|| GetType ||  ||
+

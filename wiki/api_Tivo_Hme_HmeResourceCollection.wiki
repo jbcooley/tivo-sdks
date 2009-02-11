@@ -4,15 +4,17 @@
 ==Properties==
 || *Property Name* || *Description* ||
 || Count ||  The number of resources stored  ||
+
 ==Methods==
 || *Method Name* || *Description* ||
 || Add || overloaded ||
-|| Contains ||  Checks for the existence of a named resource.  ||
-|| Remove ||  Removes a named resource.  ||
 || Clear ||  Removes all resource from the collection.  ||
+|| Contains ||  Checks for the existence of a named resource.  ||
+|| Equals || Inherited from System.Object. ||
 || GetBytes ||  Retrieves a raw byte[] representation of the resource, translating a file into bytes if need be.  ||
+|| GetHashCode || Inherited from System.Object. ||
+|| GetType || Inherited from System.Object. ||
+|| Remove ||  Removes a named resource.  ||
+|| ToString || Inherited from System.Object. ||
 || TryGetFilePath ||  ||
-|| ToString ||  ||
-|| Equals ||  ||
-|| GetHashCode ||  ||
-|| GetType ||  ||
+

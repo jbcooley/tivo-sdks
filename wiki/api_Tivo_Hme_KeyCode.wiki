@@ -3,34 +3,25 @@
  Represents the key pressed on a remote. 
 ==Fields==
 || *Field Name* || *Description* ||
-|| value__ ||  ||
-|| Unknown ||  key not known  ||
-|| Tivo ||  TiVo® or equivalent (reserved)  ||
-|| Up ||  arrow up  ||
-|| Down ||  arrow down  ||
-|| Left ||  arrow left  ||
-|| Right ||  arrow right  ||
-|| Select ||  select  ||
-|| Play ||  play  ||
-|| Pause ||  pause  ||
-|| Slow ||  play slowly  ||
-|| Reverse ||  reverse  ||
-|| Forward ||  fast forward  ||
-|| Replay ||  instant replay  ||
 || Advance ||  advance to the next marker  ||
-|| ThumbsUp ||  thumbs up  ||
-|| ThumbsDown ||  thumbs down  ||
-|| VolumeUp ||  volume up  ||
-|| VolumeDown ||  volume down  ||
-|| ChannelUp ||  channel up  ||
+|| Angle ||  angle  ||
+|| Aspect ||  aspect, same as window  ||
 || ChannelDown ||  channel down  ||
-|| Mute ||  mute  ||
-|| Record ||  record  ||
-|| LiveTv ||  back to live TV  ||
-|| Info ||  info  ||
-|| Display ||  display, same as info  ||
+|| ChannelUp ||  channel up  ||
 || Clear ||  clear  ||
+|| Display ||  display, same as info  ||
+|| Down ||  arrow down  ||
+|| Dvd ||  dvd (reserved)  ||
 || Enter ||  enter  ||
+|| Exit ||  exit (reserved)  ||
+|| Forward ||  fast forward  ||
+|| Guide ||  guide (reserved)  ||
+|| Info ||  info  ||
+|| Left ||  arrow left  ||
+|| List ||  list now playing (reserved)  ||
+|| LiveTv ||  back to live TV  ||
+|| Menu ||  dvd menu  ||
+|| Mute ||  mute  ||
 || Num0 ||  0  ||
 || Num1 ||  1  ||
 || Num2 ||  2  ||
@@ -41,22 +32,33 @@
 || Num7 ||  7  ||
 || Num8 ||  8  ||
 || Num9 ||  9  ||
-|| Window ||  window  ||
+|| Pause ||  pause  ||
 || Pip ||  picture in picture, same as window  ||
-|| Aspect ||  aspect, same as window  ||
-|| Exit ||  exit (reserved)  ||
-|| List ||  list now playing (reserved)  ||
-|| Guide ||  guide (reserved)  ||
+|| Play ||  play  ||
+|| Record ||  record  ||
+|| Replay ||  instant replay  ||
+|| Reverse ||  reverse  ||
+|| Right ||  arrow right  ||
+|| Select ||  select  ||
+|| Slow ||  play slowly  ||
 || Stop ||  stop  ||
-|| Menu ||  dvd menu  ||
+|| ThumbsDown ||  thumbs down  ||
+|| ThumbsUp ||  thumbs up  ||
+|| Tivo ||  TiVo® or equivalent (reserved)  ||
 || TopMenu ||  dvd top menu  ||
-|| Angle ||  angle  ||
-|| Dvd ||  dvd (reserved)  ||
+|| Unknown ||  key not known  ||
+|| Up ||  arrow up  ||
+|| value__ ||  ||
+|| VolumeDown ||  volume down  ||
+|| VolumeUp ||  volume up  ||
+|| Window ||  window  ||
+
 ==Methods==
 || *Method Name* || *Description* ||
-|| Equals ||  ||
-|| GetHashCode ||  ||
+|| CompareTo || Inherited from System.Enum. ||
+|| Equals || Inherited from System.Enum. ||
+|| GetHashCode || Inherited from System.Enum. ||
+|| GetType || Inherited from System.Object. ||
+|| GetTypeCode || Inherited from System.Enum. ||
 || ToString || overloaded ||
-|| CompareTo ||  ||
-|| GetTypeCode ||  ||
-|| GetType ||  ||
+

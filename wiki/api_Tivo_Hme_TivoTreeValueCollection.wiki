@@ -3,20 +3,22 @@
 
 ==Properties==
 || *Property Name* || *Description* ||
-|| Item ||  ||
 || Count ||  ||
 || IsReadOnly ||  ||
+|| Item ||  ||
+
 ==Methods==
 || *Method Name* || *Description* ||
-|| IndexOf || overloaded ||
-|| Insert || overloaded ||
-|| RemoveAt ||  ||
 || Add || overloaded ||
 || Clear ||  ||
 || Contains || overloaded ||
-|| Remove || overloaded ||
+|| Equals || Inherited from System.Object. ||
 || GetEnumerator ||  ||
-|| ToString ||  ||
-|| Equals ||  ||
-|| GetHashCode ||  ||
-|| GetType ||  ||
+|| GetHashCode || Inherited from System.Object. ||
+|| GetType || Inherited from System.Object. ||
+|| IndexOf || overloaded ||
+|| Insert || overloaded ||
+|| Remove || overloaded ||
+|| RemoveAt ||  ||
+|| ToString || Inherited from System.Object. ||
+

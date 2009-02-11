@@ -3,19 +3,20 @@
 
 ==Methods==
 || *Method Name* || *Description* ||
+|| Add || overloaded ||
+|| ContainsKey ||  ||
+|| Equals || Inherited from System.Object. ||
 || FromDictionary ||  ||
 || FromNameValueCollection ||  ||
 || GetEnumerator ||  ||
-|| GetValues ||  ||
-|| Add || overloaded ||
-|| ContainsKey ||  ||
-|| RemoveValueAt ||  ||
-|| Remove ||  ||
+|| GetHashCode || Inherited from System.Object. ||
+|| GetType || Inherited from System.Object. ||
 || GetValueCount ||  ||
-|| TryGetValue ||  ||
+|| GetValues ||  ||
+|| Remove ||  ||
+|| RemoveValueAt ||  ||
+|| ToString || Inherited from System.Object. ||
 || TryGetStringValue ||  ||
 || TryGetTivoTreeValue ||  ||
-|| ToString ||  ||
-|| Equals ||  ||
-|| GetHashCode ||  ||
-|| GetType ||  ||
+|| TryGetValue ||  ||
+

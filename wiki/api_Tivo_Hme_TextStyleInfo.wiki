@@ -5,13 +5,15 @@
 || *Property Name* || *Description* ||
 || Ascent ||  ||
 || Descent ||  ||
+|| GlyphInfo ||  ||
 || Height ||  ||
 || LineGap ||  ||
-|| GlyphInfo ||  ||
+
 ==Methods==
 || *Method Name* || *Description* ||
+|| Equals || Inherited from System.Object. ||
+|| GetHashCode || Inherited from System.Object. ||
+|| GetType || Inherited from System.Object. ||
 || MeasureText ||  ||
-|| ToString ||  ||
-|| Equals ||  ||
-|| GetHashCode ||  ||
-|| GetType ||  ||
+|| ToString || Inherited from System.Object. ||
+

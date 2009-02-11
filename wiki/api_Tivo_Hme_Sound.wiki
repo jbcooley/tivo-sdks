@@ -4,12 +4,14 @@
 ==Properties==
 || *Property Name* || *Description* ||
 || Name ||  ||
+
 ==Methods==
 || *Method Name* || *Description* ||
 || Close ||  ||
 || Dispose ||  ||
-|| Play || overloaded ||
 || Equals || overloaded ||
 || GetHashCode ||  ||
-|| ToString ||  ||
-|| GetType ||  ||
+|| GetType || Inherited from System.Object. ||
+|| Play || overloaded ||
+|| ToString || Inherited from System.Object. ||
+
