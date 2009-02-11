@@ -1,0 +1,21 @@
+==Methods==
+|| Method Name || Description ||
+|| SuspendPainting || 
+            Temporarily stop updating the view while adjustments are made.
+             ||
+|| ResumePainting || 
+            Update the view with adjustments mad while painting was suspended.
+             ||
+|| Animate || 
+            Animate view using instructions set in an .
+             ||
+|| Focus || 
+            Make this view the .
+             ||
+|| Dispose || 
+            Remove the view and its children from the screen.
+             ||
+|| ToString ||  ||
+|| Equals ||  ||
+|| GetHashCode ||  ||
+|| GetType ||  ||
