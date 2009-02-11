@@ -1,0 +1,61 @@
+#sidebar api_sidebar
+=Tivo.Hme=
+==Classes==
+|| *Class Name* || *Description* ||
+|| Animation ||  ||
+|| Application ||  ||
+|| ApplicationErrorArgs ||  ||
+|| ApplicationIconAttribute ||  ||
+|| ApplicationParametersReceivedArgs ||  ||
+|| ApplicationStateChangedArgs ||  ||
+|| BoundsChangedArgs ||  ||
+|| ColorView ||  ||
+|| DeviceConnectedArgs ||  ||
+|| GlyphInfo ||  ||
+|| GlyphInfoCollection ||  ||
+|| HmeApplicationHandler ||  ||
+|| HmeApplicationStartArgs ||  ||
+|| HmeResourceCollection ||  Represents a name, value collection used to store raw resources  ||
+|| IdleEventArgs ||  ||
+|| ImageResource ||  Represents an image resource for an application  ||
+|| ImageResourceCollection ||  Represents a name, value collection used to store raw image resources  ||
+|| ImageView ||  ||
+|| KeyEventArgs ||  ||
+|| Mp3Helper ||  ||
+|| ResolutionInfo ||  Resolution and aspect ratio  ||
+|| ResourceErrorArgs ||  ||
+|| ResourceStateChangedArgs ||  ||
+|| SafetyViewMargin ||  ||
+|| Sound ||  ||
+|| StreamedMusic ||  An mp3 audio stream.  ||
+|| StreamedVideoView ||  ||
+|| SuspendPainting ||  ||
+|| TextStyleCreatedArgs ||  ||
+|| TextStyleInfo ||  ||
+|| TextView ||  ||
+|| TivoTree ||  ||
+|| TivoTreeValueCollection ||  ||
+|| TrueTypeFontResource ||  Represents a TrueType font resource for an application  ||
+|| View ||  A basic type for representing a viewable area of the screen.  ||
+|| ViewCollection ||  ||
+
+==Structures==
+|| *Structure Name* || *Description* ||
+|| Margin ||  ||
+|| TextStyle ||  ||
+
+==Interfaces==
+|| *Interface Name* || *Description* ||
+|| IHmeResource ||  Used internally by the framework  ||
+
+==Enumerations==
+|| *Enumeration Name* || *Description* ||
+|| ApplicationErrorCode ||  ||
+|| ImageLayout ||  Settings to be combined in specifying how an image should be placed in a view.  ||
+|| KeyCode ||  Represents the key pressed on a remote.  ||
+|| MusicStart ||  Initial status of streamed audio  ||
+|| ResourceErrorCode ||  ||
+|| ResourceStatus ||  ||
+|| TextLayout ||  ||
+|| VideoStart ||  ||
+

@@ -1,0 +1,14 @@
+#sidebar api_sidebar
+=Tivo.Hme.Host=
+==Classes==
+|| *Class Name* || *Description* ||
+|| HmeConnection ||  ||
+
+==Interfaces==
+|| *Interface Name* || *Description* ||
+|| IHmeConnectionSyncronizationInfo ||  Provides access to the names of the connection events used in syncronization.  ||
+
+==Enumerations==
+|| *Enumeration Name* || *Description* ||
+|| ConnectionSyncronizationType ||  ||
+
