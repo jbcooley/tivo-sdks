@@ -22,10 +22,25 @@ using System;
 
 namespace Tivo.Hme
 {
+    /// <summary>
+    /// Helper class for calling <see cref="View.SuspendPainting"/> and <see cref="View.ResumePainting"/> within the scope of a using statement.
+    /// </summary>
+    /// <example>
+    /// <code>
+    /// using (new SuspendPainting(view))
+    /// {
+    ///     // painting suspended in this block
+    /// }
+    /// </code>
+    /// </example>
     public class SuspendPainting : IDisposable
     {
         private View _view;
 
+        /// <summary>
+        /// Creates a SuspendPainting object that suspends painting for a view.
+        /// </summary>
+        /// <param name="view">A view to suspend painting.</param>
         public SuspendPainting(View view)
         {
             _view = view;
@@ -34,6 +49,9 @@ namespace Tivo.Hme
 
         #region IDisposable Members
 
+        /// <summary>
+        /// Resumes painting the view.
+        /// </summary>
         public void Dispose()
         {
             _view.ResumePainting();

@@ -23,34 +23,59 @@ using System.Collections.ObjectModel;
 
 namespace Tivo.Hme
 {
+    /// <summary>
+    /// Collection of views, primarily used as the child views collection.
+    /// </summary>
     public class ViewCollection : Collection<View>
     {
         private View _owner;
         private TimeSpan _delay = TimeSpan.Zero;
 
+        /// <summary>
+        /// Create ViewCollection.
+        /// </summary>
+        /// <param name="owner">View which will dispatch all collection change commands.</param>
         public ViewCollection(View owner)
         {
             _owner = owner;
         }
 
+        /// <summary>
+        /// Clear the collection with a delay.
+        /// </summary>
+        /// <param name="delay">Duration to wait before performing operation.</param>
         public void Clear(TimeSpan delay)
         {
             _delay = delay;
             Clear();
         }
 
+        /// <summary>
+        /// Remove a view from the collection.
+        /// </summary>
+        /// <param name="item">The view to be removed.</param>
+        /// <param name="delay">Duration to wait before performing operation.</param>
+        /// <returns>true if the view was removed; false otherwise.</returns>
         public bool Remove(View item, TimeSpan delay)
         {
             _delay = delay;
             return Remove(item);
         }
 
+        /// <summary>
+        /// Remove a view from the collection.
+        /// </summary>
+        /// <param name="index">The index of the view to be removed.</param>
+        /// <param name="delay">Duration to wait before performing operation.</param>
         public void RemoveAt(int index, TimeSpan delay)
         {
             _delay = delay;
             RemoveAt(index);
         }
 
+        /// <summary>
+        /// Performs the collection operation and sends commands to the tivo.
+        /// </summary>
         protected override void ClearItems()
         {
             foreach (View view in Items)
@@ -62,6 +87,11 @@ namespace Tivo.Hme
             base.ClearItems();
         }
 
+        /// <summary>
+        /// Performs the collection operation and sends commands to the tivo.
+        /// </summary>
+        /// <param name="index"></param>
+        /// <param name="item"></param>
         protected override void InsertItem(int index, View item)
         {
             base.InsertItem(index, item);
@@ -69,6 +99,10 @@ namespace Tivo.Hme
             item.SetParent(_owner, false);
         }
 
+        /// <summary>
+        /// Performs the collection operation and sends commands to the tivo.
+        /// </summary>
+        /// <param name="index"></param>
         protected override void RemoveItem(int index)
         {
             // send ViewRemove command when parent has not changed
@@ -83,6 +117,11 @@ namespace Tivo.Hme
             base.RemoveItem(index);
         }
 
+        /// <summary>
+        /// Performs the collection operation and sends commands to the tivo.
+        /// </summary>
+        /// <param name="index"></param>
+        /// <param name="item"></param>
         protected override void SetItem(int index, View item)
         {
             // send ViewRemove command when parent has not changed

@@ -22,28 +22,45 @@ using System;
 
 namespace Tivo.Hme
 {
+    /// <summary>
+    /// Provides data for the <see cref="Application.KeyDown"/>, <see cref="Application.KeyPress"/>, and <see cref="Application.KeyUp"/> events.
+    /// </summary>
     public class KeyEventArgs : EventArgs
     {
         private KeyCode _keyCode;
         private long _rawCode;
         private bool _handled;
 
+        /// <summary>
+        /// Creates a KeyEventArgs.
+        /// </summary>
+        /// <param name="keyCode">The key code.</param>
+        /// <param name="rawCode">The raw code for the key.</param>
         public KeyEventArgs(KeyCode keyCode, long rawCode)
         {
             _keyCode = keyCode;
             _rawCode = rawCode;
         }
 
+        /// <summary>
+        /// The <see cref="KeyCode"/> value.
+        /// </summary>
         public KeyCode KeyCode
         {
             get { return _keyCode; }
         }
 
+        /// <summary>
+        /// The raw numerical key value.
+        /// </summary>
         public long RawCode
         {
             get { return _rawCode; }
         }
 
+        /// <summary>
+        /// Handler should set this to true if the event has been handled.  If left to false will bubble up.
+        /// </summary>
         public bool Handled
         {
             get { return _handled; }
