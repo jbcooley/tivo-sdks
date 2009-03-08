@@ -22,10 +22,16 @@ using System;
 
 namespace Tivo.Hme
 {
+    /// <summary>
+    /// Provides data for the <see cref="Application.Idle"/> event.
+    /// </summary>
     public class IdleEventArgs : EventArgs
     {
         private bool _cancelScreenSaver = false;
 
+        /// <summary>
+        /// set to true if the application should continue; will default to false and exit to screen saver when left idle.
+        /// </summary>
         public bool CancelScreenSaver
         {
             get { return _cancelScreenSaver; }

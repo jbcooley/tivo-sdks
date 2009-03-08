@@ -23,7 +23,7 @@ using System;
 namespace Tivo.Hme
 {
     /// <summary>
-    /// Represents an image resource for an application
+    /// Represents an image resource to be displayed in a view
     /// </summary>
     public sealed class ImageResource : IHmeResource
     {
