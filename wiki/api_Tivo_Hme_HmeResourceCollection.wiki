@@ -1,21 +1,21 @@
 #sidebar api_sidebar
 #labels CodeDocs
 =Tivo.Hme.HmeResourceCollection=
- Represents a name, value collection used to store raw resources 
+
 ==Properties==
 || *Property Name* || *Description* ||
-|| Count ||  The number of resources stored  ||
+|| Count ||  ||
 
 ==Methods==
 || *Method Name* || *Description* ||
 || Add || overloaded ||
-|| Clear ||  Removes all resource from the collection.  ||
-|| Contains ||  Checks for the existence of a named resource.  ||
+|| Clear ||  ||
+|| Contains ||  ||
 || Equals || Inherited from System.Object. ||
-|| GetBytes ||  Retrieves a raw byte[] representation of the resource, translating a file into bytes if need be.  ||
+|| GetBytes ||  ||
 || GetHashCode || Inherited from System.Object. ||
 || GetType || Inherited from System.Object. ||
-|| Remove ||  Removes a named resource.  ||
+|| Remove ||  ||
 || ToString || Inherited from System.Object. ||
 || TryGetFilePath ||  ||
 

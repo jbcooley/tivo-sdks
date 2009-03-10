@@ -1,32 +1,32 @@
 #sidebar api_sidebar
 #labels CodeDocs
 =Tivo.Hme.View=
- A basic type for representing a viewable area of the screen. 
+
 ==Properties==
 || *Property Name* || *Description* ||
-|| Bounds ||  The boundaries of this view in parent coordinates. (0,0) is the upper left corner of .  ||
-|| CanFocus ||  true if this view can recieve focus and be the ; false otherwise.  ||
-|| Children ||  A  containing all child views of this view.  ||
-|| Focused ||  true if this view has focus and is the .  ||
-|| Location ||  The location of this view in parent coordinates. (0,0) is the upper left corner of .  ||
-|| Margin ||  The distance to maintain betwen this views  and its . Using Margin instead of  allows a flexible layout for different resolutions.  ||
-|| Offset ||  Adjusts the positioning of child views.  ||
-|| Parent ||  If this view is not the root view, then the parent view.  ||
-|| Scale ||  Scales resources in this view as well as child views.  ||
-|| Size ||  The size of this view  ||
-|| Transparency ||  Level of transparency where 0 is opaque and 1 is completely transparent.  ||
-|| ViewId ||  An identifier that uniquely identifies this view for the .  ||
-|| Visible ||  true if this view is displayed; false otherwise.  ||
+|| Bounds ||  ||
+|| CanFocus ||  ||
+|| Children ||  ||
+|| Focused ||  ||
+|| Location ||  ||
+|| Margin ||  ||
+|| Offset ||  ||
+|| Parent ||  ||
+|| Scale ||  ||
+|| Size ||  ||
+|| Transparency ||  ||
+|| ViewId ||  ||
+|| Visible ||  ||
 
 ==Methods==
 || *Method Name* || *Description* ||
-|| Animate ||  Animate view using instructions set in an .  ||
-|| Dispose ||  Remove the view and its children from the screen.  ||
+|| Animate ||  ||
+|| Dispose ||  ||
 || Equals || Inherited from System.Object. ||
-|| Focus ||  Make this view the .  ||
+|| Focus ||  ||
 || GetHashCode || Inherited from System.Object. ||
 || GetType || Inherited from System.Object. ||
-|| ResumePainting ||  Update the view with adjustments mad while painting was suspended.  ||
-|| SuspendPainting ||  Temporarily stop updating the view while adjustments are made.  ||
+|| ResumePainting ||  ||
+|| SuspendPainting ||  ||
 || ToString || Inherited from System.Object. ||
 

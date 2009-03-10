@@ -7,7 +7,7 @@
 
 ==Interfaces==
 || *Interface Name* || *Description* ||
-|| [api_Tivo_Hme_Host_IHmeConnectionSyncronizationInfo IHmeConnectionSyncronizationInfo] ||  Provides access to the names of the connection events used in syncronization.  ||
+|| [api_Tivo_Hme_Host_IHmeConnectionSyncronizationInfo IHmeConnectionSyncronizationInfo] ||  ||
 
 ==Enumerations==
 || *Enumeration Name* || *Description* ||

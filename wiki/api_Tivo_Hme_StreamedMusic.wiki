@@ -1,22 +1,22 @@
 #sidebar api_sidebar
 #labels CodeDocs
 =Tivo.Hme.StreamedMusic=
- An mp3 audio stream. 
+
 ==Properties==
 || *Property Name* || *Description* ||
-|| Name ||  Name that uniquely identifies this stream.  This value may be the same for multiple streams over multiple instance of the application when the audio source is the same.  ||
+|| Name ||  ||
 
 ==Methods==
 || *Method Name* || *Description* ||
-|| Close ||  Release client side resources used in playing the stream.  ||
-|| Dispose ||  Release client side resources used in playing the stream.  ||
+|| Close ||  ||
+|| Dispose ||  ||
 || Equals || overloaded ||
-|| Forward ||  Set forward speed, often used to fast forward through a stream.  ||
-|| GetHashCode ||  hash value for use in hash tables.  Does not uniquely identify object.  ||
+|| Forward ||  ||
+|| GetHashCode ||  ||
 || GetType || Inherited from System.Object. ||
-|| Pause ||  Pause audio at the currently played location  ||
-|| Play ||  Begin or continue playing audio.  ||
-|| Reverse ||  Set the reverse speed, used in rewinding through a stream.  ||
-|| Seek ||  Set starting point of playing or paused stream.  ||
+|| Pause ||  ||
+|| Play ||  ||
+|| Reverse ||  ||
+|| Seek ||  ||
 || ToString || Inherited from System.Object. ||
 

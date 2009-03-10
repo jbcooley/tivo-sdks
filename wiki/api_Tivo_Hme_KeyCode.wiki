@@ -1,55 +1,55 @@
 #sidebar api_sidebar
 #labels CodeDocs
 =Tivo.Hme.KeyCode=
- Represents the key pressed on a remote. 
+
 ==Members==
 || *Member Name* || *Description* ||
-|| Advance ||  advance to the next marker  ||
-|| Angle ||  angle  ||
-|| Aspect ||  aspect, same as window  ||
-|| ChannelDown ||  channel down  ||
-|| ChannelUp ||  channel up  ||
-|| Clear ||  clear  ||
-|| Display ||  display, same as info  ||
-|| Down ||  arrow down  ||
-|| Dvd ||  dvd (reserved)  ||
-|| Enter ||  enter  ||
-|| Exit ||  exit (reserved)  ||
-|| Forward ||  fast forward  ||
-|| Guide ||  guide (reserved)  ||
-|| Info ||  info  ||
-|| Left ||  arrow left  ||
-|| List ||  list now playing (reserved)  ||
-|| LiveTv ||  back to live TV  ||
-|| Menu ||  dvd menu  ||
-|| Mute ||  mute  ||
-|| Num0 ||  0  ||
-|| Num1 ||  1  ||
-|| Num2 ||  2  ||
-|| Num3 ||  3  ||
-|| Num4 ||  4  ||
-|| Num5 ||  5  ||
-|| Num6 ||  6  ||
-|| Num7 ||  7  ||
-|| Num8 ||  8  ||
-|| Num9 ||  9  ||
-|| Pause ||  pause  ||
-|| Pip ||  picture in picture, same as window  ||
-|| Play ||  play  ||
-|| Record ||  record  ||
-|| Replay ||  instant replay  ||
-|| Reverse ||  reverse  ||
-|| Right ||  arrow right  ||
-|| Select ||  select  ||
-|| Slow ||  play slowly  ||
-|| Stop ||  stop  ||
-|| ThumbsDown ||  thumbs down  ||
-|| ThumbsUp ||  thumbs up  ||
-|| Tivo ||  TiVo® or equivalent (reserved)  ||
-|| TopMenu ||  dvd top menu  ||
-|| Unknown ||  key not known  ||
-|| Up ||  arrow up  ||
-|| VolumeDown ||  volume down  ||
-|| VolumeUp ||  volume up  ||
-|| Window ||  window  ||
+|| Advance ||  ||
+|| Angle ||  ||
+|| Aspect ||  ||
+|| ChannelDown ||  ||
+|| ChannelUp ||  ||
+|| Clear ||  ||
+|| Display ||  ||
+|| Down ||  ||
+|| Dvd ||  ||
+|| Enter ||  ||
+|| Exit ||  ||
+|| Forward ||  ||
+|| Guide ||  ||
+|| Info ||  ||
+|| Left ||  ||
+|| List ||  ||
+|| LiveTv ||  ||
+|| Menu ||  ||
+|| Mute ||  ||
+|| Num0 ||  ||
+|| Num1 ||  ||
+|| Num2 ||  ||
+|| Num3 ||  ||
+|| Num4 ||  ||
+|| Num5 ||  ||
+|| Num6 ||  ||
+|| Num7 ||  ||
+|| Num8 ||  ||
+|| Num9 ||  ||
+|| Pause ||  ||
+|| Pip ||  ||
+|| Play ||  ||
+|| Record ||  ||
+|| Replay ||  ||
+|| Reverse ||  ||
+|| Right ||  ||
+|| Select ||  ||
+|| Slow ||  ||
+|| Stop ||  ||
+|| ThumbsDown ||  ||
+|| ThumbsUp ||  ||
+|| Tivo ||  ||
+|| TopMenu ||  ||
+|| Unknown ||  ||
+|| Up ||  ||
+|| VolumeDown ||  ||
+|| VolumeUp ||  ||
+|| Window ||  ||
 

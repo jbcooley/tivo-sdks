@@ -1,17 +1,17 @@
 #sidebar api_sidebar
 #labels CodeDocs
 =Tivo.Hme.TrueTypeFontResource=
- Represents a TrueType font resource for an application 
+
 ==Properties==
 || *Property Name* || *Description* ||
-|| Name ||  The name of the TrueType font in the  collection.  ||
+|| Name ||  ||
 
 ==Methods==
 || *Method Name* || *Description* ||
-|| Close ||  Releases the resource allocated to the associated application.  ||
-|| Dispose ||  Releases the resource allocated to the associated application.  ||
+|| Close ||  ||
+|| Dispose ||  ||
 || Equals || overloaded ||
-|| GetHashCode ||  overriden, returns the hash code such that two equal resources have the same hash code value.  ||
+|| GetHashCode ||  ||
 || GetType || Inherited from System.Object. ||
 || ToString || Inherited from System.Object. ||
 

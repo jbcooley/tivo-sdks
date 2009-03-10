@@ -1,9 +1,9 @@
 #sidebar api_sidebar
 #labels CodeDocs
 =Tivo.Hme.MusicStart=
- Initial status of streamed audio 
+
 ==Members==
 || *Member Name* || *Description* ||
-|| AutoPlay ||  Start playing stream immediately  ||
-|| Pause ||  Buffer audio stream and wait for Play to be called.  ||
+|| AutoPlay ||  ||
+|| Pause ||  ||
 
