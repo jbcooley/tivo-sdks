@@ -16,19 +16,19 @@
 || [api_Tivo_Hme_GlyphInfoCollection GlyphInfoCollection] ||  ||
 || [api_Tivo_Hme_HmeApplicationHandler HmeApplicationHandler] ||  ||
 || [api_Tivo_Hme_HmeApplicationStartArgs HmeApplicationStartArgs] ||  ||
-|| [api_Tivo_Hme_HmeResourceCollection HmeResourceCollection] ||  Represents a name, value collection used to store raw resources  ||
+|| [api_Tivo_Hme_HmeResourceCollection HmeResourceCollection] ||  ||
 || [api_Tivo_Hme_IdleEventArgs IdleEventArgs] ||  ||
-|| [api_Tivo_Hme_ImageResource ImageResource] ||  Represents an image resource for an application  ||
-|| [api_Tivo_Hme_ImageResourceCollection ImageResourceCollection] ||  Represents a name, value collection used to store raw image resources  ||
+|| [api_Tivo_Hme_ImageResource ImageResource] ||  ||
+|| [api_Tivo_Hme_ImageResourceCollection ImageResourceCollection] ||  ||
 || [api_Tivo_Hme_ImageView ImageView] ||  ||
 || [api_Tivo_Hme_KeyEventArgs KeyEventArgs] ||  ||
 || [api_Tivo_Hme_Mp3Helper Mp3Helper] ||  ||
-|| [api_Tivo_Hme_ResolutionInfo ResolutionInfo] ||  Resolution and aspect ratio  ||
+|| [api_Tivo_Hme_ResolutionInfo ResolutionInfo] ||  ||
 || [api_Tivo_Hme_ResourceErrorArgs ResourceErrorArgs] ||  ||
 || [api_Tivo_Hme_ResourceStateChangedArgs ResourceStateChangedArgs] ||  ||
 || [api_Tivo_Hme_SafetyViewMargin SafetyViewMargin] ||  ||
 || [api_Tivo_Hme_Sound Sound] ||  ||
-|| [api_Tivo_Hme_StreamedMusic StreamedMusic] ||  An mp3 audio stream.  ||
+|| [api_Tivo_Hme_StreamedMusic StreamedMusic] ||  ||
 || [api_Tivo_Hme_StreamedVideoView StreamedVideoView] ||  ||
 || [api_Tivo_Hme_SuspendPainting SuspendPainting] ||  ||
 || [api_Tivo_Hme_TextStyleCreatedArgs TextStyleCreatedArgs] ||  ||
@@ -36,8 +36,8 @@
 || [api_Tivo_Hme_TextView TextView] ||  ||
 || [api_Tivo_Hme_TivoTree TivoTree] ||  ||
 || [api_Tivo_Hme_TivoTreeValueCollection TivoTreeValueCollection] ||  ||
-|| [api_Tivo_Hme_TrueTypeFontResource TrueTypeFontResource] ||  Represents a TrueType font resource for an application  ||
-|| [api_Tivo_Hme_View View] ||  A basic type for representing a viewable area of the screen.  ||
+|| [api_Tivo_Hme_TrueTypeFontResource TrueTypeFontResource] ||  ||
+|| [api_Tivo_Hme_View View] ||  ||
 || [api_Tivo_Hme_ViewCollection ViewCollection] ||  ||
 
 ==Structures==
@@ -47,14 +47,14 @@
 
 ==Interfaces==
 || *Interface Name* || *Description* ||
-|| [api_Tivo_Hme_IHmeResource IHmeResource] ||  Used internally by the framework  ||
+|| [api_Tivo_Hme_IHmeResource IHmeResource] ||  ||
 
 ==Enumerations==
 || *Enumeration Name* || *Description* ||
 || [api_Tivo_Hme_ApplicationErrorCode ApplicationErrorCode] ||  ||
-|| [api_Tivo_Hme_ImageLayout ImageLayout] ||  Settings to be combined in specifying how an image should be placed in a view.  ||
-|| [api_Tivo_Hme_KeyCode KeyCode] ||  Represents the key pressed on a remote.  ||
-|| [api_Tivo_Hme_MusicStart MusicStart] ||  Initial status of streamed audio  ||
+|| [api_Tivo_Hme_ImageLayout ImageLayout] ||  ||
+|| [api_Tivo_Hme_KeyCode KeyCode] ||  ||
+|| [api_Tivo_Hme_MusicStart MusicStart] ||  ||
 || [api_Tivo_Hme_ResourceErrorCode ResourceErrorCode] ||  ||
 || [api_Tivo_Hme_ResourceStatus ResourceStatus] ||  ||
 || [api_Tivo_Hme_TextLayout TextLayout] ||  ||
