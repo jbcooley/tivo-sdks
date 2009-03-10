@@ -1,4 +1,5 @@
-﻿// Copyright (c) 2008 Josh Cooley
+﻿// Copyright (c) 2009 Josh Cooley
+// Copyright (c) 2009 David Sempek
 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -33,10 +34,43 @@ namespace Tivo.Hme.Host.Services
     {
         private SimpleAspNetHost _aspHost;
 
+        protected string AppPath { get; set; }
+
         public HttpApplicationHost(string appPath)
         {
-            _aspHost = (SimpleAspNetHost)ApplicationHost.CreateApplicationHost(
-            typeof(SimpleAspNetHost), "/", appPath);
+            AppPath = appPath;
+            Start();
+        }
+
+        private bool Start()
+        {
+            try
+            {
+                _aspHost = (SimpleAspNetHost)ApplicationHost.CreateApplicationHost(
+                typeof(SimpleAspNetHost), "/", AppPath);
+            }
+            catch(Exception ex)
+            {
+                ServerLog.Write(ex);
+                return false;
+            }
+            return true;
+        }
+
+        private bool CheckHostOk()
+        {
+            try
+            {
+                // If the _aspHost hasn't been destroyed this is always true
+                // otherwise it throws an exception
+                if (_aspHost.StillAlive) { }
+            }
+            catch (Exception ex)
+            {
+                ServerLog.Write(ex);
+                return false;
+            }
+            return true;
         }
 
         #region IHttpApplicationHost Members
@@ -52,6 +86,19 @@ namespace Tivo.Hme.Host.Services
                 VirtualDirectory = baseUri.AbsolutePath,
                 RelativePagePath = context.Request.Url.LocalPath.Substring(baseUri.AbsolutePath.Length)
             };
+            try
+            {
+                if (!CheckHostOk())
+                {
+                    Start();
+                }
+            }
+            catch(Exception ex)
+            {
+                // We can't recover from this
+                ServerLog.Write(ex);
+                throw;
+            }
             _aspHost.ProcessRequest(requestData, new HttpResponseWrapper(context.Response));
         }
 

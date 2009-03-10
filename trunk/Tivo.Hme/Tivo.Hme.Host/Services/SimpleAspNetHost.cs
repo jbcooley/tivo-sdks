@@ -1,4 +1,5 @@
-﻿// Copyright (c) 2008 Josh Cooley
+﻿// Copyright (c) 2009 Josh Cooley
+// Copyright (c) 2009 David Sempek
 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -26,11 +27,33 @@ using System.Web.Hosting;
 using System.Web;
 using System.IO;
 using System.Collections.Specialized;
+using System.Runtime.Remoting.Lifetime;
 
 namespace Tivo.Hme.Host.Services
 {
     class SimpleAspNetHost : MarshalByRefObject
     {
+        /// <summary>
+        /// We will use this field to check if the object has been destroyed
+        /// by the timeout.
+        /// </summary>
+        public bool StillAlive = true;
+        /// <summary>
+        /// The timeout for the ASP.Net runtime after which it is automatically unloaded when idle
+        /// to release resources. Note this can't be externally set because the lease is set
+        /// during object construction. All you can do is change this property value here statically
+        /// </summary>
+        public static int IdleTimeoutMinutes = 15;
+        /// <summary>
+        /// the Response status code the server sent. 200 on success, 500 on error, 404 for redirect etc.
+        /// </summary>
+        public int ResponseStatusCode = 200;
+        /// <summary>
+        /// An error message if bError is set. Only works for the ProcessRequest method
+        /// </summary>
+        public string ErrorMessage = "";
+        public bool Error = false;
+
         public void ProcessRequest(HttpRequestData requestData, HttpResponseWrapper response)
         {
             try
@@ -42,6 +65,36 @@ namespace Tivo.Hme.Host.Services
             {
                 // ignore cases where the client closes the connection
             }
+            catch (Exception ex)
+            {
+                ResponseStatusCode = 500;
+                ErrorMessage = ex.Message;
+                Error = true;
+            }
+        }
+
+        /// <summary>
+        /// Overrides the default Lease setting to allow the runtime to not
+        /// expire after 5 minutes. 
+        /// </summary>
+        /// <returns></returns>
+        public override object InitializeLifetimeService()
+        {
+            // return null; // never expire
+
+            ILease lease = (ILease)base.InitializeLifetimeService();
+
+            // *** Set the initial lease which determines how long the remote ref sticks around
+            // *** before .Net automatically releases it. Although our code has the logic to
+            // *** to automatically restart it's better to keep it loaded
+            if (lease.CurrentState == LeaseState.Initial)
+            {
+                lease.InitialLeaseTime = TimeSpan.FromMinutes(SimpleAspNetHost.IdleTimeoutMinutes);
+                lease.RenewOnCallTime = TimeSpan.FromMinutes(SimpleAspNetHost.IdleTimeoutMinutes);
+                lease.SponsorshipTimeout = TimeSpan.FromMinutes(5);
+            }
+
+            return lease;
         }
     }
 }
