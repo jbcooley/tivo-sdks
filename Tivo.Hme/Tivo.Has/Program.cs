@@ -13,15 +13,15 @@ namespace Tivo.Has
         /// </summary>
         static void Main()
         {
-            //ServiceBase[] ServicesToRun;
-            //ServicesToRun = new ServiceBase[] 
-            //{ 
-            //    new HmeApplicationService() 
-            //};
-            //ServiceBase.Run(ServicesToRun);
-            var service = new HmeApplicationService();
-            service.StartApplications(null);
-            Console.ReadLine();
+            ServiceBase[] ServicesToRun;
+            ServicesToRun = new ServiceBase[] 
+            { 
+                new HmeApplicationService() 
+            };
+            ServiceBase.Run(ServicesToRun);
+            //var service = new HmeApplicationService();
+            //service.StartApplications(null);
+            //Console.ReadLine();
         }
     }
 }
