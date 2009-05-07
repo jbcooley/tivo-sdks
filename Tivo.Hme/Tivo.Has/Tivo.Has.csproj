@@ -59,8 +59,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Configuration\HasConfigurationService.cs" />
-    <Compile Include="Configuration\IHasConfigurationService.cs" />
     <Compile Include="HasServiceInstaller.cs">
       <SubType>Component</SubType>
     </Compile>
