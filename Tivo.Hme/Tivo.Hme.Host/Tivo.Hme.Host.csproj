@@ -38,11 +38,11 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\mono.webserver\Mono.Security.dll</HintPath>
     </Reference>
-    <Reference Include="Mono.Zeroconf, Version=2.0.0.76, Culture=neutral, PublicKeyToken=e60c4f4a95e1099e, processorArchitecture=MSIL">
+    <Reference Include="Mono.Zeroconf, Version=3.0.0.80, Culture=neutral, PublicKeyToken=e60c4f4a95e1099e, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\mono-zeroconf-0.8.0-binary\bin\Mono.Zeroconf.dll</HintPath>
     </Reference>
-    <Reference Include="Mono.Zeroconf.Providers.Bonjour, Version=2.0.0.76, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Mono.Zeroconf.Providers.Bonjour, Version=3.0.0.80, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\mono-zeroconf-0.8.0-binary\bin\Mono.Zeroconf.Providers.Bonjour.dll</HintPath>
     </Reference>
