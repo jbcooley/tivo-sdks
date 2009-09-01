@@ -1,5 +1,9 @@
 = Tivo.Hmo Change Log =
 
+*2.0 Aug 31, 2009*
+
+  * Public release of HMO SDK.
+
 *2.0 Oct 21, 2008*
 
   * Move towards a public HMO SDK.  1.0 was just an internal implementation for DiskUsage.
