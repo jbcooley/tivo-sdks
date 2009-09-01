@@ -44,8 +44,13 @@ namespace TivoDiskUsage
 
         public static DiskUsageCalculator Calculate(TivoContainer container, string tivoName)
         {
+            return Calculate(new TivoContainer[] { container }, tivoName);
+        }
+
+        public static DiskUsageCalculator Calculate(IEnumerable<TivoContainer> containers, string tivoName)
+        {
             DiskUsageCalculator calculator = new DiskUsageCalculator();
-            calculator.CurrentSpaceUsed = calculator.CalculateCategoryTotals(container);
+            calculator.CurrentSpaceUsed = calculator.CalculateCategoryTotals(containers);
             calculator.MaxSpaceUsed = calculator.GetMaxSpaceUsedForTivo(calculator.CurrentSpaceUsed, tivoName);
 
             // decrement this value with each category found
@@ -114,10 +119,10 @@ namespace TivoDiskUsage
             }
         }
 
-        private ulong CalculateCategoryTotals(TivoContainer container)
+        private ulong CalculateCategoryTotals(IEnumerable<TivoContainer> containers)
         {
             ulong total = 0;
-            foreach (TivoVideo video in container.TivoItems.Where(item => item is TivoVideo))
+            foreach (TivoVideo video in containers.SelectMany(cs => cs.TivoItems).Where(item => item is TivoVideo))
             {
                 total += (ulong)video.Length;
                 if (video.CustomIcon != null)

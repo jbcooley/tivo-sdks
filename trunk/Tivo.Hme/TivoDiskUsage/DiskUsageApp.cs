@@ -74,7 +74,7 @@ namespace TivoDiskUsage
                 string server = DiscoveryBeacon.GetServer(_tivoName, TimeSpan.FromMinutes(1));
                 GetNowPlaying(server, Properties.Settings.Default.MediaAccessKey, (Application)sender);
             }
-            catch (TimeoutException ex)
+            catch (TimeoutException)
             {
                 _waitingView.DisplayFailure("Unable to connect connect back to tivo. Please be sure tivo to go is enabled");
             }
@@ -95,19 +95,28 @@ namespace TivoDiskUsage
             //_connection.BeginQueryContainer("/NowPlaying", true, QueryUsage, app);
         }
 
+        private List<TivoContainer> _containers = new List<TivoContainer>();
         public void QueryUsage(IAsyncResult result)
         {
             Application app = (Application)result.AsyncState;
-            //TivoContainer container = _connection.EndQueryContainer(result);
-            //_connection.Dispose();
-            TivoContainer container = _query.EndExecute(result);
-            _connection.Dispose();
 
-            CategoryPieView pieView = new CategoryPieView(DiskUsageCalculator.Calculate(container, _tivoName));
-            View previousView = app.Root.Children[0];
-            app.Root.Children.RemoveAt(0);
-            app.Root.Children.Add(pieView);
-            previousView.Dispose();
+            TivoContainer container = _query.EndExecute(result);
+            _containers.Add(container);
+
+            if (container.ItemStart + container.ItemCount < container.TotalItems)
+            {
+                _query = _query.Skip(container.ItemStart + container.ItemCount);
+                _query.BeginExecute(QueryUsage, app);
+            }
+            else
+            {
+                _connection.Dispose();
+                CategoryPieView pieView = new CategoryPieView(DiskUsageCalculator.Calculate(_containers, _tivoName));
+                View previousView = app.Root.Children[0];
+                app.Root.Children.RemoveAt(0);
+                app.Root.Children.Add(pieView);
+                previousView.Dispose();
+            }
         }
     }
 }
