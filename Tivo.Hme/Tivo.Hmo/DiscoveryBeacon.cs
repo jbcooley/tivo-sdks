@@ -30,6 +30,9 @@ namespace Tivo.Hmo
     {
         private const int BeaconPort = 2190;
         private static Dictionary<string, string> NameLookup = new Dictionary<string, string>();
+        // TODO: allow services to be appended to contents of BeaconPacket
+        // this could be done by changing this field, or by concatenating this
+        // with the dynamic portion
         private static readonly string BeaconPacket =
             string.Format("tivoconnect=1\n" +
             "method=broadcast\n" +
@@ -37,8 +40,10 @@ namespace Tivo.Hmo
             "machine={1}\n" +
             "identity={2}\n" +
             "swversion=dnsw:{3}\n",
-            Environment.OSVersion.VersionString, Environment.MachineName, Guid.NewGuid(),
+            Environment.OSVersion.VersionString, Environment.MachineName, GetIdentity(),
             System.Reflection.Assembly.GetCallingAssembly().GetName().Version);
+        private static volatile string ServicesHeader = string.Empty;
+        private static TivoConnectServicesCollection ServicesCollection = new TivoConnectServicesCollection();
         private static System.Threading.Timer SendBeaconTimer = new System.Threading.Timer(SendBeacon);
         private static System.Threading.Timer SlowBeaconTimer = new System.Threading.Timer(SlowBeacon);
         private static int IsFastBeacon;
@@ -71,7 +76,7 @@ namespace Tivo.Hmo
             UdpClient announce = new UdpClient();
             IPEndPoint broadcast = new IPEndPoint(IPAddress.Broadcast, BeaconPort);
             announce.EnableBroadcast = true;
-            byte[] beaconBytes = Encoding.ASCII.GetBytes(BeaconPacket);
+            byte[] beaconBytes = Encoding.ASCII.GetBytes(BeaconPacket + ServicesHeader);
             announce.Send(beaconBytes, beaconBytes.Length, broadcast);
         }
 
@@ -112,6 +117,30 @@ namespace Tivo.Hmo
             return server;
         }
 
+        public static IEnumerable<string> GetServerNames()
+        {
+            lock (NameLookup)
+            {
+                string[] names = new string[NameLookup.Count];
+                NameLookup.Keys.CopyTo(names, 0);
+                return names;
+            }
+        }
+
+        public static TivoConnectServicesCollection Services
+        {
+            get { return ServicesCollection; }
+        }
+
+        public static event EventHandler<EventArgs> AvailableServersChanged;
+
+        private static void OnAvailableServersChanged(EventArgs e)
+        {
+            EventHandler<EventArgs> handler = AvailableServersChanged;
+            if (handler != null)
+                handler(null, e);
+        }
+
         private static void BroadcastRecieved(IAsyncResult results)
         {
             UdpClient listen = results.AsyncState as UdpClient;
@@ -122,6 +151,7 @@ namespace Tivo.Hmo
                 string message = Encoding.ASCII.GetString(bytes);
                 using (System.IO.StringReader reader = new System.IO.StringReader(message))
                 {
+                    bool nameLookupChanged = false;
                     string line;
                     while ((line = reader.ReadLine()) != null)
                     {
@@ -135,10 +165,12 @@ namespace Tivo.Hmo
                                     if (NameLookup.ContainsKey(nameValue[1]))
                                     {
                                         NameLookup[nameValue[1]] = broadcast.Address.ToString();
+                                        nameLookupChanged = true;
                                     }
                                     else
                                     {
                                         NameLookup.Add(nameValue[1], broadcast.Address.ToString());
+                                        nameLookupChanged = true;
                                         // found new tivo, change broadcast to every 5 seconds.
                                         StartBeacon();
                                     }
@@ -146,6 +178,8 @@ namespace Tivo.Hmo
                             }
                         }
                     }
+                    if (nameLookupChanged)
+                        OnAvailableServersChanged(EventArgs.Empty);
                 }
             }
             finally
@@ -154,6 +188,329 @@ namespace Tivo.Hmo
                 {
                     listen.BeginReceive(BroadcastRecieved, listen);
                 }
+            }
+        }
+
+        private static Guid GetIdentity()
+        {
+            if (Properties.Settings.Default.BeaconIdentity == Guid.Empty)
+            {
+                Properties.Settings.Default.BeaconIdentity = Guid.NewGuid();
+                Properties.Settings.Default.Save();
+            }
+            return Properties.Settings.Default.BeaconIdentity;
+        }
+
+        internal static void RefreshServices()
+        {
+            // TODO: make this threadsafe
+            // could update Services collection after reading
+            if (Services.Count == 0)
+                ServicesHeader = string.Empty;
+            else
+            {
+                StringBuilder headerBuilder = new StringBuilder();
+                headerBuilder.Append("services=");
+                bool first = true;
+                foreach (TivoConnectService service in Services)
+                {
+                    if (!first)
+                        headerBuilder.Append(",");
+                    headerBuilder.Append(service);
+                }
+                headerBuilder.Append("\n");
+                ServicesHeader = headerBuilder.ToString();
+            }
+            // trigger fast beacon due to service changes
+            StartBeacon();
+        }
+    }
+
+    public struct TivoConnectService
+    {
+        public TivoConnectService(string name)
+            : this()
+        {
+            Name = name;
+        }
+
+        public string Name { get; set; }
+        public int? Port { get; set; }
+        public string Protocol { get; set; }
+
+        public override string ToString()
+        {
+            StringBuilder serviceHeaderEntry = new StringBuilder();
+            serviceHeaderEntry.Append(Name);
+            if (Port != null)
+            {
+                serviceHeaderEntry.Append(":");
+                serviceHeaderEntry.Append((int)Port);
+            }
+            if (!string.IsNullOrEmpty(Protocol))
+            {
+                serviceHeaderEntry.Append("/");
+                serviceHeaderEntry.Append(Protocol);
+            }
+            return serviceHeaderEntry.ToString();
+        }
+    }
+
+    public class TivoConnectServicesCollection : IList<TivoConnectService>, System.Collections.IList
+    {
+        private List<TivoConnectService> _innerList = new List<TivoConnectService>();
+
+        #region IList<TivoConnectService> Members
+
+        public int IndexOf(TivoConnectService item)
+        {
+            lock (SyncRoot)
+            {
+                return _innerList.IndexOf(item);
+            }
+        }
+
+        public void Insert(int index, TivoConnectService item)
+        {
+            lock (SyncRoot)
+            {
+                if (item.Name == null)
+                    // name must not be null
+                    throw new ArgumentException();
+                _innerList.Insert(index, item);
+            }
+            DiscoveryBeacon.RefreshServices();
+        }
+
+        public void RemoveAt(int index)
+        {
+            lock (SyncRoot)
+            {
+                _innerList.RemoveAt(index);
+                DiscoveryBeacon.RefreshServices();
+            }
+        }
+
+        public TivoConnectService this[int index]
+        {
+            get
+            {
+                lock (SyncRoot)
+                {
+                    return _innerList[index];
+                }
+            }
+            set
+            {
+                lock (SyncRoot)
+                {
+                    if (value.Name == null)
+                        // name must not be null
+                        throw new ArgumentException();
+                    _innerList[index] = value;
+                    DiscoveryBeacon.RefreshServices();
+                }
+            }
+        }
+
+        #endregion
+
+        #region ICollection<TivoConnectService> Members
+
+        public void Add(TivoConnectService item)
+        {
+            lock (SyncRoot)
+            {
+                if (item.Name == null)
+                    // name must not be null
+                    throw new ArgumentException();
+                _innerList.Add(item);
+                DiscoveryBeacon.RefreshServices();
+            }
+        }
+
+        public void Clear()
+        {
+            lock (SyncRoot)
+            {
+                _innerList.Clear();
+                DiscoveryBeacon.RefreshServices();
+            }
+        }
+
+        public bool Contains(TivoConnectService item)
+        {
+            lock (SyncRoot)
+            {
+                return _innerList.Contains(item);
+            }
+        }
+
+        public void CopyTo(TivoConnectService[] array, int arrayIndex)
+        {
+            lock (SyncRoot)
+            {
+                _innerList.CopyTo(array, arrayIndex);
+            }
+        }
+
+        public int Count
+        {
+            get { lock(SyncRoot) return _innerList.Count; }
+        }
+
+        bool ICollection<TivoConnectService>.IsReadOnly
+        {
+            get { return false; }
+        }
+
+        public bool Remove(TivoConnectService item)
+        {
+            lock (SyncRoot)
+            {
+                bool remove = _innerList.Remove(item);
+                DiscoveryBeacon.RefreshServices();
+                return remove;
+            }
+        }
+
+        #endregion
+
+        #region IEnumerable<TivoConnectService> Members
+
+        public IEnumerator<TivoConnectService> GetEnumerator()
+        {
+            lock (SyncRoot)
+            {
+                return _innerList.GetEnumerator();
+            }
+        }
+
+        #endregion
+
+        #region IEnumerable Members
+
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        {
+            // lock happens in other function
+            return GetEnumerator();
+        }
+
+        #endregion
+
+        #region IList Members
+
+        int System.Collections.IList.Add(object value)
+        {
+            int add;
+            ThrowIfWrongType(value);
+            lock (SyncRoot)
+            {
+                add = ((System.Collections.IList)_innerList).Add(value);
+            }
+            DiscoveryBeacon.RefreshServices();
+            return add;
+        }
+
+        bool System.Collections.IList.Contains(object value)
+        {
+            lock (SyncRoot)
+            {
+                return ((System.Collections.IList)_innerList).Contains(value);
+            }
+        }
+
+        int System.Collections.IList.IndexOf(object value)
+        {
+            lock (SyncRoot)
+            {
+                return ((System.Collections.IList)_innerList).IndexOf(value);
+            }
+        }
+
+        void System.Collections.IList.Insert(int index, object value)
+        {
+            ThrowIfWrongType(value);
+            lock (SyncRoot)
+            {
+                ((System.Collections.IList)_innerList).Insert(index, value);
+            }
+            DiscoveryBeacon.RefreshServices();
+        }
+
+        bool System.Collections.IList.IsFixedSize
+        {
+            get { return false; }
+        }
+
+        bool System.Collections.IList.IsReadOnly
+        {
+            get { return false; }
+        }
+
+        void System.Collections.IList.Remove(object value)
+        {
+            lock (SyncRoot)
+            {
+                ((System.Collections.IList)_innerList).Remove(value);
+            }
+            DiscoveryBeacon.RefreshServices();
+        }
+
+        object System.Collections.IList.this[int index]
+        {
+            get
+            {
+                lock (SyncRoot)
+                {
+                    return ((System.Collections.IList)_innerList)[index];
+                }
+            }
+            set
+            {
+                ThrowIfWrongType(value);
+                lock (SyncRoot)
+                {
+                    ((System.Collections.IList)_innerList)[index] = value;
+                }
+                DiscoveryBeacon.RefreshServices();
+            }
+        }
+
+        #endregion
+
+        #region ICollection Members
+
+        void System.Collections.ICollection.CopyTo(Array array, int index)
+        {
+            lock (SyncRoot)
+            {
+                ((System.Collections.IList)_innerList).CopyTo(array, index);
+            }
+        }
+
+        public bool IsSynchronized
+        {
+            get { return true; }
+        }
+
+        public object SyncRoot
+        {
+            get { return ((System.Collections.ICollection)_innerList).SyncRoot; }
+        }
+
+        #endregion
+
+        private static void ThrowIfWrongType(object value)
+        {
+            if (!(value is TivoConnectService))
+            {
+                throw new ArgumentException();
+            }
+            if (((TivoConnectService)value).Name == null)
+            {
+                // name must not be null
+                throw new ArgumentException();
             }
         }
     }

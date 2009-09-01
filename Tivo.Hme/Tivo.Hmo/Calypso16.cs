@@ -60,6 +60,21 @@ namespace Tivo.Hmo
             get { return XNamespace + "LastChangeDate"; }
         }
 
+        public static XName TotalItems
+        {
+            get { return XNamespace + "TotalItems"; }
+        }
+
+        public static XName ItemStart
+        {
+            get { return XNamespace + "ItemStart"; }
+        }
+
+        public static XName ItemCount
+        {
+            get { return XNamespace + "ItemCount"; }
+        }
+
         public static XName SourceSize
         {
             get { return XNamespace + "SourceSize"; }
