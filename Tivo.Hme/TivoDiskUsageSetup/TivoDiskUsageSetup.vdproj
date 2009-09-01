@@ -21,43 +21,49 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_722895A77B268DD26B6C4328C26A076A"
+        "MsmKey" = "8:_5F7DD960A01ADFD11A6AF75367410B2A"
         "OwnerKey" = "8:_4943306DC0FE45A59A6EE557F645EC62"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_7B59C6D7C6FC43916A0F82A5F8DD278B"
+        "MsmKey" = "8:_CC19B4F5579124D5646DD688E08E6A99"
         "OwnerKey" = "8:_4943306DC0FE45A59A6EE557F645EC62"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_88F782B0874831028B35CCC25C9DF26C"
+        "MsmKey" = "8:_CC19B4F5579124D5646DD688E08E6A99"
+        "OwnerKey" = "8:_5F7DD960A01ADFD11A6AF75367410B2A"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_DB5967A9EEEC159268B3EE9CFA4FF24B"
+        "OwnerKey" = "8:_5F7DD960A01ADFD11A6AF75367410B2A"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_DB5967A9EEEC159268B3EE9CFA4FF24B"
         "OwnerKey" = "8:_4943306DC0FE45A59A6EE557F645EC62"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_88F782B0874831028B35CCC25C9DF26C"
-        "OwnerKey" = "8:_722895A77B268DD26B6C4328C26A076A"
+        "MsmKey" = "8:_E5300246AB675FE4FAFA7E14FE90505B"
+        "OwnerKey" = "8:_4943306DC0FE45A59A6EE557F645EC62"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_88F782B0874831028B35CCC25C9DF26C"
-        "OwnerKey" = "8:_7B59C6D7C6FC43916A0F82A5F8DD278B"
+        "MsmKey" = "8:_F076FCB1F9C98802787809C60606EB73"
+        "OwnerKey" = "8:_5F7DD960A01ADFD11A6AF75367410B2A"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_B67FD1600EA06F45A298C1B943C7C442"
-        "OwnerKey" = "8:_722895A77B268DD26B6C4328C26A076A"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_B67FD1600EA06F45A298C1B943C7C442"
+        "MsmKey" = "8:_F076FCB1F9C98802787809C60606EB73"
         "OwnerKey" = "8:_4943306DC0FE45A59A6EE557F645EC62"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -70,25 +76,31 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_722895A77B268DD26B6C4328C26A076A"
+        "OwnerKey" = "8:_E5300246AB675FE4FAFA7E14FE90505B"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_B67FD1600EA06F45A298C1B943C7C442"
+        "OwnerKey" = "8:_5F7DD960A01ADFD11A6AF75367410B2A"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_7B59C6D7C6FC43916A0F82A5F8DD278B"
+        "OwnerKey" = "8:_F076FCB1F9C98802787809C60606EB73"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_88F782B0874831028B35CCC25C9DF26C"
+        "OwnerKey" = "8:_CC19B4F5579124D5646DD688E08E6A99"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_DB5967A9EEEC159268B3EE9CFA4FF24B"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -153,6 +165,19 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.Net.Framework.3.5.SP1"
+                    {
+                    "Name" = "8:.NET Framework 3.5 SP1"
+                    "ProductCode" = "8:Microsoft.Net.Framework.3.5.SP1"
+                    }
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.Windows.Installer.3.1"
+                    {
+                    "Name" = "8:Windows Installer 3.1"
+                    "ProductCode" = "8:Microsoft.Windows.Installer.3.1"
+                    }
+                }
             }
         }
     }
@@ -239,14 +264,14 @@
         }
         "File"
         {
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_722895A77B268DD26B6C4328C26A076A"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_5F7DD960A01ADFD11A6AF75367410B2A"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Tivo.Hme.Host, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:Tivo.Hme.Host, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_722895A77B268DD26B6C4328C26A076A"
+                    "_5F7DD960A01ADFD11A6AF75367410B2A"
                     {
                     "Name" = "8:Tivo.Hme.Host.dll"
                     "Attributes" = "3:512"
@@ -270,45 +295,14 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_7B59C6D7C6FC43916A0F82A5F8DD278B"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_CC19B4F5579124D5646DD688E08E6A99"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Mono.Zeroconf.Providers.Bonjour, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:Mono.Zeroconf, Version=3.0.0.80, Culture=neutral, PublicKeyToken=e60c4f4a95e1099e, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_7B59C6D7C6FC43916A0F82A5F8DD278B"
-                    {
-                    "Name" = "8:Mono.Zeroconf.Providers.Bonjour.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:Mono.Zeroconf.Providers.Bonjour.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_E8719274AC704815859A78734DA1B9B6"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_88F782B0874831028B35CCC25C9DF26C"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Mono.Zeroconf, Version=1.0.0.0, Culture=neutral, PublicKeyToken=e60c4f4a95e1099e, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_88F782B0874831028B35CCC25C9DF26C"
+                    "_CC19B4F5579124D5646DD688E08E6A99"
                     {
                     "Name" = "8:Mono.Zeroconf.dll"
                     "Attributes" = "3:512"
@@ -332,14 +326,76 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_B67FD1600EA06F45A298C1B943C7C442"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_DB5967A9EEEC159268B3EE9CFA4FF24B"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:TRUE"
+            "AssemblyAsmDisplayName" = "8:Mono.Security, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_DB5967A9EEEC159268B3EE9CFA4FF24B"
+                    {
+                    "Name" = "8:Mono.Security.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:Mono.Security.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_E8719274AC704815859A78734DA1B9B6"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_E5300246AB675FE4FAFA7E14FE90505B"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Tivo.Hme, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:Tivo.Hmo, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_B67FD1600EA06F45A298C1B943C7C442"
+                    "_E5300246AB675FE4FAFA7E14FE90505B"
+                    {
+                    "Name" = "8:Tivo.Hmo.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:Tivo.Hmo.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_E8719274AC704815859A78734DA1B9B6"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_F076FCB1F9C98802787809C60606EB73"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Tivo.Hme, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_F076FCB1F9C98802787809C60606EB73"
                     {
                     "Name" = "8:Tivo.Hme.dll"
                     "Attributes" = "3:512"
@@ -419,14 +475,14 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Tivo Disk Usage"
-        "ProductCode" = "8:{B8ADB638-EC93-40F3-A80C-F9E1195DDBA8}"
-        "PackageCode" = "8:{D53CFD9C-3E9E-4D73-A182-B6C793CB2958}"
+        "ProductCode" = "8:{29A9D4B0-C00C-4297-92EB-EE9F135E4FB0}"
+        "PackageCode" = "8:{7B660726-D563-41E5-A9F7-BE27F6DF433F}"
         "UpgradeCode" = "8:{5798BED5-5C44-4C0E-BB9C-2B42F38AD822}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:0.1.0"
+        "ProductVersion" = "8:0.2.0"
         "Manufacturer" = "8:Josh Cooley"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
