@@ -1,6 +1,10 @@
 #labels Featured
 = Tivo.Hme and Tivo.Hme.Host Change Log =
 
+*2.0 Aug 31, 2009*
+
+  * Changed Http processing to use HttpListener from Mono.
+
 *1.4 Oct 21, 2008*
 
   * Added support for application transitions.
