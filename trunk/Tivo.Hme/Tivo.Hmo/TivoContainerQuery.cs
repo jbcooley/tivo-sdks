@@ -22,6 +22,7 @@ namespace Tivo.Hmo
         private List<string> _filter = new List<string>();
         private List<string> _sort = new List<string>();
         private int? _randomSeed;
+        private int? _skipCount;
         private int? _limitCount;
 
         internal TivoContainerQuery(TivoConnection connection, string container)
@@ -103,7 +104,14 @@ namespace Tivo.Hmo
             return clone;
         }
 
-        TivoContainerQuery Take(int count)
+        public TivoContainerQuery Skip(int count)
+        {
+            var clone = Clone();
+            clone._skipCount = count;
+            return clone;
+        }
+
+        public TivoContainerQuery Take(int count)
         {
             var clone = Clone();
             clone._limitCount = count;
@@ -149,13 +157,22 @@ namespace Tivo.Hmo
 
         void client_OpenReadCompleted(object sender, OpenReadCompletedEventArgs e)
         {
+            // unregister so query and connection can be reused.
+            _connection.WebClient.OpenReadCompleted -= new OpenReadCompletedEventHandler(client_OpenReadCompleted);
             // return object
             WebClientAsyncResult asyncResult = (WebClientAsyncResult)e.UserState;
-            using (var stream = e.Result)
-            using (var reader = new System.IO.StreamReader(stream))
+            try
             {
-                var doc = System.Xml.Linq.XDocument.Load(reader);
-                asyncResult.Result = (TivoContainer)doc;
+                using (var stream = e.Result)
+                using (var reader = new System.IO.StreamReader(stream))
+                {
+                    var doc = System.Xml.Linq.XDocument.Load(reader);
+                    asyncResult.Result = (TivoContainer)doc;
+                }
+            }
+            catch (Exception ex)
+            {
+                asyncResult.Error = ex;
             }
             asyncResult.AsyncCallback(asyncResult);
             // TODO: what to do with errors and cancelled?
@@ -187,7 +204,10 @@ namespace Tivo.Hmo
             {
                 client.QueryString.Add("RandomSeed", _randomSeed.ToString());
             }
-            // anchor here
+            if (_skipCount != null)
+            {
+                client.QueryString.Add("AnchorOffset", _skipCount.ToString());
+            }
             if (_limitCount != null)
             {
                 client.QueryString.Add("ItemCount", _limitCount.ToString());

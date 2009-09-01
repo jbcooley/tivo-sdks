@@ -23,13 +23,23 @@ using System.Collections.Generic;
 using System.Text;
 using System.Net;
 using System.Xml.Serialization;
+using System.Net.Security;
 
 namespace Tivo.Hmo
 {
+    public enum TivoConnectionState
+    {
+        Closed,
+        Open,
+        Downloading
+    }
+
     public class TivoConnection : IDisposable
     {
+        private bool _disposed;
         private string _hmoServer;
         private string _mediaAccessKey;
+        private WebClient _webClient;
 
         public TivoConnection(string hmoServer, string mediaAccessKey)
         {
@@ -37,8 +47,6 @@ namespace Tivo.Hmo
             _mediaAccessKey = mediaAccessKey;
             // optional -- 4.4.2 QueryServer
         }
-
-        private bool _disposed;
 
         #region IDisposable Members
 
@@ -53,6 +61,7 @@ namespace Tivo.Hmo
         {
             if (disposing && !_disposed)
             {
+                Close();
                 // required -- 4.4.3 ResetServer
                 // Currently times out - may be because of active TivoDesktop stuff.
                 //WebClient client = new WebClient();
@@ -64,72 +73,63 @@ namespace Tivo.Hmo
             _disposed = true;
         }
 
-        public IAsyncResult BeginQueryContainer(string container, bool recurse, AsyncCallback asyncCallback, object asyncState)
+        public TivoConnectionState State
         {
-            WebClient client;
-            Uri uri;
-            PrepareQueryContainer(container, recurse, out client, out uri);
-            client.OpenReadCompleted += new OpenReadCompletedEventHandler(client_OpenReadCompleted);
-            WebClientAsyncResult asyncResult = new WebClientAsyncResult(asyncCallback, asyncState);
-            ServicePointManager.ServerCertificateValidationCallback = TrustAllCertificatePolicy.TrustAllCertificateCallback;
-            client.OpenReadAsync(uri, asyncResult);
-            return asyncResult;
+            get
+            {
+                if (_webClient == null)
+                    return TivoConnectionState.Closed;
+                else if (_webClient.IsBusy)
+                    return TivoConnectionState.Downloading;
+                else
+                    return TivoConnectionState.Open;
+            }
         }
 
-        void client_OpenReadCompleted(object sender, OpenReadCompletedEventArgs e)
+        internal WebClient WebClient
         {
-            // return object
-            WebClientAsyncResult asyncResult = (WebClientAsyncResult)e.UserState;
-            XmlSerializer serializer = new XmlSerializer(typeof(TiVoContainer));
-            asyncResult.Result = (TiVoContainer)serializer.Deserialize(e.Result);
-            asyncResult.AsyncCallback(asyncResult);
-            // TODO: what to do with errors and cancelled?
+            get { return _webClient; }
         }
 
-        public TiVoContainer EndQueryContainer(IAsyncResult asyncResult)
+        public string HmoServer
         {
-            WebClientAsyncResult webClientAsyncResult = asyncResult as WebClientAsyncResult;
-            if (webClientAsyncResult == null)
-                throw new ArgumentException("IAsyncResult did not come from BeginQueryContainer", "asyncResult");
-            if (webClientAsyncResult.Error != null)
-                throw webClientAsyncResult.Error;
-            return (TiVoContainer)webClientAsyncResult.Result;
+            get { return _hmoServer; }
         }
 
-        public TiVoContainer QueryContainer(string container, bool recurse)
-            // sortorder, randomseed, randomstart, itemcount, anchoritem, anchoroffset,
-            // filter - mime type filter
+        public void Open()
         {
-            WebClient client;
-            Uri uri;
-            PrepareQueryContainer(container, recurse, out client, out uri);
-            XmlSerializer serializer = new XmlSerializer(typeof(TiVoContainer));
+            if (_webClient != null)
+            {
+                throw new InvalidOperationException();
+            }
+            _webClient = new WebClient();
+            ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(TrustAllCertificatePolicy.TrustAllCertificateCallback);
+            _webClient.Credentials = new NetworkCredential("tivo", _mediaAccessKey);
 
-            ServicePointManager.ServerCertificateValidationCallback = TrustAllCertificatePolicy.TrustAllCertificateCallback;
-            return (TiVoContainer)serializer.Deserialize(client.OpenRead(uri));
         }
 
-        private void PrepareQueryContainer(string container, bool recurse, out WebClient client, out Uri uri)
+        public void Close()
         {
-            client = new WebClient();
-            //ServicePointManager.ServerCertificateValidationCallback = TrustAllCertificatePolicy.TrustAllCertificateCallback;
-            client.Credentials = new NetworkCredential("tivo", _mediaAccessKey);
-            client.QueryString.Add("Command", "QueryContainer");
-            client.QueryString.Add("Container", container);
-            client.QueryString.Add("Recurse", recurse ? "Yes" : "No");
-            uri = new Uri("https://" + _hmoServer + "/TiVoConnect");
+            if (_webClient != null)
+            {
+                _webClient.Dispose();
+                _webClient = null;
+            }
         }
 
-        public void QueryItem()
+        public TivoContainerQuery CreateContainerQuery(string container)
         {
+            return new TivoContainerQuery(this, container);
         }
 
-        public void QueryFormats()
+        public TivoContainerQuery CreateContainerQuery(TivoContainer container)
         {
+            return new TivoContainerQuery(this, new Uri(container.ContentUrl));
         }
 
-        public void RequestDocument()
+        public ContentDownloader GetDownloader(TivoVideo video)
         {
+            return new ContentDownloader(this, new Uri(video.ContentUrl));
         }
 
         public class TrustAllCertificatePolicy

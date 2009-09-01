@@ -30,6 +30,21 @@ namespace Tivo.Hmo
             get { return GetLastChanged(Element); }
         }
 
+        public int TotalItems
+        {
+            get { return (int)Element.Element(Calypso16.Details).Element(Calypso16.TotalItems); }
+        }
+
+        public int ItemStart
+        {
+            get { return (int)Element.Element(Calypso16.ItemStart); }
+        }
+
+        public int ItemCount
+        {
+            get { return (int)Element.Element(Calypso16.ItemCount); }
+        }
+
         public TivoItemCollection TivoItems
         {
             get { return new TivoItemCollection(Element); }
