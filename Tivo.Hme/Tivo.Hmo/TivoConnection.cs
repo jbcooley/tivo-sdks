@@ -102,7 +102,7 @@ namespace Tivo.Hmo
             {
                 throw new InvalidOperationException();
             }
-            _webClient = new WebClient();
+            _webClient = new CookieHandlingWebClient();
             ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(TrustAllCertificatePolicy.TrustAllCertificateCallback);
             _webClient.Credentials = new NetworkCredential("tivo", _mediaAccessKey);
 
@@ -140,6 +140,253 @@ namespace Tivo.Hmo
                 System.Net.Security.SslPolicyErrors errors)
             {
                 return true;
+            }
+        }
+
+        private class CookieHandlingWebClient : WebClient
+        {
+            private CookieContainer _container = new CookieContainer();
+
+            internal WebRequest GetBaseWebRequest(Uri address)
+            {
+                var request = base.GetWebRequest(address);
+                var httpRequest = request as HttpWebRequest;
+                if (httpRequest != null)
+                    httpRequest.CookieContainer = _container;
+                return request;
+            }
+
+            protected override WebRequest GetWebRequest(Uri address)
+            {
+                return new RecreatableWebRequest(this, address);
+            }
+
+            protected override WebResponse GetWebResponse(WebRequest request)
+            {
+                var credentials = request.Credentials;
+                if (request.RequestUri.Scheme == "http")
+                    request.Credentials = null;
+                string setCookieHeader = null;
+                string host;
+                try
+                {
+                    return base.GetWebResponse(request);
+                }
+                catch (WebException e)
+                {
+                    if (e.Response == null || (((HttpWebResponse)e.Response).StatusCode != HttpStatusCode.Unauthorized))
+                        throw;
+                    if (!(request is RecreatableWebRequest))
+                        throw;
+                    setCookieHeader = e.Response.Headers[HttpResponseHeader.SetCookie];
+                    host = ((HttpWebResponse)e.Response).ResponseUri.Host;
+                    ((RecreatableWebRequest)request).Recreate();
+                    request.Credentials = credentials;
+                }
+                _container.Add(CookieParser.ParseCookie(setCookieHeader, host));
+                return base.GetWebResponse(request);
+            }
+        }
+
+        private class RecreatableWebRequest : WebRequest
+        {
+            private CookieHandlingWebClient _webClient;
+            private Uri _address;
+
+            internal RecreatableWebRequest(CookieHandlingWebClient webClient, Uri address)
+            {
+                _webClient = webClient;
+                _address = address;
+                Recreate();
+            }
+
+            public void Recreate()
+            {
+                InnerRequest = _webClient.GetBaseWebRequest(_address);
+            }
+
+            public WebRequest InnerRequest { get; private set; }
+
+            public override void Abort()
+            {
+                InnerRequest.Abort();
+            }
+
+            public override IAsyncResult BeginGetRequestStream(AsyncCallback callback, object state)
+            {
+                return InnerRequest.BeginGetRequestStream(callback, state);
+            }
+
+            public override IAsyncResult BeginGetResponse(AsyncCallback callback, object state)
+            {
+                return InnerRequest.BeginGetResponse(callback, state);
+            }
+
+            public override System.Net.Cache.RequestCachePolicy CachePolicy
+            {
+                get
+                {
+                    return InnerRequest.CachePolicy;
+                }
+                set
+                {
+                    InnerRequest.CachePolicy = value;
+                }
+            }
+
+            public override string ConnectionGroupName
+            {
+                get
+                {
+                    return InnerRequest.ConnectionGroupName;
+                }
+                set
+                {
+                    InnerRequest.ConnectionGroupName = value;
+                }
+            }
+
+            public override long ContentLength
+            {
+                get
+                {
+                    return InnerRequest.ContentLength;
+                }
+                set
+                {
+                    InnerRequest.ContentLength = value;
+                }
+            }
+
+            public override string ContentType
+            {
+                get
+                {
+                    return InnerRequest.ContentType;
+                }
+                set
+                {
+                    InnerRequest.ContentType = value;
+                }
+            }
+
+            public override ICredentials Credentials
+            {
+                get
+                {
+                    return InnerRequest.Credentials;
+                }
+                set
+                {
+                    InnerRequest.Credentials = value;
+                }
+            }
+
+            public override System.IO.Stream EndGetRequestStream(IAsyncResult asyncResult)
+            {
+                return InnerRequest.EndGetRequestStream(asyncResult);
+            }
+
+            public override WebResponse EndGetResponse(IAsyncResult asyncResult)
+            {
+                return InnerRequest.EndGetResponse(asyncResult);
+            }
+
+            // can't call protected method on InnerRequest.  This shouldn't
+            // cause any problems unless the request is serialized.
+            //protected override void GetObjectData(System.Runtime.Serialization.SerializationInfo serializationInfo, System.Runtime.Serialization.StreamingContext streamingContext)
+            //{
+            //    InnerRequest.GetObjectData(serializationInfo, streamingContext);
+            //}
+
+            public override System.IO.Stream GetRequestStream()
+            {
+                return InnerRequest.GetRequestStream();
+            }
+
+            public override WebResponse GetResponse()
+            {
+                return InnerRequest.GetResponse();
+            }
+
+            public override WebHeaderCollection Headers
+            {
+                get
+                {
+                    return InnerRequest.Headers;
+                }
+                set
+                {
+                    InnerRequest.Headers = value;
+                }
+            }
+
+            public override string Method
+            {
+                get
+                {
+                    return InnerRequest.Method;
+                }
+                set
+                {
+                    InnerRequest.Method = value;
+                }
+            }
+
+            public override bool PreAuthenticate
+            {
+                get
+                {
+                    return InnerRequest.PreAuthenticate;
+                }
+                set
+                {
+                    InnerRequest.PreAuthenticate = value;
+                }
+            }
+
+            public override IWebProxy Proxy
+            {
+                get
+                {
+                    return InnerRequest.Proxy;
+                }
+                set
+                {
+                    InnerRequest.Proxy = value;
+                }
+            }
+
+            public override Uri RequestUri
+            {
+                get
+                {
+                    return InnerRequest.RequestUri;
+                }
+            }
+
+            public override int Timeout
+            {
+                get
+                {
+                    return InnerRequest.Timeout;
+                }
+                set
+                {
+                    InnerRequest.Timeout = value;
+                }
+            }
+
+            public override bool UseDefaultCredentials
+            {
+                get
+                {
+                    return InnerRequest.UseDefaultCredentials;
+                }
+                set
+                {
+                    InnerRequest.UseDefaultCredentials = value;
+                }
             }
         }
     }
