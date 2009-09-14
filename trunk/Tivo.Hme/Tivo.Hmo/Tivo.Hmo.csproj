@@ -72,6 +72,7 @@
     <Compile Include="Calypso16.cs" />
     <Compile Include="ContentDownloader.cs" />
     <Compile Include="ContentTypes.cs" />
+    <Compile Include="CookieParser.cs" />
     <Compile Include="CustomIcon.cs" />
     <Compile Include="DateUtility.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
