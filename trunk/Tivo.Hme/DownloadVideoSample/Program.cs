@@ -11,11 +11,11 @@ namespace DownloadVideoSample
         /// <summary>
         /// Name of tivo.  See Tivo Desktop or My Account on tivo.com to see name of tivo.
         /// </summary>
-        static string tivoName = "DVR A9F1";
+        static string tivoName = "";
         /// <summary>
         /// Media access key.
         /// </summary>
-        static string mak = "5314672594";
+        static string mak = "";
         static void Main(string[] args)
         {
             string videoName = null;
