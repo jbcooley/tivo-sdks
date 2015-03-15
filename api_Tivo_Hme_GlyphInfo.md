@@ -1,0 +1,16 @@
+# Tivo.Hme.GlyphInfo #
+
+## Properties ##
+| **Property Name** | **Description** |
+|:------------------|:----------------|
+| AdvanceWidth |  |
+| BoundingWidth |  |
+| GlyphId |  |
+
+## Methods ##
+| **Method Name** | **Description** |
+|:----------------|:----------------|
+| Equals | Inherited from System.Object. |
+| GetHashCode | Inherited from System.Object. |
+| GetType | Inherited from System.Object. |
+| ToString | Inherited from System.Object. |

@@ -1,0 +1,35 @@
+# Tivo.Hme.Application #
+
+## Properties ##
+| **Property Name** | **Description** |
+|:------------------|:----------------|
+| ActiveView |  |
+| CurrentResolution |  |
+| Fonts |  |
+| Images |  |
+| IsConnected |  |
+| IsRunning |  |
+| Root |  |
+| Sounds |  |
+| SupportedResolutions |  |
+
+## Methods ##
+| **Method Name** | **Description** |
+|:----------------|:----------------|
+| Close |  |
+| CloseDisconnected |  |
+| CreateTextStyle | overloaded |
+| DelayAction |  |
+| Dispose |  |
+| Equals | Inherited from System.Object. |
+| GetHashCode | Inherited from System.Object. |
+| GetImageResource |  |
+| GetSound |  |
+| GetStreamedMusic | overloaded |
+| GetTrueTypeFontResource |  |
+| GetType | Inherited from System.Object. |
+| StreamImageResource |  |
+| ToString | Inherited from System.Object. |
+| TransitionBack | overloaded |
+| TransitionForward | overloaded |
+| TransitionStartNew | overloaded |

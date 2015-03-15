@@ -1,0 +1,27 @@
+# Tivo.Hme.GlyphInfoCollection #
+
+## Properties ##
+| **Property Name** | **Description** |
+|:------------------|:----------------|
+| Comparer |  |
+| Count |  |
+| Item |  |
+| Item |  |
+| Item |  |
+
+## Methods ##
+| **Method Name** | **Description** |
+|:----------------|:----------------|
+| Add | Inherited from System.Collections.ObjectModel.Collection`1[[Tivo.Hme.GlyphInfo, Tivo.Hme, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null]]. |
+| Clear | Inherited from System.Collections.ObjectModel.Collection`1[[Tivo.Hme.GlyphInfo, Tivo.Hme, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null]]. |
+| Contains | overloaded |
+| CopyTo | Inherited from System.Collections.ObjectModel.Collection`1[[Tivo.Hme.GlyphInfo, Tivo.Hme, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null]]. |
+| Equals | Inherited from System.Object. |
+| GetEnumerator | Inherited from System.Collections.ObjectModel.Collection`1[[Tivo.Hme.GlyphInfo, Tivo.Hme, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null]]. |
+| GetHashCode | Inherited from System.Object. |
+| GetType | Inherited from System.Object. |
+| IndexOf | Inherited from System.Collections.ObjectModel.Collection`1[[Tivo.Hme.GlyphInfo, Tivo.Hme, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null]]. |
+| Insert | Inherited from System.Collections.ObjectModel.Collection`1[[Tivo.Hme.GlyphInfo, Tivo.Hme, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null]]. |
+| Remove | overloaded |
+| RemoveAt | Inherited from System.Collections.ObjectModel.Collection`1[[Tivo.Hme.GlyphInfo, Tivo.Hme, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null]]. |
+| ToString | Inherited from System.Object. |

@@ -1,0 +1,14 @@
+# Tivo.Hmo Change Log #
+
+**2.0.1 Sept 13, 2009**
+
+  * Fix download bug in ContentDownloader with the help of some source from the mono project.
+
+**2.0 Aug 31, 2009**
+
+  * Public release of HMO SDK.
+
+**2.0 Oct 21, 2008**
+
+  * Move towards a public HMO SDK.  1.0 was just an internal implementation for DiskUsage.
+  * Using XLinq (requires .NET 3.5)

@@ -1,0 +1,15 @@
+# Tivo.Hme.HmeApplicationStartArgs #
+
+## Properties ##
+| **Property Name** | **Description** |
+|:------------------|:----------------|
+| Application |  |
+| HostServices |  |
+
+## Methods ##
+| **Method Name** | **Description** |
+|:----------------|:----------------|
+| Equals | Inherited from System.Object. |
+| GetHashCode | Inherited from System.Object. |
+| GetType | Inherited from System.Object. |
+| ToString | Inherited from System.Object. |

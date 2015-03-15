@@ -1,0 +1,18 @@
+# Tivo.Hme.DeviceConnectedArgs #
+
+## Properties ##
+| **Property Name** | **Description** |
+|:------------------|:----------------|
+| Brand |  |
+| DeviceInfo |  |
+| Host |  |
+| Platform |  |
+| Version |  |
+
+## Methods ##
+| **Method Name** | **Description** |
+|:----------------|:----------------|
+| Equals | Inherited from System.Object. |
+| GetHashCode | Inherited from System.Object. |
+| GetType | Inherited from System.Object. |
+| ToString | Inherited from System.Object. |

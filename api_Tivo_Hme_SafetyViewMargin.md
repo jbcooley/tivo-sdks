@@ -1,0 +1,19 @@
+# Tivo.Hme.SafetyViewMargin #
+
+## Fields ##
+| **Field Name** | **Description** |
+|:---------------|:----------------|
+| ActionMargin |  |
+| HorizontalActionMargin |  |
+| HorizontalTitleMargin |  |
+| TitleMargin |  |
+| VerticalActionMargin |  |
+| VerticalTitleMargin |  |
+
+## Methods ##
+| **Method Name** | **Description** |
+|:----------------|:----------------|
+| Equals | Inherited from System.Object. |
+| GetHashCode | Inherited from System.Object. |
+| GetType | Inherited from System.Object. |
+| ToString | Inherited from System.Object. |

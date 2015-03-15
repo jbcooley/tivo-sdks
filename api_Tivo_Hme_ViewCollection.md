@@ -1,0 +1,24 @@
+# Tivo.Hme.ViewCollection #
+
+## Properties ##
+| **Property Name** | **Description** |
+|:------------------|:----------------|
+| Count |  |
+| Item |  |
+
+## Methods ##
+| **Method Name** | **Description** |
+|:----------------|:----------------|
+| Add | Inherited from System.Collections.ObjectModel.Collection`1[[Tivo.Hme.View, Tivo.Hme, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null]]. |
+| Clear | overloaded |
+| Contains | Inherited from System.Collections.ObjectModel.Collection`1[[Tivo.Hme.View, Tivo.Hme, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null]]. |
+| CopyTo | Inherited from System.Collections.ObjectModel.Collection`1[[Tivo.Hme.View, Tivo.Hme, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null]]. |
+| Equals | Inherited from System.Object. |
+| GetEnumerator | Inherited from System.Collections.ObjectModel.Collection`1[[Tivo.Hme.View, Tivo.Hme, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null]]. |
+| GetHashCode | Inherited from System.Object. |
+| GetType | Inherited from System.Object. |
+| IndexOf | Inherited from System.Collections.ObjectModel.Collection`1[[Tivo.Hme.View, Tivo.Hme, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null]]. |
+| Insert | Inherited from System.Collections.ObjectModel.Collection`1[[Tivo.Hme.View, Tivo.Hme, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null]]. |
+| Remove | overloaded |
+| RemoveAt | overloaded |
+| ToString | Inherited from System.Object. |

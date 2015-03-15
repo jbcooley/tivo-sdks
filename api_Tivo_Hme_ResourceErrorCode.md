@@ -1,0 +1,17 @@
+# Tivo.Hme.ResourceErrorCode #
+
+## Members ##
+| **Member Name** | **Description** |
+|:----------------|:----------------|
+| BadArgument |  |
+| BadDataFormat |  |
+| BadMagicNumber |  |
+| BadState |  |
+| ConnectionFailed |  |
+| ConnectionLost |  |
+| ConnectionTimeout |  |
+| HostNotFound |  |
+| IncompatibleMediaVersion |  |
+| MediaTypeNotSupported |  |
+| MediaVersionNotSupported |  |
+| Unknown |  |

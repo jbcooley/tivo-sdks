@@ -1,0 +1,20 @@
+# Tivo.Hme.HmeResourceCollection #
+
+## Properties ##
+| **Property Name** | **Description** |
+|:------------------|:----------------|
+| Count |  |
+
+## Methods ##
+| **Method Name** | **Description** |
+|:----------------|:----------------|
+| Add | overloaded |
+| Clear |  |
+| Contains |  |
+| Equals | Inherited from System.Object. |
+| GetBytes |  |
+| GetHashCode | Inherited from System.Object. |
+| GetType | Inherited from System.Object. |
+| Remove |  |
+| ToString | Inherited from System.Object. |
+| TryGetFilePath |  |

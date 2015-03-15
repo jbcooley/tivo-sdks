@@ -1,0 +1,10 @@
+# Tivo.Hme.SuspendPainting #
+
+## Methods ##
+| **Method Name** | **Description** |
+|:----------------|:----------------|
+| Dispose |  |
+| Equals | Inherited from System.Object. |
+| GetHashCode | Inherited from System.Object. |
+| GetType | Inherited from System.Object. |
+| ToString | Inherited from System.Object. |

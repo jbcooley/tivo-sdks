@@ -1,0 +1,31 @@
+# Tivo.Hme.View #
+
+## Properties ##
+| **Property Name** | **Description** |
+|:------------------|:----------------|
+| Bounds |  |
+| CanFocus |  |
+| Children |  |
+| Focused |  |
+| Location |  |
+| Margin |  |
+| Offset |  |
+| Parent |  |
+| Scale |  |
+| Size |  |
+| Transparency |  |
+| ViewId |  |
+| Visible |  |
+
+## Methods ##
+| **Method Name** | **Description** |
+|:----------------|:----------------|
+| Animate |  |
+| Dispose |  |
+| Equals | Inherited from System.Object. |
+| Focus |  |
+| GetHashCode | Inherited from System.Object. |
+| GetType | Inherited from System.Object. |
+| ResumePainting |  |
+| SuspendPainting |  |
+| ToString | Inherited from System.Object. |

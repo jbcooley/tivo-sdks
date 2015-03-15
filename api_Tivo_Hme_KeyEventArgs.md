@@ -1,0 +1,16 @@
+# Tivo.Hme.KeyEventArgs #
+
+## Properties ##
+| **Property Name** | **Description** |
+|:------------------|:----------------|
+| Handled |  |
+| KeyCode |  |
+| RawCode |  |
+
+## Methods ##
+| **Method Name** | **Description** |
+|:----------------|:----------------|
+| Equals | Inherited from System.Object. |
+| GetHashCode | Inherited from System.Object. |
+| GetType | Inherited from System.Object. |
+| ToString | Inherited from System.Object. |

@@ -1,0 +1,16 @@
+# Tivo.Hme.TextStyle #
+
+## Properties ##
+| **Property Name** | **Description** |
+|:------------------|:----------------|
+| Name |  |
+| Style |  |
+| Weight |  |
+
+## Methods ##
+| **Method Name** | **Description** |
+|:----------------|:----------------|
+| Equals | Inherited from System.ValueType. |
+| GetHashCode | Inherited from System.ValueType. |
+| GetType | Inherited from System.Object. |
+| ToString |  |

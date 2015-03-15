@@ -1,0 +1,17 @@
+# Tivo.Hme.Margin #
+
+## Properties ##
+| **Property Name** | **Description** |
+|:------------------|:----------------|
+| Bottom |  |
+| Left |  |
+| Right |  |
+| Top |  |
+
+## Methods ##
+| **Method Name** | **Description** |
+|:----------------|:----------------|
+| Equals | overloaded |
+| GetHashCode |  |
+| GetType | Inherited from System.Object. |
+| ToString |  |

@@ -1,0 +1,12 @@
+# Tivo.Hme.TextLayout #
+
+## Members ##
+| **Member Name** | **Description** |
+|:----------------|:----------------|
+| HorizontalAlignCenter |  |
+| HorizontalAlignLeft |  |
+| HorizontalAlignRight |  |
+| TextWrap |  |
+| VerticalAlignBottom |  |
+| VerticalAlignCenter |  |
+| VerticalAlignTop |  |

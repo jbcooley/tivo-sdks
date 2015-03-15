@@ -1,0 +1,10 @@
+# Tivo.Hme.Mp3Helper #
+
+## Methods ##
+| **Method Name** | **Description** |
+|:----------------|:----------------|
+| Equals | Inherited from System.Object. |
+| GetHashCode | Inherited from System.Object. |
+| GetType | Inherited from System.Object. |
+| SeekToTime |  |
+| ToString | Inherited from System.Object. |

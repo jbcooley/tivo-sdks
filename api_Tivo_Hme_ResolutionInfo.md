@@ -1,0 +1,17 @@
+# Tivo.Hme.ResolutionInfo #
+
+## Properties ##
+| **Property Name** | **Description** |
+|:------------------|:----------------|
+| Horizontal |  |
+| PixelAspectHeight |  |
+| PixelAspectWidth |  |
+| Vertical |  |
+
+## Methods ##
+| **Method Name** | **Description** |
+|:----------------|:----------------|
+| Equals | overloaded |
+| GetHashCode |  |
+| GetType | Inherited from System.Object. |
+| ToString |  |

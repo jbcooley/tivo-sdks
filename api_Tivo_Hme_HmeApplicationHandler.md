@@ -1,0 +1,16 @@
+# Tivo.Hme.HmeApplicationHandler #
+
+## Properties ##
+| **Property Name** | **Description** |
+|:------------------|:----------------|
+| BaseUri |  |
+
+## Methods ##
+| **Method Name** | **Description** |
+|:----------------|:----------------|
+| Equals | Inherited from System.Object. |
+| GetHashCode | Inherited from System.Object. |
+| GetType | Inherited from System.Object. |
+| OnApplicationEnd |  |
+| OnApplicationStart |  |
+| ToString | Inherited from System.Object. |
