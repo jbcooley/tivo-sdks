@@ -35,7 +35,7 @@ using System.Collections;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Net;
-using Mono.Security.Authenticode;
+//using Mono.Security.Authenticode;
 
 namespace Tivo.Hme.Host.Http {
 	sealed class EndPointListener
@@ -46,7 +46,7 @@ namespace Tivo.Hme.Host.Http {
 		ArrayList unhandled; // List<ListenerPrefix> unhandled; host = '*'
 		ArrayList all;       // List<ListenerPrefix> all;  host = '+'
 		X509Certificate2 cert;
-		AsymmetricAlgorithm key;
+		//AsymmetricAlgorithm key;
 		bool secure;
 
 		public EndPointListener (IPAddress addr, int port, bool secure)
@@ -71,10 +71,11 @@ namespace Tivo.Hme.Host.Http {
 				string dirname = Environment.GetFolderPath (Environment.SpecialFolder.ApplicationData);
 				string path = Path.Combine (dirname, ".mono");
 				path = Path.Combine (path, "httplistener");
-				string cert_file = Path.Combine (path, String.Format ("{0}.cer", port));
-				string pvk_file = Path.Combine (path, String.Format ("{0}.pvk", port));
+                //string cert_file = Path.Combine (path, String.Format ("{0}.cer", port));
+                //string pvk_file = Path.Combine (path, String.Format ("{0}.pvk", port));
+				string cert_file = Path.Combine (path, String.Format ("{0}.pfx", port));
 				cert = new X509Certificate2 (cert_file);
-				key = PrivateKey.CreateFromFile (pvk_file).RSA;
+				//key = PrivateKey.CreateFromFile (pvk_file).RSA;
 			} catch {
 				// ignore errors
 			}
@@ -104,11 +105,11 @@ namespace Tivo.Hme.Host.Http {
 			if (accepted == null)
 				return;
 
-			if (epl.secure && (epl.cert == null || epl.key == null)) {
+			if (epl.secure && epl.cert == null) {//(epl.cert == null || epl.key == null)) {
 				accepted.Close ();
 				return;
 			}
-			HttpConnection conn = new HttpConnection (accepted, epl, epl.secure, epl.cert, epl.key);
+			HttpConnection conn = new HttpConnection (accepted, epl, epl.secure, epl.cert);//, epl.key);
 			conn.BeginReadRequest ();
 		}
 

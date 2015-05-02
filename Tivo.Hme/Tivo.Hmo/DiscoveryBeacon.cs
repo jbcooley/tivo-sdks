@@ -206,7 +206,7 @@ namespace Tivo.Hmo
             // TODO: make this threadsafe
             // could update Services collection after reading
             if (Services.Count == 0)
-                ServicesHeader = string.Empty;
+                ServicesHeader = "services=\n";
             else
             {
                 StringBuilder headerBuilder = new StringBuilder();

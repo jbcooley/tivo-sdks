@@ -36,7 +36,7 @@ using System.Text;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Net;
-using Mono.Security.Protocol.Tls;
+//using Mono.Security.Protocol.Tls;
 
 namespace Tivo.Hme.Host.Http {
 	sealed class HttpConnection
@@ -56,32 +56,34 @@ namespace Tivo.Hme.Host.Http {
 		int chunked_uses;
 		bool context_bound;
 		bool secure;
-		AsymmetricAlgorithm key;
+		//AsymmetricAlgorithm key;
 
-		public HttpConnection (Socket sock, EndPointListener epl, bool secure, X509Certificate2 cert, AsymmetricAlgorithm key)
+		public HttpConnection (Socket sock, EndPointListener epl, bool secure, X509Certificate2 cert)//, AsymmetricAlgorithm key)
 		{
 			this.sock = sock;
 			this.epl = epl;
 			this.secure = secure;
-			this.key = key;
+			//this.key = key;
 			if (secure == false) {
 				stream = new NetworkStream (sock, false);
 			} else {
 #if EMBEDDED_IN_1_0
 				throw new NotImplementedException ();
 #else
-				SslServerStream ssl_stream = new SslServerStream (new NetworkStream (sock, false), cert, false, false);
-				ssl_stream.PrivateKeyCertSelectionDelegate += OnPVKSelection;
+                //SslServerStream ssl_stream = new SslServerStream (new NetworkStream (sock, false), cert, false, false);
+                //ssl_stream.PrivateKeyCertSelectionDelegate += OnPVKSelection;
+                var ssl_stream = new System.Net.Security.SslStream(new NetworkStream(sock, false), true);
+                ssl_stream.AuthenticateAsServer(cert);
 				stream = ssl_stream;
 #endif
 			}
 			Init ();
 		}
 
-		AsymmetricAlgorithm OnPVKSelection (X509Certificate certificate, string targetHost)
-		{
-			return key;
-		}
+        //AsymmetricAlgorithm OnPVKSelection (X509Certificate certificate, string targetHost)
+        //{
+        //    return key;
+        //}
 
 
 		void Init ()

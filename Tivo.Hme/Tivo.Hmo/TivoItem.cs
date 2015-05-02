@@ -18,7 +18,7 @@ namespace Tivo.Hmo
             Element = element;
         }                                                                                       
 
-        protected XElement Element { get; private set; }
+        public XElement Element { get; private set; }
 
         public string ContentType
         {

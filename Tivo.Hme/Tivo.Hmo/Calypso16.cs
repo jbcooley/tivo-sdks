@@ -99,5 +99,10 @@ namespace Tivo.Hmo
         {
             get { return XNamespace + "AcceptsParams"; }
         }
+
+        public static XName TiVoVideoDetails
+        {
+            get { return XNamespace + "TiVoVideoDetails"; }
+        }
     }
 }

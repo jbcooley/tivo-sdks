@@ -132,6 +132,16 @@ namespace Tivo.Hmo
             return new ContentDownloader(this, new Uri(video.ContentUrl));
         }
 
+        public System.Xml.Linq.XDocument GetTivoVideoDetailsDocument(TivoVideoDetails tivoVideoDetails)
+        {
+            WebClient.QueryString.Clear();
+            using (var stream = WebClient.OpenRead(tivoVideoDetails.Uri))
+            using (var reader = new System.IO.StreamReader(stream))
+            {
+                return System.Xml.Linq.XDocument.Load(reader);
+            }
+        }
+
         public class TrustAllCertificatePolicy
         {
             public static bool TrustAllCertificateCallback(object sender,
@@ -183,7 +193,8 @@ namespace Tivo.Hmo
                     ((RecreatableWebRequest)request).Recreate();
                     request.Credentials = credentials;
                 }
-                _container.Add(CookieParser.ParseCookie(setCookieHeader, host));
+                if (setCookieHeader != null)
+                    _container.Add(CookieParser.ParseCookie(setCookieHeader, host));
                 return base.GetWebResponse(request);
             }
         }

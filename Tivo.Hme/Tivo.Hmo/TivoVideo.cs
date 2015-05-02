@@ -52,10 +52,45 @@ namespace Tivo.Hmo
             }
         }
 
-        //public object GetDetails(TivoConnection connection)
-        //{
-        //    return null;
-        //}
+        public string EpisodeTitle
+        {
+            get
+            {
+                return GetEpisodeTitle(Element);
+            }
+        }
+
+        public string Description
+        {
+            get
+            {
+                return GetDescription(Element);
+            }
+        }
+
+        public string SourceChannel
+        {
+            get
+            {
+                return GetSourceChannel(Element);
+            }
+        }
+
+        public string SourceStation
+        {
+            get
+            {
+                return GetSourceStation(Element);
+            }
+        }
+
+        public TivoVideoDetails TivoVideoDetails
+        {
+            get
+            {
+                return GetTivoVideoDetails(Element);
+            }
+        }
 
         protected static long GetLength(XElement tivoItem)
         {
@@ -78,6 +113,34 @@ namespace Tivo.Hmo
             if (customIconElement == null)
                 return null;
             return new CustomIcon(customIconElement);
+        }
+
+        protected static string GetEpisodeTitle(XElement tivoItem)
+        {
+            return (string)tivoItem.Element(Calypso16.Details).Element(Calypso16.XNamespace + "EpisodeTitle");
+        }
+
+        protected static string GetDescription(XElement tivoItem)
+        {
+            return (string)tivoItem.Element(Calypso16.Details).Element(Calypso16.XNamespace + "Description");
+        }
+
+        protected static string GetSourceChannel(XElement tivoItem)
+        {
+            return (string)tivoItem.Element(Calypso16.Details).Element(Calypso16.XNamespace + "SourceChannel");
+        }
+
+        protected static string GetSourceStation(XElement tivoItem)
+        {
+            return (string)tivoItem.Element(Calypso16.Details).Element(Calypso16.XNamespace + "SourceStation");
+        }
+
+        protected static TivoVideoDetails GetTivoVideoDetails(XElement tivoItem)
+        {
+            var tivoVideoDetailsElement = tivoItem.Element(Calypso16.Links).Element(Calypso16.TiVoVideoDetails);
+            if (tivoVideoDetailsElement == null)
+                return null;
+            return new TivoVideoDetails(tivoVideoDetailsElement);
         }
     }
 }

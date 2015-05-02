@@ -19,6 +19,7 @@ namespace Tivo.Hmo
         private TivoConnection _connection;
         private string _container;
         private bool _recurse;
+        private bool _doGenres;
         private List<string> _filter = new List<string>();
         private List<string> _sort = new List<string>();
         private int? _randomSeed;
@@ -50,6 +51,13 @@ namespace Tivo.Hmo
         {
             var clone = Clone();
             clone._recurse = true;
+            return clone;
+        }
+
+        public TivoContainerQuery DoGenres()
+        {
+            var clone = Clone();
+            clone._doGenres = true;
             return clone;
         }
 
@@ -100,7 +108,7 @@ namespace Tivo.Hmo
             var clone = Clone();
             clone._sort.Clear();
             clone._sort.Add("Random");
-            _randomSeed = seed;
+            clone._randomSeed = seed;
             return clone;
         }
 
@@ -188,6 +196,13 @@ namespace Tivo.Hmo
             return (TivoContainer)webClientAsyncResult.Result;
         }
 
+        public System.Threading.Tasks.Task<TivoContainer> ExecuteAsync()
+        {
+            Func<AsyncCallback, object, IAsyncResult> begin = BeginExecute;
+            Func<IAsyncResult, TivoContainer> end = EndExecute;
+            return System.Threading.Tasks.Task.Factory.FromAsync(begin, end, null);
+        }
+
         private void PrepareQueryContainer(WebClient client, out Uri uri)
         {
             //ServicePointManager.ServerCertificateValidationCallback = TrustAllCertificatePolicy.TrustAllCertificateCallback;
@@ -212,6 +227,8 @@ namespace Tivo.Hmo
             {
                 client.QueryString.Add("ItemCount", _limitCount.ToString());
             }
+            if (_doGenres) // default is 0.
+                client.QueryString.Add("DoGenres", "1");
             uri = new Uri("https://" + _connection.HmoServer + "/TiVoConnect");
         }
     }

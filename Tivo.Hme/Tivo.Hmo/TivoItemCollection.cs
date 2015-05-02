@@ -6,7 +6,7 @@ using System.Xml.Linq;
 
 namespace Tivo.Hmo
 {
-    public struct TivoItemCollection : IList<TivoItem>
+    public struct TivoItemCollection : IList<TivoItem>, IReadOnlyList<TivoItem>
     {
         private XElement _itemsContainer;
 
