@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace Cooley.Tivo.Hmo
+namespace Tivo.Hmo
 {
     public sealed class TivoVideoDetails : IEquatable<TivoVideoDetails>
     {
